@@ -3,10 +3,8 @@ const app = express();
 const port = 3001;
 const cors = require('cors');
 
-var usersRouter = require('./routes/users.js');
-
 app.use(cors());
-
+var usersRouter = require('./routes/users.js');
 
 var mysql = require('mysql2');
 var conn = mysql.createConnection({
@@ -28,6 +26,7 @@ conn.connect((err) => {
 app.locals.db = conn;
 app.use(express.json());
 app.use('/users', usersRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Chào mừng đến với dự án của bạn với Express.js!');
