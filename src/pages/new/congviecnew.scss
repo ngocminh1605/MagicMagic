@@ -1,0 +1,88 @@
+.dialog {
+
+  .dialogTitle {
+    width: fit-content;
+    font-size: 20px;
+    padding: 6px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #32516F;
+    background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+
+  }
+
+  .dialogContent {
+    //background-color: #4E728F;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    width: 450px;
+
+    .div1 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      //margin-right: 20px;
+    }
+
+    .div2 {
+      //margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .div3 {
+      //margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .dichuyenBtn {
+    //background-color: #008700;
+    height: auto;
+    margin: 0 auto;
+    margin-top: -30px;
+    margin-bottom: 10px;
+    position: relative;
+
+    .dichuyen {
+      //background-color: #37d5d6;
+      display: flex;
+      gap: 20px;
+
+      .ok {
+        padding: 2px 2px;
+        border-radius: 10px;
+        color: green;
+        border: 1px solid rgba(127, 226, 79, 0.93);
+        transition: all 0.5s;
+        cursor: pointer;
+        //margin-right: 20px;
+        //margin-bottom: 10px;
+
+        &:hover {
+          background-color: rgba(119, 201, 102, 0.63);
+          transform: translateY(-5px);
+          cursor: pointer;
+        }
+      }
+
+      .cancel {
+        padding: 2px 2px;
+        border-radius: 10px;
+        color: crimson;
+        border: 1px solid rgba(220, 20, 60, 0.6);
+        transition: all 0.5s;
+        cursor: pointer;
+        //margin-right: 10px;
+        //margin-bottom: 10px;
+
+        &:hover {
+          background-color: rgba(210, 113, 113, 0.49);
+          transform: translateY(-5px);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+

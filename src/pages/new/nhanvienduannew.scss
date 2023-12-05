@@ -1,0 +1,176 @@
+.dialogCC {
+    .dialogTitleCC {
+      width: fit-content;
+      font-size: 20px;
+      padding: 6px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #32516F;
+      background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+    }
+  
+    .dialogContentCC {
+      //background-color: yellow;
+      //background-color: #f5f7fa;
+      align-items: center;
+      width: 1000px;
+  
+      .ngaysinhaCC {
+        //color: rgba(73, 89, 101, 0.76);
+        font-size: 14px;
+        margin-left: 14px;
+        font-weight: normal;
+        //border-bottom: 1px solid gray;
+        //width: fit-content;
+      }
+  
+      .ngaySinhCC {
+        color: #335371;
+        font-weight: 500;
+        height: 52px;
+        font-size: 17px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid silver;
+      }
+    }
+  
+    .dichuyenBtnCC {
+      //background-color: #008700;
+      height: auto;
+      margin: 0 auto;
+      position: relative;
+  
+      .dichuyenCC {
+        //background-color: #37d5d6;
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+  
+        .okCC {
+          padding: 2px 2px;
+          border-radius: 10px;
+          color: green;
+          border: 1px solid rgba(127, 226, 79, 0.93);
+          transition: all 0.5s;
+          cursor: pointer;
+          //margin-right: 20px;
+          //margin-bottom: 10px;
+  
+          &:hover {
+            background-color: rgba(119, 201, 102, 0.63);
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+  
+        .cancelCC {
+          padding: 2px 2px;
+          border-radius: 10px;
+          color: crimson;
+          border: 1px solid rgba(220, 20, 60, 0.6);
+          transition: all 0.5s;
+          cursor: pointer;
+          //margin-right: 10px;
+          //margin-bottom: 10px;
+  
+          &:hover {
+            background-color: rgba(210, 113, 113, 0.49);
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  
+  .dialogCCSua {
+  
+    .dialogTitleCCSua {
+      width: fit-content;
+      font-size: 20px;
+      padding: 6px;
+      border-radius: 5px;
+      color: white;
+      background-color: #32516F;
+      background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+    }
+  
+    .dialogContentCCSua {
+      background-color: yellow;
+      display: flex;
+      align-items: center;
+      flex-flow: column;
+      width: 450px;
+  
+      .div1SuaCC {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        //margin-right: 20px;
+      }
+  
+      .div2SuaCC {
+        //margin-top: 20px;
+        margin-bottom: 20px;
+      }
+  
+      .div3SuaCC {
+        //margin-top: 20px;
+        margin-bottom: 20px;
+      }
+  
+      .div4SuaCC {
+        //margin-top: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  
+    .dichuyenBtnCCSua {
+      //background-color: #008700;
+      height: auto;
+      margin: 0 auto;
+      position: relative;
+  
+      .dichuyenCCSua {
+        //background-color: #37d5d6;
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+  
+        .okCCSua {
+          padding: 2px 2px;
+          border-radius: 10px;
+          color: green;
+          border: 1px solid rgba(127, 226, 79, 0.93);
+          transition: all 0.5s;
+          cursor: pointer;
+          //margin-right: 20px;
+          //margin-bottom: 10px;
+  
+          &:hover {
+            background-color: rgba(119, 201, 102, 0.63);
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+  
+        .cancelCCSua {
+          padding: 2px 2px;
+          border-radius: 10px;
+          color: crimson;
+          border: 1px solid rgba(220, 20, 60, 0.6);
+          transition: all 0.5s;
+          cursor: pointer;
+          //margin-right: 10px;
+          //margin-bottom: 10px;
+  
+          &:hover {
+            background-color: rgba(210, 113, 113, 0.49);
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  

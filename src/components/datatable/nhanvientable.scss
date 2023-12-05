@@ -1,0 +1,107 @@
+.datatable {
+  padding: 20px;
+  height: fit-content;
+  background-color: #f5f7fa;
+
+  .addNew {
+    width: 100%;
+    display: flex;
+    //align-items: center;
+    justify-content: flex-end;
+
+
+    .link {
+      text-decoration: none;
+      color: #537895;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #32516F;
+      border-radius: 10px;
+      transition: all 0.5s;
+
+      &:hover {
+        background-color: rgba(83, 120, 149, 0.63);
+        transform: translateY(-5px);
+      }
+    }
+  }
+
+  .chinhmau {
+    background-color: white;
+    border-radius: 10px;
+    height: 430px;
+  }
+
+  .chinh {
+    padding: 5px;
+    border-radius: 5px;
+
+
+    &.active {
+      background-color: rgba(0, 128, 0, 0.05);
+      color: green;
+    }
+
+    &.cancel {
+      background-color: rgba(255, 0, 0, 0.05);
+      color: crimson;
+    }
+
+    //
+    //&.pending {
+    //  background-color: rgba(255, 317, 0, 0.05);
+    //  color: goldenrod;
+    //}
+  }
+
+  .cellAction {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .view {
+      padding: 2px 2px;
+      border-radius: 10px;
+      color: darkblue;
+      border: 1px solid rgba(0, 0, 139, 0.596);
+      transition: all 0.5s;
+
+      &:hover {
+        background-color: rgba(41, 91, 149, 0.6);
+        transform: translateY(-5px);
+      }
+    }
+
+    .update {
+      padding: 2px 2px;
+      border-radius: 10px;
+      color: green;
+      border: 1px solid rgba(127, 226, 79, 0.93);
+      transition: all 0.5s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(119, 201, 102, 0.63);
+        transform: translateY(-5px);
+        cursor: pointer;
+      }
+    }
+
+    .delete {
+      padding: 2px 2px;
+      border-radius: 10px;
+      color: crimson;
+      border: 1px solid rgba(220, 20, 60, 0.6);
+      transition: all 0.5s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(210, 113, 113, 0.49);
+        transform: translateY(-5px);
+        cursor: pointer;
+      }
+    }
+  }
+}

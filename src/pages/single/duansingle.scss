@@ -1,0 +1,118 @@
+.single {
+    display: flex;
+    width: 100%;
+  
+    .singleContainer {
+      flex: 6;
+      background-color: #f5f7fa;
+  
+      .top {
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        border-radius: 10px;
+  
+        .left {
+          background-color: #ffffff;
+          -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+          box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+          cursor: pointer;
+          padding: 20px;
+          position: relative;
+          border-radius: 10px;
+          width: max-content;
+  
+          .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 15px;
+            padding: 8px;
+            border-radius: 5px;
+            color: #ffffff;
+            background-color: #32516F;
+            background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+          }
+  
+          .editBtn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-weight: bold;
+            color: #6439ff;
+            background-color: rgba(175, 207, 227, 0.35);
+          }
+  
+          .item {
+            display: flex;
+            margin-top: 30px;
+            gap: 20px;
+            width: max-content;
+  
+            .itemImg {
+              //background-image: url("src/components/images/work.jpeg");
+              width: 150px;
+              height: 150px;
+              border-radius: 10%;
+              object-fit: cover;
+              margin-left: -10px;
+            }
+  
+            .details {
+              //background-color: whitesmoke;
+              display: flex;
+              width: max-content;
+  
+              .itemTitle {
+                color: #537895;
+                margin-bottom: 10px;
+                font-weight: bold;
+  
+                li {
+                  padding: 10px;
+                }
+              }
+  
+              .itemKey {
+                color: #555555;
+                font-weight: normal;
+                margin-left: 5px;
+                margin-bottom: 10px;
+  
+                li {
+                  list-style: none;
+                  padding: 10px;
+                }
+              }
+  
+            }
+          }
+        }
+      }
+  
+      .bottom {
+        background-color: #ffffff;
+        padding: 20px;
+        //display: flex;
+        margin: 20px;
+        border-radius: 10px;
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        cursor: pointer;
+        position: relative;
+  
+        .title {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 15px;
+          padding: 8px;
+          background-color: rgba(175, 207, 227, 0.35);
+          border-radius: 5px;
+          color: #ffffff;
+          background-color: #32516F;
+          background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+        }
+      }
+    }
+  }

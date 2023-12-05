@@ -1,0 +1,215 @@
+.singleNV {
+  display: flex;
+  width: 100%;
+
+
+  .singleContainerNV {
+    flex: 6;
+    background-color: #f5f7fa;
+
+    .topNV {
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      border-radius: 10px;
+
+      .leftNV {
+        background-color: #ffffff;
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        cursor: pointer;
+        padding: 20px;
+        position: relative;
+        border-radius: 10px;
+        width: 100%;
+        position: relative;
+
+        .titleNV {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 15px;
+          padding: 8px;
+          border-radius: 5px;
+          color: #ffffff;
+          background-color: #32516F;
+          background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+        }
+
+        .editBtnNV {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-weight: bold;
+          font-size: 12px;
+          padding: 10px;
+          color: #ffffff;
+          background-color: #32516F;
+          background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+          transition: all 0.5s;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #182635;
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+
+        .itemNV {
+          display: flex;
+          margin-top: 30px;
+          gap: 20px;
+          width: 100%;
+          //background-color: #37d5d6;
+
+          .itemImgNV {
+            //background-image: url("src/components/images/work.jpeg");
+            width: 150px;
+            height: 150px;
+            border-radius: 10%;
+            object-fit: cover;
+            margin-left: -10px;
+          }
+
+          .chonHinhAnh {
+            font-weight: bold;
+            font-size: 12px;
+            padding: 10px;
+            color: #ffffff;
+            background-color: #32516F;
+            background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+            transition: all 0.5s;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #182635;
+              transform: translateY(-5px);
+              cursor: pointer;
+            }
+          }
+
+          .detailsNV {
+            //background-color: whitesmoke;
+            display: flex;
+            width: max-content;
+            margin-left: 20px;
+            gap: 50px;
+
+            .itemTitleNV1 {
+              color: #335371;
+              margin-bottom: 10px;
+              font-weight: bold;
+              //background-color: red;
+              display: flex;
+              flex-flow: column;
+              gap: 25px;
+
+              .ngaysinha {
+                //color: rgba(73, 89, 101, 0.76);
+                font-size: 14px;
+                margin-left: 14px;
+                margin-top: -10px;
+                margin-bottom: -25px;
+                font-weight: normal;
+                //border-bottom: 1px solid gray;
+                //width: fit-content;
+              }
+
+              .ngaySinh {
+                color: #335371;
+                font-weight: 500;
+                height: 50px;
+                font-size: 17px;
+                text-align: center;
+                border-radius: 5px;
+                border: 1px solid silver;
+              }
+
+              .gioitinha {
+                font-weight: normal;
+                font-size: 14px;
+                margin-left: 14px;
+                margin-top: -10px;
+                margin-bottom: -25px;
+                width: fit-content;
+              }
+
+              .gioitinh {
+                border-radius: 5px;
+                border: 1px solid silver;
+                height: 50px !important;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                //padding-top: 20px;
+                .radione {
+                  &:checked {
+                    background: #008700;
+                  }
+                }
+              }
+            }
+
+            .itemTitleNV2 {
+              color: #555555;
+              font-weight: normal;
+              margin-bottom: 10px;
+              display: flex;
+              flex-flow: column;
+              gap: 25px;
+
+              .ngaysinha {
+                //color: rgba(73, 89, 101, 0.76);
+                font-size: 14px;
+                margin-left: 14px;
+                margin-top: -16px;
+                margin-bottom: -25px;
+                font-weight: normal;
+                //border-bottom: 1px solid gray;
+                //width: fit-content;
+              }
+
+              .ngaySinh {
+                color: #335371;
+                font-weight: 500;
+                height: 50px;
+                font-size: 17px;
+                text-align: center;
+                border-radius: 5px;
+                border: 1px solid silver;
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+    .bottomNV {
+      background-color: #ffffff;
+      padding: 20px;
+      //display: flex;
+      margin: 20px;
+      border-radius: 10px;
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      cursor: pointer;
+      position: relative;
+
+      .titleNV {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 15px;
+        padding: 8px;
+        background-color: rgba(175, 207, 227, 0.35);
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #32516F;
+        background-image: linear-gradient(250deg, #537895 25%, #32516F 80%);
+      }
+    }
+  }
+}
