@@ -107,30 +107,23 @@
   }
 }
 
-/* Custom styles for Dropdown */
-// .custom-dropdown {
-//   /* Add your custom styles here */
-// }
 
-/* Style the Dropdown.Toggle button */
 .custom-dropdown .dropdown-toggle {
   background-color: #007bff;
-  /* Example background color */
-  color: #ffffff;
-  /* Example text color */
+
 }
 
-/* Style the Dropdown.Menu */
-// .custom-dropdown .dropdown-menu {
-//   /* Add your custom styles for the dropdown menu */
-// }
-
-// /* Style individual items inside the Dropdown.Menu */
 .custom-dropdown .dropdown-item span {
   font-family: sans-serif;
   padding-left: 10px;
 }
 
+.custom-dropdown .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  margin-left: 5px;
+  width: 150px;
+}
 
 .custom-dropdown .dropdown-item.active,
 .custom-dropdown .dropdown-item:active {
@@ -138,7 +131,6 @@
   color: white;
 }
 
-/* Style the Dropdown.Menu when it's shown */
 .custom-dropdown.show .dropdown-menu {
   border-radius: 20px;
   border: none;
