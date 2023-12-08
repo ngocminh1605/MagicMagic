@@ -1,7 +1,7 @@
 import React from 'react';
 import "./home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+//import Navbar from "../../components/navbar/Navbar";
 
 const Home = () =>
 {
@@ -10,7 +10,7 @@ const Home = () =>
         <div className="home">
             <Sidebar/>
             <div className="homeContainer">
-                <Navbar/>
+                {/* <Navbar/> */}
                 {/* <div className="widgets">
                     <Widget type="nhansu"/>
                     <Widget type="phongban"/>
