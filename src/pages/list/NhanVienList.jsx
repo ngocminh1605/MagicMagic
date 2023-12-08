@@ -11,7 +11,7 @@ const NhanVienList = () =>
         <div className="list">
             <Sidebar/>
             <div className="listContainer">
-                {/* <Navbar/> */}
+            <div className='title'>Employee</div>
             <NhanVienTable/>
             </div>
         </div>

@@ -44,52 +44,52 @@ const Sidebar = () => {
   };
 
   return (
-    <div className='sidebar'>
-      <div className='logo'>
-        <img src={logo} alt='' />
-        <span>
-          Magic<span>Magic</span>
-        </span>
-      </div>
-
-      <div className='menu'>
-        {menuItems.map((item, index) => (
-          <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
-            <div
-              className={`menuItem ${activeItem === index ? 'active' : ''}`}
-              onClick={() => handleItemClick(index)}
-            >
-              <div>{item.icon}</div>
-              <span>{item.text}</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      <div className="items">
-
-        <div className="item">
-          <Dropdown className='custom-dropdown'>
-            <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
-              <img className="avatar dropdown-toggle" src={nv2} alt="Ảnh" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <EditIcon />
-                <span>Sửa hồ sơ</span>
-              </Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout}>
-                <LogoutOutlinedIcon />
-                <span>Đăng xuất</span>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+      <div className='sidebar'>
+        <div className='logo'>
+          <img src={logo} alt='' />
+          <span>
+            Magic<span>Magic</span>
+          </span>
         </div>
-        <div className="position" style={{ fontWeight: "bold", fontSize: "20px" }}>
-          Admin
+
+        <div className='menu'>
+          {menuItems.map((item, index) => (
+            <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+              <div
+                className={`menuItem ${activeItem === index ? 'active' : ''}`}
+                onClick={() => handleItemClick(index)}
+              >
+                <div>{item.icon}</div>
+                <span>{item.text}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="items">
+
+          <div className="item">
+            <Dropdown className='custom-dropdown'>
+              <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
+                <img className="avatar dropdown-toggle" src={nv2} alt="Ảnh" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <EditIcon />
+                  <span>Sửa hồ sơ</span>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>
+                  <LogoutOutlinedIcon />
+                  <span>Đăng xuất</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <div className="position" style={{ fontWeight: "bold", fontSize: "20px" }}>
+            Admin
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 

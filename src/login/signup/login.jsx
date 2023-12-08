@@ -22,16 +22,16 @@ const Login = () => {
 
           <div className='login-form'>
             <PersonOutlinedIcon className='icon' />
-            <input type='text' />
-            <label >Username</label>
+            <input type='text' placeholder='Username'/>
+            {/* <label >Username</label> */}
 
           </div>
 
 
           <div className='login-form'>
             <LockOutlinedIcon className='icon' />
-            <input type='password' />
-            <label>Password</label>
+            <input type='password' placeholder='Password' />
+            {/* <label>Password</label> */}
           </div>
 
 
