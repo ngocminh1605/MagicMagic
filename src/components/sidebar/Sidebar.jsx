@@ -6,11 +6,12 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import EditIcon from '@mui/icons-material/EditOutlined';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import nv2 from '../navbar/nv2.jpg';
 
 const Sidebar = () => {
@@ -66,19 +67,26 @@ const Sidebar = () => {
       </div>
 
       <div className="items">
-        <div className="item" style={{ color: "#537895", fontWeight: "bold", fontSize: "15px", marginTop: -25, marginLeft: 10 }}>
-          Xin Chào, Admin
-        </div>
+
         <div className="item">
-          <Dropdown>
+          <Dropdown className='custom-dropdown'>
             <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
               <img className="avatar dropdown-toggle" src={nv2} alt="Ảnh" />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>Sửa hồ sơ</Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+              <Dropdown.Item>
+                <EditIcon />
+                <span>Sửa hồ sơ</span>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>
+                <LogoutOutlinedIcon />
+                <span>Đăng xuất</span>
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+        </div>
+        <div className="position" style={{ fontWeight: "bold", fontSize: "20px" }}>
+          Admin
         </div>
       </div>
     </div>
