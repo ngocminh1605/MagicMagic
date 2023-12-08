@@ -7,13 +7,12 @@
     font-family: 'poppins', sans-serif;
 }
 
-body {
+.login-page {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 5em;
     min-height: 100vh;
-    background-image: url(../../../assets/pink-truck.jpg);
+    background-image: url(../../assets/pink-truck.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -30,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2rem 3rem;
+    margin-right: 5em;
 }
 
 h1 {
