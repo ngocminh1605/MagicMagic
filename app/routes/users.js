@@ -22,12 +22,14 @@ const comparePasswords = async (password, hashedPassword) => {
         throw "Error comparing passwords";
     }
 };
-const createUser = async (username, email, password, db, res) => {
+const createUser = async (username, email, password,officeID,Title,db, res) => {
     // Kiểm tra có tồn tại mail chưa
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
     console.log(username + " " + email + " " + password);
     const hashedPassword = await hashPassword(password);
-    console.log(username + " " + email + " " + hashedPassword);
+    // console.log(username + " " + email + " " + hashedPassword + officeID + Title);
+    console.log("officeID:", officeID);
+    console.log("Title:", Title);
     db.query(checkUserQuery, [email, username], (err, results) => {
         if (err) {
             console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -36,10 +38,11 @@ const createUser = async (username, email, password, db, res) => {
         if (results.length > 0) {
             return res.status(400).json({ message: "Người dùng đã tồn tại." });
         }
+        
         // Thêm người dùng mới vào cơ sở dữ liệu
         const insertUserQuery =
-            "INSERT INTO user (UserName, email, Password) VALUES (?, ?, ?);";
-        db.query(insertUserQuery, [username, email, hashedPassword], (err) => {
+            "INSERT INTO user (UserName, email, Password,OfficeId,title) VALUES (?, ?, ?, ?, ?);";
+        db.query(insertUserQuery, [username, email, hashedPassword,officeID,Title], (err) => {
             if (err) {
                 console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi đăng ký người dùng." });
@@ -48,18 +51,20 @@ const createUser = async (username, email, password, db, res) => {
         });
     });
 };
+
 router.post("/register", async (req, res) => {
     try {
         const db = req.app.locals.db;
-        const { username, email, password } = req.body;
+        const { username, email, password,officeID,Title} = req.body;
 
         // Call createUser function and wait for its completion
-        await createUser(username, email, password, db, res);
+        await createUser(username, email, password,officeID,Title,db, res);
     } catch (error) {
         console.error("Error during registration:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
+
 
 router.post("/login", async (req, res) => {
     try {
@@ -153,6 +158,58 @@ router.get("/logout", isAuthenticated, (req, res) => {
         console.error("Error during logout:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
+});
+
+
+//thêm thông tin bản thân
+const createInfo = async (userid,fullname,phone,db, res) => {
+    //xem đây là thông tin của ai
+    const checkID = "Select * from user WHERE ID_user = ?"
+    console.log (userid);
+    db.query(checkID,[userid],(err,results) => {
+        if (err) {
+            console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+            return res.status(500).json({ message: "Lỗi thêm thông tin người dùng." });
+        }
+        const insertUserQuery =
+            "UPDATE user set FullName = ? ,Phone = ? WHERE ID_user = ?";
+        db.query(insertUserQuery, [fullname,phone,userid], (err) => {
+            if (err) {
+                console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
+                return res.status(500).json({ message: "Lỗi update dữ liệu người dùng." });
+            }
+            return res.status(201).json({ message: "update dữ liệu thành công" });
+        });
+
+    })
+    
+}
+
+// sửa đổi thông tin người dùng
+router.put("/info", async (req,res) => {
+    try {
+        const db = req.app.locals.db;
+        const {userid,fullname,phone} = req.body;
+        await createInfo(userid,fullname,phone,db, res);
+    }
+    catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+// lấy thông tin người dùng
+router.get("/info_users", (req, res) => {
+    const db = req.app.locals.db;
+    const getUsersQuery = "SELECT * FROM user";
+    db.query(getUsersQuery, (err, results) => {
+      if (err) {
+        console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+        return res.status(500).json({ message: "Lỗi lấy danh sách người dùng." });
+      }
+  
+      return res.status(200).json({ users: results });
+    });
 });
 
 module.exports = router;
