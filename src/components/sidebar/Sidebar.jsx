@@ -13,6 +13,8 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import nv2 from '../navbar/nv2.jpg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { axiosInstance } from '../../constant/axios';
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -22,27 +24,37 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/' },
+    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
-    { icon: <BusinessOutlinedIcon />, text: 'Office', path: '/' },
-    { icon: <WorkOutlinedIcon />, text: 'Position', path: '/' },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/' },
+    { icon: <BusinessOutlinedIcon />, text: 'Office', path: '/office' },
+    { icon: <WorkOutlinedIcon />, text: 'Position', path: '/position' },
+    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
   ];
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate('/login');
-  };
-
-  const handleLogout = () => {
-    // Add any additional logic you need for logout
-    // ...
-
-    // Navigate to the login page
-    navigate('/login');
-  };
-
+  const handleLogout = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        navigate("/");
+      }
+      const response = await axiosInstance.get('/users/logout', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        // Xử lý khi logout thành công, ví dụ: chuyển hướng đến màn hình đăng nhập
+        await AsyncStorage.removeItem("token");
+        navigate("/")
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
   return (
       <div className='sidebar'>
         <div className='logo'>
@@ -85,12 +97,11 @@ const Sidebar = () => {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className="position" style={{ fontWeight: "bold", fontSize: "20px" }}>
+          <div className="position" style={{ fontWeight: "bold", fontSize: "20px",paddingBottom: "2rem" }}>
             Admin
           </div>
         </div>
       </div>
   );
 };
-
 export default Sidebar;
