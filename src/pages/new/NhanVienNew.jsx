@@ -5,289 +5,121 @@ import TextField from '@mui/material/TextField';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useLocation } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { InputAdornment } from "@material-ui/core";
 import MenuItem from '@mui/material/MenuItem';
 import AddIcon from '@mui/icons-material/Add';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import nv4 from '../images/nv4.jpg';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const NhanVienNew = () => {
+    const [id, idchange] = useState("");
+    const [password, passwordchange] = useState("");
+    const [email, emailchange] = useState("");
+    const [office, officechange] = useState("");
+    const [position, positionchange] = useState("");
 
+    const navigate = useNavigate();
+
+    const IsValidate = () => {
+        let isproceed = true;
+        let errormessage = 'Please enter the value in ';
+        if (id === null || id === '') {
+            isproceed = false;
+            errormessage += ' Username';
+        }
+
+        if (password === null || password === '') {
+            isproceed = false;
+            errormessage += ' Password';
+        }
+        if (email === null || email === '') {
+            isproceed = false;
+            errormessage += ' Email';
+        }
+
+        if (!isproceed) {
+            toast.warning(errormessage)
+        } else {
+            if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+
+            } else {
+                isproceed = false;
+                toast.warning('Please enter the valid email')
+            }
+        }
+        return isproceed;
+    }
 
 
 
     return (
-        <div className="singleNV">
+        <div className='add'>
             <Sidebar />
-            <div className="singleContainerNV">
-                <Navbar />
-                <div className="topNV">
-                    <div className="leftNV">
-                        <h1 className="titleNV"></h1>
 
-                        <div>
-                            <Button variant="text" className="editBtnNV"
-                                style={{ maxWidth: "50px", maxHeight: "50px", minWidth: "30px", minHeight: "30px" }}
-                            >
-                            </Button>
-                        </div>
-
-                        <div className="itemNV">
-
-                            <div style={{
-                                display: 'flex',
-                                flexFlow: 'column',
-                                alignItems: 'center',
-                                gap: '20px'
-                            }}>
-                                <img
-                                    alt="Nhân ziên này chưa có avartar" className="itemImgNV" />
-
-                                <Button
-                                    style={{
-                                        maxWidth: "50px",
-                                        maxHeight: "50px",
-                                        minWidth: "30px",
-                                        minHeight: "30px"
-                                    }}
-                                    className="chonHinhAnh">
-                                    <FileUploadIcon />
-                                </Button>
-                                <input id="layHinhAnh"
-                                    style={{ display: 'none' }}
-                                    type="file" name="image-upload" accept="image/*" />
-                            </div>
-
-                            <div className="detailsNV">
-                                <div className="itemTitleNV1">
-
-                                    <div >
-                                        <TextField
-                                            sx={{ input: { color: '#335371' } }}
-                                            id="outlined-read-only-input"
-                                            label="Nhân Viên ID"
-                                            InputProps={{
-                                                readOnly: true,
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <ArrowRightIcon
-                                                            style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                            name="nhanVienId"
-                                        />
-                                    </div>
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Họ Nhân Viên" variant="outlined"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-
-                                        }}
-                                        name='hoNhanVien'
-                                    />
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Tên Nhân Viên" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='tenNhanVien'
-                                    />
-
-                                    <p className="gioitinha"> Giới Tính</p>
-                                    <div className="gioitinh">
-                                        <label style={{
-                                            textAlign: 'center',
-                                            marginTop: '15px'
-                                        }}>Nam</label>
-                                        <input className="radione"
-                                            style={{
-                                                textAlign: 'center',
-                                                height: '20px',
-                                                width: '20px',
-                                                marginTop: '15px',
-                                                marginLeft: '-20px',
-                                                color: 'rebeccapurple'
-                                            }}
-                                            type="radio" 
-                                            name="gioiTinh"
-                                             />
-
-                                        <label style={{
-                                            textAlign: 'center',
-                                            marginTop: '15px'
-                                        }}>Nữ</label>
-                                        <input className="radione"
-                                            style={{
-                                                textAlign: 'center',
-                                                height: '20px',
-                                                width: '20px',
-                                                marginTop: '15px',
-                                                marginLeft: '-20px',
-                                                color: 'rebeccapurple'
-                                            }}
-                                            value={0}
-                                            name="gioiTinh"
-                                            
-                                            />
-                                    </div>
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Số Điện Thoại" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='sdt'
-                                    />
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Email" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='mail'
-                                    />
-
-
-                                </div>
-
-                                <div className="itemTitleNV2">
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Nơi Sinh" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='noiSinh'
-                                    />
-
-                                    <p className="ngaysinha"> Ngày Sinh</p>
-                                    <input className="ngaySinh"
-                                        type="date"/>
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Địa Chỉ" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='diaChi'
-                                    />
-
-                                    <TextField style={{ marginTop: '5px' }}
-                                        sx={{ input: { color: '#335371' } }}
-                                        label="Căn Cước" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='canCuoc'
-                                    />
-
-                                    <p style={{ marginTop: '-15px' }}
-                                        className="ngaysinha"> Ngày Cấp</p>
-                                    <input className="ngaySinh"
-                                        type="date"
-                                         name='ngayCap' />
-
-                                    <p style={{ marginTop: '-15px' }}
-                                        className="ngaysinha"> Ngày Vào Làm</p>
-                                    <input className="ngaySinh"
-                                        type="date"
-                                        name='ngayVaoLam' />
-
-                                </div>
-                                <div className="itemTitleNV2">
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        label="Lương Căn Bản" variant="outlined" className="textFieldNV"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <ArrowRightIcon
-                                                        style={{ color: '#3D5E7C', marginLeft: '-10' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        name='luongCanBan'
-                                    />
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        id="filled-select-currency"
-                                        select
-                                        label="Phòng Ban"
-                                        name="phongBanId"
-                                        variant="outlined"
-                                    >
-                                       
-                                    </TextField>
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        id="filled-select-currency"
-                                        select
-                                        label="Công Việc"
-                                        name="congViecId"
-                                        variant="outlined"
-                                    >
-                                        
-                                    </TextField>
-
-                                    <TextField sx={{ input: { color: '#335371' } }}
-                                        id="filled-select-currency"
-                                        select
-                                        label="Chức Vụ"
-                                        name="chucVuId"
-                                        variant="outlined"
-                                    >
-                                        
-                                    </TextField>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+            <div className="container">
+                <div className="title" >
+                    Employee
                 </div>
+                <form className="offset-lg-1 col-lg-8" >
 
+
+
+                    <div className="row">
+                        <div className="content2">
+                            <div className="form-group">
+                                <label>User Name <span className="errmsg">*</span></label>
+                                <input value={id} onChange={e => idchange(e.target.value)} className="form-control"></input>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Password <span className="errmsg">*</span></label>
+                                <input value={password} onChange={e => passwordchange(e.target.value)} type="password" className="form-control"></input>
+                            </div>
+                        </div>
+
+                        <div className="content1">
+                            <div className="form-group2">
+                                <label>Email <span className="errmsg">*</span></label>
+                                <input value={email} onChange={e => emailchange(e.target.value)} className="form-control"></input>
+                            </div>
+                        </div>
+
+                        <div className="content2">
+                            <div className="form-group">
+                                <label>OfficeID <span className="errmsg">*</span></label>
+                                <select value={office} onChange={e => officechange(e.target.value)} className="form-control">
+                                    <option value="office1">Office 1</option>
+                                    <option value="office2">Office 2</option>
+                                    <option value="office3">Office 3</option>
+
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Position <span className="errmsg">*</span></label>
+                                <select value={position} onChange={e => positionchange(e.target.value)} className="form-control">
+                                    <option value="giaodichvien">Giao dịch viên</option>
+                                    <option value="nhanvien">Nhân Viên</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div className="card-footer">
+                        <button type="submit" className="btn1">Add</button>
+                        <button className="btn2"><Link to={'/login'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
+                    </div>
+                </form>
             </div>
+
+
         </div>
     );
-
-
 };
 
 export default NhanVienNew;

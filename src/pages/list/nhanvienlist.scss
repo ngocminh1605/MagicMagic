@@ -2,12 +2,20 @@
   display: flex;
   width: 100%;
 
-  .title{
-    font-size: 20px;
+  .title {
+    font-size: 40px;
+    color: var(--black);
+    font-weight: bold;
+    padding: 20px;
+    text-align: start;
   }
 
-  .listContainer {
-    flex: 6;
+  .main {
+    width: 100%;
   }
+
+  // .listContainer {
+  //   flex: 6;
+  // }
 
 }
