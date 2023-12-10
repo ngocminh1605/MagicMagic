@@ -1,8 +1,12 @@
 .ag-theme-quartz {
-    --ag-background-color: #FBDAE9;
+    --ag-row-border-style:"solid";
+    --ag-row-border-color:"black"
 }
 .ag-theme-acmecorp {
     --ag-odd-row-background-color:  #EFB0C9;
     --ag-borders:solid 1px;
+    --ag-background-color: #FBDAE9;
+    --ag-tooltip-background-color:#d04f89;
+
 }
 
