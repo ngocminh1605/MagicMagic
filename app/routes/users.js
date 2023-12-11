@@ -70,7 +70,6 @@ router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
         const db = req.app.locals.db;
-
         // Truy vấn người dùng theo username và password
         const userQuery = "SELECT * FROM user WHERE UserName = ? or email=?";
         db.query(userQuery, [username, username], async (err, results) => {
