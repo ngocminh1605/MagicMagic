@@ -6,6 +6,7 @@ require('dotenv').config();
 
 app.use(cors());
 var usersRouter = require('./routes/users.js');
+var goodsRouter = require('./routes/goods.js');
 
 var mysql = require('mysql2');
 var conn = mysql.createConnection({
@@ -27,6 +28,8 @@ conn.connect((err) => {
 app.locals.db = conn;
 app.use(express.json());
 app.use('/users', usersRouter);
+
+app.use('/goods', goodsRouter)
 
 
 
