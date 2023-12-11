@@ -2,11 +2,12 @@ import Home from "./pages/home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NhanVienList from "./pages/list/NhanVienList";
 import PhongBanList from "./pages/list/PhongBanList";
-import DonHang from "./pages/list/DonHang";
+import DonHang from "./pages/list/Donhang";
 import Login from "./login/signup/login";
 import NhanVienNew from "./pages/new/NhanVienNew";
-import './App.css';
 import ChucvuList from "./pages/list/ChucvuList";
+import './App.css';
+import DonHangNew from "./pages/new/DonHangNew";
 
 function App() {
     return (
@@ -17,8 +18,6 @@ function App() {
                         <Route path="/">
                             <Route index element={<Login />} />
                             <Route index path="home" element={<Home />} />
-
-
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
 
@@ -39,6 +38,9 @@ function App() {
                             </Route>
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
+                            </Route>
+                            <Route path="create">
+                                <Route index element={<DonHangNew />} />
                             </Route>
                         </Route>
                     </Routes>

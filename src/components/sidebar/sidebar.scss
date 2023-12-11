@@ -54,9 +54,14 @@
 
 .menuItem:hover {
   transform: translateY(-5px);
+  cursor:  pointer;
+
+
+  
 }
 
 .menuItem {
+  &:active,
   &.active {
     background: var(--activeItem);
     margin-left: 0;
@@ -64,6 +69,7 @@
     border-bottom-right-radius: 10px;
   }
 
+  &:active::before,
   &.active::before {
     content: '';
     width: 8px;
@@ -75,11 +81,12 @@
 }
 
 
+
 .items {
   display: flex;
   align-items: center;
-  margin-top: 8rem;
-  padding-bottom: 3rem;
+  margin-top: 10rem;
+  padding-bottom: 2rem;
 
   .position {
     color: var(--pink);
@@ -87,15 +94,10 @@
     font-size: "40px";
     text-align: center;
     align-self: center;
-
-
   }
 
   .item {
-    // display: flex;
     align-items: center;
-    //margin-right: 2rem;
-    // position: relative;
     padding-bottom:2rem;
     .avatar {
       width: 50px;

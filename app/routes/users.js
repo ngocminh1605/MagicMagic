@@ -22,7 +22,7 @@ const comparePasswords = async (password, hashedPassword) => {
         throw "Error comparing passwords";
     }
 };
-const createUser = async (username, email, password,officeID,Title,db, res) => {
+const createUser = async (username, email, password, officeID, Title, db, res) => {
     // Kiểm tra có tồn tại mail chưa
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
     console.log(username + " " + email + " " + password);
@@ -38,11 +38,11 @@ const createUser = async (username, email, password,officeID,Title,db, res) => {
         if (results.length > 0) {
             return res.status(400).json({ message: "Người dùng đã tồn tại." });
         }
-        
+
         // Thêm người dùng mới vào cơ sở dữ liệu
         const insertUserQuery =
             "INSERT INTO user (UserName, email, Password,OfficeId,title) VALUES (?, ?, ?, ?, ?);";
-        db.query(insertUserQuery, [username, email, hashedPassword,officeID,Title], (err) => {
+        db.query(insertUserQuery, [username, email, hashedPassword, officeID, Title], (err) => {
             if (err) {
                 console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi đăng ký người dùng." });
@@ -55,10 +55,10 @@ const createUser = async (username, email, password,officeID,Title,db, res) => {
 router.post("/register", async (req, res) => {
     try {
         const db = req.app.locals.db;
-        const { username, email, password,officeID,Title} = req.body;
+        const { username, email, password, officeID, Title } = req.body;
 
         // Call createUser function and wait for its completion
-        await createUser(username, email, password,officeID,Title,db, res);
+        await createUser(username, email, password, officeID, Title, db, res);
     } catch (error) {
         console.error("Error during registration:", error);
         res.status(500).json({ message: "Internal Server Error" });
@@ -95,6 +95,8 @@ router.post("/login", async (req, res) => {
                     {
                         userId: user.ID_user,
                         username: user.UserName,
+                        title: user.title,
+
                     },
                     "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7",
                     {
@@ -102,7 +104,7 @@ router.post("/login", async (req, res) => {
                     }
                 );
 
-                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName, expiresIn: 3600 });
+                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName, title: user.title, expiresIn: 3600 });
             } catch (error) {
                 console.error('Error signing token:', error);
                 res.status(500).json({ message: "Lỗi đăng nhập." });
@@ -115,24 +117,38 @@ router.post("/login", async (req, res) => {
 });
 
 const isAuthenticated = (req, res, next) => {
-    console.log("Hello 1");
-    const token = req.headers.authorization.split(" ")[1];
-    console.log("Hello 2", token);
-
-    if (!token) {
-        console.log("Not token");
-        return res.status(401).json({ message: "Unauthorized" });
-    }
     try {
+        console.log("Headers:", req.headers); // Log headers
+        const token = req.headers.authorization.split(" ")[1];
+        console.log("Token:", token); // Log token
+
+        if (!token) {
+            console.log("Not token");
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        console.log("Hello 2", token);
+
         // Xác thực token
-        console.log("vào try");
+        const now = Date.now() / 1000;
+        const expirationThreshold = 5 * 60; // 5 minutes in seconds
         const decodedToken = jwt.verify(token, process.env.SECRET_KEY, {
             algorithms: ["HS256"],
         });
-
+        if (decodedToken.exp - now < expirationThreshold) {
+            // Token is about to expire, generate a new one and send it in the response
+            const newToken = jwt.sign({
+                userId: user.ID_user,
+                username: user.UserName,
+                title: user.title,
+            }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            res.setHeader('Authorization', 'Bearer ' + newToken); // Include 'Bearer' before the new token
+        }
         // Thêm thông tin người dùng vào req để sử dụng ở các middleware hoặc route khác
         console.log("sử dụng decodedToken");
+        console.log("user", decodedToken.id);
         req.user = decodedToken;
+
         next();
     } catch (error) {
         console.error("Invalid token:", error);
@@ -140,13 +156,9 @@ const isAuthenticated = (req, res, next) => {
     }
 };
 router.get("/me", isAuthenticated, (req, res) => {
-    // Thông tin người dùng đã được thêm vào req.user trong quá trình xác thực
     const user = req.user;
-
-    // Trả về thông tin người dùng
-    return res
-        .status(200)
-        .json({ user: { userId: user.id, username: user.username } });
+    console.log("user:", user);
+    return res.status(200).json({ user: { userId: user.userId, username: user.username, title: user.title } });
 });
 
 router.get("/logout", isAuthenticated, (req, res) => {
@@ -161,18 +173,18 @@ router.get("/logout", isAuthenticated, (req, res) => {
 
 
 //thêm thông tin bản thân
-const createInfo = async (userid,fullname,phone,db, res) => {
+const createInfo = async (userid, fullname, phone, db, res) => {
     //xem đây là thông tin của ai
     const checkID = "Select * from user WHERE ID_user = ?"
-    console.log (userid);
-    db.query(checkID,[userid],(err,results) => {
+    console.log(userid);
+    db.query(checkID, [userid], (err, results) => {
         if (err) {
             console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
             return res.status(500).json({ message: "Lỗi thêm thông tin người dùng." });
         }
         const insertUserQuery =
             "UPDATE user set FullName = ? ,Phone = ? WHERE ID_user = ?";
-        db.query(insertUserQuery, [fullname,phone,userid], (err) => {
+        db.query(insertUserQuery, [fullname, phone, userid], (err) => {
             if (err) {
                 console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi update dữ liệu người dùng." });
@@ -181,15 +193,15 @@ const createInfo = async (userid,fullname,phone,db, res) => {
         });
 
     })
-    
+
 }
 
 // sửa đổi thông tin người dùng
-router.put("/info", async (req,res) => {
+router.put("/info", async (req, res) => {
     try {
         const db = req.app.locals.db;
-        const {userid,fullname,phone} = req.body;
-        await createInfo(userid,fullname,phone,db, res);
+        const { userid, fullname, phone } = req.body;
+        await createInfo(userid, fullname, phone, db, res);
     }
     catch (error) {
         console.error("Error during registration:", error);
@@ -202,12 +214,12 @@ router.get("/info_users", (req, res) => {
     const db = req.app.locals.db;
     const getUsersQuery = "SELECT * FROM user";
     db.query(getUsersQuery, (err, results) => {
-      if (err) {
-        console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
-        return res.status(500).json({ message: "Lỗi lấy danh sách người dùng." });
-      }
-  
-      return res.status(200).json({ users: results });
+        if (err) {
+            console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+            return res.status(500).json({ message: "Lỗi lấy danh sách người dùng." });
+        }
+
+        return res.status(200).json({ users: results });
     });
 });
 

@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from 'react-router-dom';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { axiosInstance } from '../../constant/axios';
 import './login.scss';
+import { axiosInstance } from '../../constant/axios';
 
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const saveToken = async (token) => {
-    try {
-      await AsyncStorage.setItem('token', token);
-    } catch (error) {
-      console.error('Error saving token:', error);
-    }
+  const saveToken = (token) => {
+    localStorage.setItem('token', token);
   };
 
   const handleLogin = async () => {
@@ -26,15 +21,17 @@ const Login = () => {
         username: username,
         password: password,
       });
-
+  
       if (response.status === 200) {
         // Xử lý khi đăng nhập thành công
         const token = response.data.token;
         console.log('Login successfully!');
         saveToken(token);
+        console.log(token);
+  
         const response2 = await axiosInstance.get('/users/me', {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
         });
         if (response2.status === 200) {
@@ -47,6 +44,15 @@ const Login = () => {
       console.error('Error during login:', error);
     }
   };
+  
+  useEffect(() => {
+    // Kiểm tra xem đã có token trong localStorage chưa
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      // Nếu có, chuyển hướng đến trang home
+      navigate('/home');
+    }
+  }, [navigate]);
 
   return (
     <div className="login-page">
@@ -82,4 +88,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

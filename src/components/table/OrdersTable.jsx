@@ -71,7 +71,13 @@ const OrdersTable = () => {
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' }
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+   
 
   ]);
 
@@ -97,10 +103,11 @@ const OrdersTable = () => {
     filter: true,
   }));
   const gridOptions = {
-    domLayout: 'autoHeight',
+    // domLayout: 'autoHeight',
     headerHeight: 45,
     rowHeight: 45,
     suppressHorizontalScroll: false,
+    PaginationPanel: true,
   };
   return (
     // Container with theme & dimensions
@@ -108,7 +115,7 @@ const OrdersTable = () => {
       className={
         "ag-theme-quartz ag-theme-acmecorp"
       }
-      style={{ width: '100%', height: '80%',flexDirection:"column" }}
+      style={{ width: '100%', height: '70%',flexDirection:"column" }}
     >
       <Button
         // onClick={() => navigate('/nhanvien/add')}
