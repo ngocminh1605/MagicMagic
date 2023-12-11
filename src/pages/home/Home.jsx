@@ -1,8 +1,8 @@
 import React from 'react';
 import "./home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-//import Navbar from "../../components/navbar/Navbar";
-
+import Widget from '../../components/thongke/widget';
+import DonHangChart from '../../components/thongke/chart';
 const Home = () =>
 {
 
@@ -10,14 +10,13 @@ const Home = () =>
         <div className="home">
             <Sidebar/>
             <div className="homeContainer">
-                {/* <Navbar/> */}
-                {/* <div className="widgets">
+                <div className="widgets">
                     <Widget type="nhansu"/>
                     <Widget type="phongban"/>
                     <Widget type="duan"/>
-                    <Widget type="luong"/>
-                    {/*<Widget type="chamcong"/>
-                    </div>*/}
+                    <Widget type="chamcong"/>
+                </div>
+                <DonHangChart/>
             </div>
         </div>
     );

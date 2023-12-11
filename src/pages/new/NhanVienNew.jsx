@@ -94,7 +94,7 @@ const NhanVienNew = () => {
 
                     <div className="card-footer">
                         <button type="submit" className="btn1">Add</button>
-                        <button className="btn2"><Link to={'/login'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
+                        <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
                     </div>
                 </form>
             </div>

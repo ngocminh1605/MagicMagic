@@ -45,6 +45,7 @@ const Widget = () =>
     }
 
     let data;
+    
     switch (type)
     {
         case "nhansu":

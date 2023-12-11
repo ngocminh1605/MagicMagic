@@ -10,7 +10,7 @@ import { Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-const NhanVienTable = () => {
+const ChucVuTable = () => {
   const navigate = useNavigate();
   const handleEditClick = (params) => {
     console.log('Edit clicked for row:', params.data);
@@ -111,7 +111,7 @@ const NhanVienTable = () => {
       style={{ width: '100%', height: '80%',flexDirection:"column" }}
     >
       <Button
-        onClick={() => navigate('/nhanvien/add')}
+        // onClick={() => navigate('/nhanvien/add')}
         style={{  
           textTransform: 'none', 
           backgroundColor: "#FF9AA2",
@@ -137,4 +137,4 @@ const NhanVienTable = () => {
     </div>
   );
 }
-export default NhanVienTable;
+export default ChucVuTable;
