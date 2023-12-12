@@ -55,8 +55,6 @@ router.post("/register", async (req, res) => {
         const { username, email, password, officeID, Title } = req.body;
 
         // Call createUser function and wait for its completion
-        console.log("hihihi",officeID);
-        console.log("hihihi",Title);
         await createUser(username, email, password, officeID, Title, db, res);
     } catch (error) {
         console.error("Error during registration:", error);
@@ -94,7 +92,7 @@ router.post("/login", async (req, res) => {
                     {
                         userId: user.ID_user,
                         username: user.UserName,
-                        officeID : user.OfficeId,
+                        officeID: user.OfficeId,
                         title: user.title,
                     },
                     "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7",
@@ -103,7 +101,7 @@ router.post("/login", async (req, res) => {
                     }
                 );
 
-                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName,officeID:user.OfficeId,title: user.title, expiresIn: 3600 });
+                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName, officeID: user.OfficeId, title: user.title, expiresIn: 3600 });
             } catch (error) {
                 console.error('Error signing token:', error);
                 res.status(500).json({ message: "Lỗi đăng nhập." });
@@ -139,14 +137,14 @@ const isAuthenticated = (req, res, next) => {
             const newToken = jwt.sign({
                 userId: user.ID_user,
                 username: user.UserName,
-                officeID:user.OfficeId,
+                officeID: user.OfficeId,
                 title: user.title,
             }, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.setHeader('Authorization', 'Bearer ' + newToken); // Include 'Bearer' before the new token
         }
         // Thêm thông tin người dùng vào req để sử dụng ở các middleware hoặc route khác
         console.log("sử dụng decodedToken");
-        console.log("user", decodedToken.id);
+        // console.log("user", decodedToken.id);
         req.user = decodedToken;
 
         next();
@@ -157,8 +155,8 @@ const isAuthenticated = (req, res, next) => {
 };
 router.get("/me", isAuthenticated, (req, res) => {
     const user = req.user;
-    console.log("user:", user);
-    return res.status(200).json({ user: { userId: user.userId, username: user.username,officeID:user.officeID, title: user.title } });
+    // console.log("user:", user);
+    return res.status(200).json({ user: { userId: user.userId, username: user.username, officeID: user.officeID, title: user.title } });
 });
 
 router.get("/logout", isAuthenticated, (req, res) => {
@@ -209,19 +207,41 @@ router.put("/info", async (req, res) => {
     }
 });
 
-// lấy thông tin người dùng
-router.get("/info_users", (req, res) => {
-    const db = req.app.locals.db;
-    const getUsersQuery = "SELECT * FROM user";
-    db.query(getUsersQuery, (err, results) => {
-        if (err) {
-            console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
-            return res.status(500).json({ message: "Lỗi lấy danh sách người dùng." });
-        }
 
-        return res.status(200).json({ users: results });
-    });
+// lấy thông tin người dùng
+router.get("/info_users", async (req, res) => {
+    const db = req.app.locals.db;
+    const { userID, officeID, title } = req.query;
+    let getUsersQuery;
+    console.log("titless", title);
+    if (title === "admin") {
+        // Nếu title là admin, truy vấn tất cả user là trưởng điểm
+        console.log("là admin");
+        getUsersQuery = "SELECT * FROM user WHERE Title = 'Trưởng điểm'";
+        db.query(getUsersQuery, (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+                return res.status(500).json({ message: "Lỗi lấy danh sách người dùng." });
+            }
+            return res.status(200).json({ users: results });
+        });
+    } else if (title === "Trưởng điểm") {
+        console.log("trưởng điểm hay không", officeID);
+        // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
+        getUsersQuery = "SELECT * FROM user WHERE OfficeId = ?";
+        db.query(getUsersQuery,[officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+                return res.status(500).json({ message: "Lỗi lấy thông tin người dùng." });
+            }
+            return res.status(200).json({ users: results });
+        });
+    } else {
+        return res.status(400).json({ message: "Title không hợp lệ." });
+    }
 });
+
+
 
 module.exports = router;
 

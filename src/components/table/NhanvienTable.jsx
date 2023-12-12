@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './NhanvienTable.scss';
@@ -8,24 +8,15 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { createRoot } from 'react-dom/client';
 import { Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { axiosInstance } from '../../constant/axios';
 
-
-const NhanVienTable = () => {
+const NhanVienTable = ({ officeID, userID, title }) => {
   const navigate = useNavigate();
-  const handleEditClick = (params) => {
-    console.log('Edit clicked for row:', params.data);
-  };
-
-  const handleDeleteClick = (params) => {
-    console.log('Delete clicked for row:', params.data);
-  };
-
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
-      {/* Check if the icons are visible */}
-      {/* {EditIcon && <IconButton onClick={() => handleEditClick(props)}><EditIcon /></IconButton>}
-      {DeleteIcon && <IconButton onClick={() => handleDeleteClick(props)}><DeleteIcon /></IconButton>} */}
       <Button
+        // onClick={() => navigate(`/nhanvien/view/${props.data["ID"]}`)}
         style={{
           textTransform: 'none',
           backgroundColor: 'green',
@@ -39,6 +30,7 @@ const NhanVienTable = () => {
         View
       </Button>
       <Button
+        // onClick={() => navigate(`/nhanvien/edit/${props.data["ID"]}`)}
         style={{
           textTransform: 'none',
           backgroundColor: 'orange',
@@ -53,6 +45,7 @@ const NhanVienTable = () => {
       </Button>
       <Button
         style={{
+          //onclick = {DeleteHandle(${prop.data["ID"]})}
           textTransform: 'none',
           backgroundColor: "crimson",
           color: 'white',
@@ -68,40 +61,44 @@ const NhanVienTable = () => {
   );
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-
-
   ]);
+  useEffect(() => {
+    const fetchUser = async (officeID, userID, title) => {
+      try {
+        
+        const response = await axios.get('http://localhost:3001/users/info_users', {
+          params: {
+            officeID: officeID,
+            userID: userID,
+            title: title
+          }
+        });
+        if (response.status === 200) {
+          const userData = response.data.users;
+          console.log("Dữ liệu người dùng:", userData);
+          // Format và set dữ liệu cho rowData
+          const formattedData = userData.map(item => {
+            return {
+              "ID_User": item.ID_user,
+              "UserName": item.UserName,
+            };
+          });
+          setRowData(formattedData);
+        } else {
+          console.error("Request failed with status:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchUser(officeID, userID, title);
+  }, [officeID, userID, title]);
+
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
-    { field: "fullName" },
-    { field: "gender" },
-    { field: "birth" },
-    { field: "phone" },
-    { field: "email" },
-    { field: "iden" },
-    { field: "start" },
-    { field: "officeid" },
-    { field: "position" },
+    { field: "ID_User" },
+    { field: "UserName" },
     {
       headerName: "Action",
       minWidth: 250,

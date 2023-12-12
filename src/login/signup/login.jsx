@@ -49,7 +49,6 @@ const Login = () => {
     // Kiểm tra xem đã có token trong localStorage chưa
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
-      // Nếu có, chuyển hướng đến trang home
       navigate('/home');
     }
   }, [navigate]);

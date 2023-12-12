@@ -8,7 +8,7 @@ import DonHangNew from '../new/DonHangNew';
 const DonHang = () => {
   const [officeID, setOfficeID] = useState(null);
   const [userID, setUserID] = useState(null);
-  const {  } = useParams();
+  const {} = useParams();
 
   return (
     <div className="list">

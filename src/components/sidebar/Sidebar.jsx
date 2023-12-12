@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from '../../constant/axios';
 
 
-const Sidebar = ({setOfficeID, setUserID}) => {
+const Sidebar = ({setOfficeID, setUserID,setTitle}) => {
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   //  useEffect(() => {
@@ -49,6 +49,7 @@ const Sidebar = ({setOfficeID, setUserID}) => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
+          // chỉnh lại nếu token hết hạn thì remove luôn
           navigate("/");
           return;
         }
@@ -57,14 +58,13 @@ const Sidebar = ({setOfficeID, setUserID}) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('API Response:', response.data); // Log the entire response object
+        // console.log('API Response:', response.data); // Log the entire response object
         if (response.status === 200) {
           const { userId, username, title,  officeID} = response.data.user;
           setUserInfo({ userId, username, title, officeID });
           setOfficeID(officeID);
           setUserID(userId);
-          
-         
+          setTitle(title);
         } else {
           console.error('Failed to fetch user info:', response.data.message);
         }
@@ -72,11 +72,8 @@ const Sidebar = ({setOfficeID, setUserID}) => {
         console.error('Error fetching user info:', error);
       }
     };
-
     fetchUserInfo();
-    
-  }, [setOfficeID, setUserID]);
-
+  }, [setOfficeID, setUserID, setTitle]);
 
   const handleItemClick = (index) => {
     setActiveItem(index);
@@ -109,10 +106,8 @@ const Sidebar = ({setOfficeID, setUserID}) => {
     { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
   ];
 
-  console.log(userInfo.userId)
-
+  // console.log(userInfo.title)
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
