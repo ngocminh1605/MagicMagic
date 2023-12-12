@@ -27,9 +27,6 @@ const createUser = async (username, email, password, officeID, Title, db, res) =
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
     console.log(username + " " + email + " " + password);
     const hashedPassword = await hashPassword(password);
-    // console.log(username + " " + email + " " + hashedPassword + officeID + Title);
-    console.log("officeID:", officeID);
-    console.log("Title:", Title);
     db.query(checkUserQuery, [email, username], (err, results) => {
         if (err) {
             console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -95,8 +92,8 @@ router.post("/login", async (req, res) => {
                     {
                         userId: user.ID_user,
                         username: user.UserName,
+                        officeID : user.OfficeId,
                         title: user.title,
-
                     },
                     "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7",
                     {
@@ -104,7 +101,7 @@ router.post("/login", async (req, res) => {
                     }
                 );
 
-                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName, title: user.title, expiresIn: 3600 });
+                res.status(200).json({ token, userId: user.ID_user, userName: user.UserName,officeID:user.OfficeId,title: user.title, expiresIn: 3600 });
             } catch (error) {
                 console.error('Error signing token:', error);
                 res.status(500).json({ message: "Lỗi đăng nhập." });
@@ -118,16 +115,16 @@ router.post("/login", async (req, res) => {
 
 const isAuthenticated = (req, res, next) => {
     try {
-        console.log("Headers:", req.headers); // Log headers
+        // console.log("Headers:", req.headers); // Log headers
         const token = req.headers.authorization.split(" ")[1];
-        console.log("Token:", token); // Log token
+        // console.log("Token:", token); // Log token
 
         if (!token) {
             console.log("Not token");
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        console.log("Hello 2", token);
+        // console.log("Hello 2", token);
 
         // Xác thực token
         const now = Date.now() / 1000;
@@ -140,6 +137,7 @@ const isAuthenticated = (req, res, next) => {
             const newToken = jwt.sign({
                 userId: user.ID_user,
                 username: user.UserName,
+                officeID:user.OfficeId,
                 title: user.title,
             }, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.setHeader('Authorization', 'Bearer ' + newToken); // Include 'Bearer' before the new token
@@ -158,7 +156,7 @@ const isAuthenticated = (req, res, next) => {
 router.get("/me", isAuthenticated, (req, res) => {
     const user = req.user;
     console.log("user:", user);
-    return res.status(200).json({ user: { userId: user.userId, username: user.username, title: user.title } });
+    return res.status(200).json({ user: { userId: user.userId, username: user.username,officeID:user.officeID, title: user.title } });
 });
 
 router.get("/logout", isAuthenticated, (req, res) => {
