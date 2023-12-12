@@ -55,6 +55,8 @@ router.post("/register", async (req, res) => {
         const { username, email, password, officeID, Title } = req.body;
 
         // Call createUser function and wait for its completion
+        console.log("hihihi",officeID);
+        console.log("hihihi",Title);
         await createUser(username, email, password, officeID, Title, db, res);
     } catch (error) {
         console.error("Error during registration:", error);

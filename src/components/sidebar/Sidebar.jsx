@@ -21,6 +21,28 @@ import { axiosInstance } from '../../constant/axios';
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+  //  useEffect(() => {
+  //       const checkTokenExpiration = async () => {
+  //           try {
+  //               const token = localStorage.getItem('token');
+  //               if (token) {
+  //                   // Decode the token to get its expiration time
+  //                   const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  //                   const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+  //                   // Check if the token is expired
+  //                   if (expirationTime < Date.now()) {
+  //                       // Token has expired, navigate to login page
+  //                       window.location.href = '/';
+  //                   }
+  //               }
+  //           } catch (error) {
+  //               console.error('Error checking token expiration:', error);
+  //           }
+  //       };
+
+  //       checkTokenExpiration();
+  //   }, []);
 
   useEffect(() => {
     const fetchUserInfo = async () => {

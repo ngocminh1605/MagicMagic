@@ -21,43 +21,46 @@ const NhanVienTable = () => {
   };
 
   const ActionButtonsRenderer = (props) => (
-    <div style = {{justifyContent:"space-between"}}>
+    <div style={{ justifyContent: "space-between" }}>
       {/* Check if the icons are visible */}
       {/* {EditIcon && <IconButton onClick={() => handleEditClick(props)}><EditIcon /></IconButton>}
       {DeleteIcon && <IconButton onClick={() => handleDeleteClick(props)}><DeleteIcon /></IconButton>} */}
       <Button
-        style={{  
-        textTransform: 'none', 
-        backgroundColor: 'green',
-        color: 'white',         
-        width: 60,
-        marginRight: 15,
-        borderRadius: 20,
-        height: 35,}}
+        style={{
+          textTransform: 'none',
+          backgroundColor: 'green',
+          color: 'white',
+          width: 60,
+          marginRight: 15,
+          borderRadius: 20,
+          height: 35,
+        }}
       >
         View
       </Button>
       <Button
-         style={{  
-          textTransform: 'none', 
+        style={{
+          textTransform: 'none',
           backgroundColor: 'orange',
-          color: 'white',         
+          color: 'white',
           width: 60,
           marginRight: 15,
           borderRadius: 20,
-          height: 35,}}
+          height: 35,
+        }}
       >
         Edit
       </Button>
       <Button
-         style={{  
-          textTransform: 'none', 
-          backgroundColor:  "crimson",
-          color: 'white',         
+        style={{
+          textTransform: 'none',
+          backgroundColor: "crimson",
+          color: 'white',
           width: 60,
           marginRight: 15,
           borderRadius: 20,
-          height: 35,}}
+          height: 35,
+        }}
       >
         Delete
       </Button>
@@ -71,7 +74,20 @@ const NhanVienTable = () => {
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
     { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' }
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
+
 
   ]);
 
@@ -97,10 +113,11 @@ const NhanVienTable = () => {
     filter: true,
   }));
   const gridOptions = {
-    domLayout: 'autoHeight',
+    // domLayout: 'autoHeight',
     headerHeight: 45,
     rowHeight: 45,
     suppressHorizontalScroll: false,
+    PaginationPanel: true,
   };
   return (
     // Container with theme & dimensions
@@ -108,20 +125,20 @@ const NhanVienTable = () => {
       className={
         "ag-theme-quartz ag-theme-acmecorp"
       }
-      style={{ width: '100%', height: '80%',flexDirection:"column" }}
+      style={{ width: '100%', height: '70%', flexDirection: "column" }}
     >
       <Button
         onClick={() => navigate('/nhanvien/add')}
-        style={{  
-          textTransform: 'none', 
+        style={{
+          textTransform: 'none',
           backgroundColor: "#FF9AA2",
-          color: 'white',         
+          color: 'white',
           width: 70,
           marginRight: 15,
           borderRadius: 10,
           height: 40,
           marginLeft: 'auto',
-          display:"flex",
+          display: "flex",
           marginBottom: 15
         }}
       >
