@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {InputAdornment} from "@material-ui/core";
+import { InputAdornment } from "@mui/material";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import axios from "axios";
 
