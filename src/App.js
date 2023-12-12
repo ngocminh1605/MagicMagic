@@ -9,6 +9,7 @@ import ChucvuList from "./pages/list/ChucvuList";
 import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import { useEffect } from "react";
+import DonHangPrint from "./pages/new/DonHangPrint";
 
 function App() {
     return (
@@ -34,11 +35,15 @@ function App() {
                             </Route>
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
-                                {/* <Route path=":chucvuID" element={<ChucVuSingle/>}/>
-                            <Route path="new" element={<ChucVuNew/>}/> */}
+                                
+                                <Route path="add/:userID" element={<DonHangNew/>}/>
+                                <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
+
+                                {/* <Route path=":chucvuID" element={<ChucVuSingle/>}/>
+                            <Route path="new" element={<ChucVuNew/>}/> */}
                             </Route>
                             <Route path="create">
                                 <Route index element={<DonHangNew />} />

@@ -1,36 +1,21 @@
 var express = require("express");
 const router = express.Router();
 
+
 const goodQueries = require("../database/goodQuery");
-
-const qrcode = require('qrcode');
-
-const generateQRCode = async (text, filePath) => {
-    try {
-        await qrcode.toFile(filePath, text);
-        console.log('QR Code generated successfully');
-    } catch (error) {
-        console.error('Error generating QR Code:', error);
-    }
-};
-
-// Hàm này sẽ tạo mã QR từ mã QRCode và lưu vào một tệp
-const generateQRCodeFromFile = async (QRCode, filePath) => {
-    const text = `QR Code: ${QRCode}`;
-    await generateQRCode(text, filePath);
-};
 
 const goodCtrl = {
     createOrder : async(req, res) => {
         try {
             const db = req.app.locals.db;
     
-            const { goodName, goodPrice } = req.body;
+            const { nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, mainPrice, secondPrice, GTVT, VAT, IdUser, Senddate } = req.body;
 
             const QRCodeList = await goodQueries.getQRCode(db);
 
             let goodQR;
             let isDuplicate;
+            const Price = parseFloat(mainPrice) + parseFloat(secondPrice) + parseFloat(GTVT) + parseFloat(VAT);
 
             do {
                 goodQR = goodQueries.generateCode();
@@ -38,7 +23,7 @@ const goodCtrl = {
                 isDuplicate = QRCodeList.includes(goodQR);
             } while (isDuplicate);
 
-            await goodQueries.createOrder(goodQR, goodName, goodPrice, db, res);
+            await goodQueries.createOrder(nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res);
     
             res.status(201).json({ message: "Tạo đơn hàng thành công!" });
         } catch (error) {
@@ -47,6 +32,18 @@ const goodCtrl = {
         }
     },
 
+    getAll: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.query; // Use req.query to get parameters from the URL
+            const results = await goodQueries.getAll(officeID, db);
+        
+            res.status(200).json({ message: "Truy vấn lấy các đơn hàng theo office thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy các đơn hàng: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
     getSendAll: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -97,7 +94,26 @@ const goodCtrl = {
         }
     },
 
-}
+    getInfoOrder: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID } = req.body;
+            const results = await goodQueries.getOrderInfo(goodID, db);
+            if (results.length === 0) {
+                return res.status(404).json({ message: 'Đơn hàng không tồn tại.' });
+            }
 
+            // Chuyển thành Image Base64
+            const qrCodeData = results[0].QR_code;
+            const qrCodeImageBase64 = await goodQueries.generateQRCodeBase64(qrCodeData);
+
+            res.status(200).json({ message: 'Truy vấn lấy thông tin đơn hàng thành công!', data: results, qrCodeImage: qrCodeImageBase64 });
+        } catch (error) {
+            console.error('Lỗi lấy thông tin đơn hàng: ', error);
+            res.status(500).json({ message: 'Lỗi máy chủ Internal Server.' });
+        }
+    },
+
+}
 
 module.exports = goodCtrl;

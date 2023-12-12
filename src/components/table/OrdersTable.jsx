@@ -1,97 +1,90 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { createRoot } from 'react-dom/client';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-
-const OrdersTable = () => {
+const OrdersTable = ({ officeID, userID }) => {
   const navigate = useNavigate();
-  const handleEditClick = (params) => {
-    console.log('Edit clicked for row:', params.data);
-  };
-
-  const handleDeleteClick = (params) => {
-    console.log('Delete clicked for row:', params.data);
-  };
 
   const ActionButtonsRenderer = (props) => (
-    <div style = {{justifyContent:"space-between"}}>
-      {/* Check if the icons are visible */}
-      {/* {EditIcon && <IconButton onClick={() => handleEditClick(props)}><EditIcon /></IconButton>}
-      {DeleteIcon && <IconButton onClick={() => handleDeleteClick(props)}><DeleteIcon /></IconButton>} */}
+    <div>
       <Button
-        style={{  
-        textTransform: 'none', 
-        backgroundColor: 'green',
-        color: 'white',         
-        width: 60,
-        marginRight: 15,
-        borderRadius: 20,
-        height: 35,}}
+        onClick={() => navigate(`/orders/view/${props.data["ID"]}`)}
+        style={{
+          textTransform: 'none',
+          backgroundColor: 'green',
+          color: 'white',
+          width: 60,
+          marginRight: 15,
+          borderRadius: 20,
+          height: 35,
+        }}
       >
         View
       </Button>
-      <Button
-         style={{  
-          textTransform: 'none', 
-          backgroundColor: 'orange',
-          color: 'white',         
-          width: 60,
-          marginRight: 15,
-          borderRadius: 20,
-          height: 35,}}
-      >
-        Edit
-      </Button>
-      <Button
-         style={{  
-          textTransform: 'none', 
-          backgroundColor:  "crimson",
-          color: 'white',         
-          width: 60,
-          marginRight: 15,
-          borderRadius: 20,
-          height: 35,}}
-      >
-        Delete
-      </Button>
     </div>
   );
-  // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState([
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-   
+  
 
+  const [rowData, setRowData] = useState([
+    
   ]);
+
+
+  useEffect(() => {
+    const fetchOrders = async (officeID) => {
+      try {
+        const response = await axios.get('http://localhost:3001/goods/getAll', {
+          params: {
+            "officeID": officeID
+          },
+        });
+  
+        const formattedData = response.data.data.map(item => ({
+          "ID": item.ID_good,
+          "Mã đơn hàng": item.QR_code,
+          "Loại hàng": item.Type,
+          "Ngày gửi": new Date(item.Senddate).toLocaleString(),
+          "Giá": item.Price,
+          "Cân nặng": item.Weight,
+          "Mã Bưu chính": item.Postalcode,
+          "Tên người gửi": item.Name_sender,
+          "Địa chỉ người gửi": item.Address_sender,
+          "Số điện thoại người gửi": item.Phone_sender,
+          "Tên người nhận": item.Name_receiver,
+          "Địa chỉ người nhận": item.Address_receiver,
+          "Số điện thoại người nhận": item.Phone_receiver,
+        }));
+  
+        setRowData(formattedData);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchOrders(officeID);
+  }, [officeID]);
+
+  
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
-    { field: "fullName" },
-    { field: "gender" },
-    { field: "birth" },
-    { field: "phone" },
-    { field: "email" },
-    { field: "iden" },
-    { field: "start" },
-    { field: "officeid" },
-    { field: "position" },
+    { field: "Mã đơn hàng" },
+    { field: "Loại hàng" },
+    { field: "Ngày gửi" },
+    { field: "Giá" },
+    { field: "Cân nặng" },
+    { field: "Mã Bưu chính" },
+    { field: "Tên người gửi" },
+    { field: "Địa chỉ người gửi" },
+    { field: "Số điện thoại người gửi" },
+    { field: "Tên người nhận" },
+    { field: "Địa chỉ người nhận" },
+    { field: "Số điện thoại người nhận" },
     {
       headerName: "Action",
       minWidth: 250,
@@ -118,7 +111,7 @@ const OrdersTable = () => {
       style={{ width: '100%', height: '70%',flexDirection:"column" }}
     >
       <Button
-        // onClick={() => navigate('/nhanvien/add')}
+        onClick={() => navigate(`/orders/add/${userID}`)}
         style={{  
           textTransform: 'none', 
           backgroundColor: "#FF9AA2",

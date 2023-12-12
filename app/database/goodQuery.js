@@ -1,19 +1,19 @@
 const crypto = require('crypto');
 const qrcode = require('qrcode');
 
-const generateQRCode = async (text, filePath) => {
+const generateQRCodeBase64 = async (data) => {
     try {
-        await qrcode.toFile(filePath, text);
-        console.log('QR Code generated successfully');
+        // Generate QR code as a buffer
+        const qrCodeBuffer = await qrcode.toBuffer(data);
+
+        // Convert the buffer to base64
+        const qrCodeBase64 = qrCodeBuffer.toString('base64');
+
+        return qrCodeBase64;
     } catch (error) {
         console.error('Error generating QR Code:', error);
+        throw error;
     }
-};
-
-// Hàm này sẽ tạo mã QR từ mã QRCode và lưu vào một tệp
-const generateQRCodeFromFile = async (QRCode, filePath) => {
-    const text = `QR Code: ${QRCode}`;
-    await generateQRCode(text, filePath);
 };
 
 
@@ -55,11 +55,11 @@ const getQRCode = async (db, res) => {
 };
 
 // Tạo đơn hàng
-const createOrder = async (goodQR, goodName, goodPrice, db, res) => {
-    const insertOrderQuery = "INSERT INTO good (QR_code, Name, Price) VALUES (?, ?, ?);";
+const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res) => {
+    const insertOrderQuery = "INSERT INTO good (Name_sender, Address_sender, Phone_sender, Name_receiver, Phone_receiver, Address_receiver, Type, Weight, QR_code,  mainPrice, secondPrice, GTVT, VAT, Price, ID_user, Senddate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     return new Promise((resolve, reject) => {
-        db.query(insertOrderQuery, [goodQR, goodName, goodPrice], (err) => {
+        db.query(insertOrderQuery, [nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate], (err) => {
             if (err) {
                 console.error("Lỗi tạo đơn hàng: ", err.message);
                 reject(err);
@@ -69,6 +69,32 @@ const createOrder = async (goodQR, goodName, goodPrice, db, res) => {
         });
     });
 };
+
+// Lấy dữ liệu đơn hàng theo officeID
+const getAll = async (officeID, db, res) => {
+    let getAllQuery = "";
+
+    if (!officeID) {
+        // Nếu officeID rỗng
+        getAllQuery = `SELECT DISTINCT * FROM good;`;
+    } else {
+        // Nếu officeID khác rỗng
+        getAllQuery = `SELECT DISTINCT good.* FROM good
+                            JOIN bookinghistory ON bookinghistory.ID_good = good.ID_good
+                            WHERE bookinghistory.ID_Office = ?;`;
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(getAllQuery, [officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
 
 
 // Lấy dữ liệu đơn hàng đã gửi
@@ -133,4 +159,20 @@ const getReceive = async (officeID, db, res) => {
     });
 };
 
-module.exports = { createOrder, getSend, getReceive, generateCode, getQRCode, generateQRCodeFromFile };
+const getOrderInfo = async (goodID, db, res) => {
+    const getInfoQuery = `SELECT * FROM good WHERE good.ID_good = ? ;`;
+
+    return new Promise((resolve, reject) => {
+        db.query(getInfoQuery, [goodID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+
+
+module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64 };
