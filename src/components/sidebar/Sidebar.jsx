@@ -13,12 +13,12 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import nv2 from '../navbar/nv2.jpg';
+import nv from '../navbar/nv.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from '../../constant/axios';
 
 
-const Sidebar = () => {
+const Sidebar = ({setOfficeID, setUserID}) => {
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
 
@@ -37,9 +37,12 @@ const Sidebar = () => {
         });
         console.log('API Response:', response.data); // Log the entire response object
         if (response.status === 200) {
-          const { userId, username, title } = response.data.user;
-          setUserInfo({ userId, username, title });
-          console.log({ userId, username, title });
+          const { userId, username, title,  officeID} = response.data.user;
+          setUserInfo({ userId, username, title, officeID });
+          setOfficeID(officeID);
+          setUserID(userId);
+          
+         
         } else {
           console.error('Failed to fetch user info:', response.data.message);
         }
@@ -49,7 +52,8 @@ const Sidebar = () => {
     };
 
     fetchUserInfo();
-  }, []);
+    
+  }, [setOfficeID, setUserID]);
 
 
   const handleItemClick = (index) => {
@@ -68,25 +72,22 @@ const Sidebar = () => {
     { icon: <DashboardIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
     { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
-    {},
-    {},
   ];
 
   const menuItems3 = [
+    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
     { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
-    {},
-    {},
-    {},
-    {},
+
   ];
 
   const menuItems4 = [
-    { icon: <AddBoxIcon />, text: 'Create', path: '/create' },
+    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
     { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
-    {},
-    {},
-    {},
   ];
+
+  console.log(userInfo.userId)
 
   const navigate = useNavigate();
 
@@ -197,7 +198,7 @@ const Sidebar = () => {
         <div className="item">
           <Dropdown className='custom-dropdown'>
             <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
-              <img className="avatar dropdown-toggle" src={nv2} alt="Ảnh" />
+              <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>
@@ -213,7 +214,7 @@ const Sidebar = () => {
         </div>
         {userInfo.title === 'admin' && (
           <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Giám Đốc
+            Lãnh đạo
           </div>
         )}
         {userInfo.title === 'Trưởng điểm' && (
@@ -223,12 +224,12 @@ const Sidebar = () => {
         )}
         {userInfo.title === 'Nhân viên giao dịch' && (
           <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Nhân viên
+            Nhân viên<br/>giao dịch
           </div>
         )}
         {userInfo.title === 'Nhân viên tập kết' && (
           <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Nhân viên
+            Nhân viên<br/>tập kết
           </div>
         )}
       </div>
