@@ -16,21 +16,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
       <Button
-        // onClick={() => navigate(`/nhanvien/view/${props.data["ID"]}`)}
-        style={{
-          textTransform: 'none',
-          backgroundColor: 'green',
-          color: 'white',
-          width: 60,
-          marginRight: 15,
-          borderRadius: 20,
-          height: 35,
-        }}
-      >
-        View
-      </Button>
-      <Button
-        // onClick={() => navigate(`/nhanvien/edit/${props.data["ID"]}`)}
+        onClick={() => navigate('/nhanvien/detail')}
         style={{
           textTransform: 'none',
           backgroundColor: 'orange',

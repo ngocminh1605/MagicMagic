@@ -10,6 +10,8 @@ import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import { useEffect } from "react";
 import DonHangPrint from "./pages/new/DonHangPrint";
+import NhanVienDetail from "./components/table/edit"
+import Main from "./pages/main/main"
 
 function App() {
     return (
@@ -18,7 +20,8 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/">
-                            <Route index element={<Login />} />
+                            <Route index element={<Main />} />
+                            <Route index path="login"  element={<Login />} />
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
@@ -27,6 +30,7 @@ function App() {
                             <Route path="edit/:nhanvienID" element={<NhanVienNew/>}/>
                              <Route path="new" element={<NhanVienNew/>}/> */}
                                 <Route path="add" element={<NhanVienNew />} />
+                                <Route path="detail" element={<NhanVienDetail />} />
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
@@ -35,8 +39,8 @@ function App() {
                             </Route>
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
-                                
-                                <Route path="add/:userID" element={<DonHangNew/>}/>
+
+                                <Route path="add/:userID" element={<DonHangNew />} />
                                 <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
                             <Route path="position">
