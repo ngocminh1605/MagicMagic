@@ -34,10 +34,12 @@ const NhanVienNew = () => {
 
         if (!isProceed) {
             // setAlert({ status: 'error', title: 'Error', description: 'Please enter the value in' });
+            alert('Vui lòng điền đầy đủ thông tin !');
         } else {
             if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
                 isProceed = false;
                 // setAlert({ status: 'error', title: 'Error', description: 'Please enter a valid email' });
+                alert('Vui lòng điền đúng định dạng email !');
             }
         }
 
@@ -47,6 +49,7 @@ const NhanVienNew = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!IsValidate()) {
+            alert('Vui lòng điền đầy đủ thông tin!');
             return;
         }
         try {
@@ -58,13 +61,14 @@ const NhanVienNew = () => {
                 Title: position,
             });
             if (response.status === 201) {
+                alert('Thêm nhân viên thành công :3');
                 navigate('/nhanvien');
             } else {
                 // Registration failed
                 console.log("fails");
             }
         } catch (error) {
-
+            alert('Thêm nhân viên thất bại hãy kiểm tra các trường thông tin!');
             console.error('Error during registration:', error);
 
         }

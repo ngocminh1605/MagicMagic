@@ -99,6 +99,10 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   const [colDefs, setColDefs] = useState([
     { field: "ID_User" },
     { field: "UserName" },
+    { field: "Title" },
+    { field: "Office" },
+    { field: "DateStart" },
+    { field: "Ngày bắt đầu"},
     {
       headerName: "Action",
       minWidth: 250,
