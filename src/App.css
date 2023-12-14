@@ -27,7 +27,6 @@
   width: 100%;
   background-color: var(--glass);
   overflow: hidden;
-  grid-template-columns: 11rem auto;
 }
 
 .App-logo {

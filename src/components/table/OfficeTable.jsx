@@ -121,37 +121,37 @@ const OfficeTable = () => {
   };
   return (
     // Container with theme & dimensions
-    <div
-      className={
-        "ag-theme-quartz ag-theme-acmecorp"
-      }
-      style={{ width: '100%', height: '70%', flexDirection: "column" }}
-    >
-      <Button
-        // onClick={() => navigate('/nhanvien/add')}
-        style={{
-          textTransform: 'none',
-          backgroundColor: "#FF9AA2",
-          color: 'white',
-          width: 70,
-          marginRight: 15,
-          borderRadius: 10,
-          height: 40,
-          marginLeft: 'auto',
-          display: "flex",
-          marginBottom: 15
-        }}
+      <div
+        className={
+          "ag-theme-quartz ag-theme-acmecorp"
+        }
+        style={{ width: '100%', height: '70%', flexDirection: "column" }}
       >
-        Add
-      </Button>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={colDefs}
-        defaultColDef={defaultColDef}
-        pagination={true}
-        gridOptions={gridOptions}
-      />
-    </div>
+        <Button
+          // onClick={() => navigate('/nhanvien/add')}
+          style={{
+            textTransform: 'none',
+            backgroundColor: "#FF9AA2",
+            color: 'white',
+            width: 70,
+            marginRight: 15,
+            borderRadius: 10,
+            height: 40,
+            marginLeft: 'auto',
+            display: "flex",
+            marginBottom: 15
+          }}
+        >
+          Add
+        </Button>
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={colDefs}
+          defaultColDef={defaultColDef}
+          pagination={true}
+          gridOptions={gridOptions}
+        />
+      </div>
   );
 }
 export default OfficeTable;

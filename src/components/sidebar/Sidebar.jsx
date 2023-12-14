@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from '../../constant/axios';
 
 
-const Sidebar = ({setOfficeID, setUserID,setTitle}) => {
+const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   //  useEffect(() => {
@@ -60,7 +60,7 @@ const Sidebar = ({setOfficeID, setUserID,setTitle}) => {
         });
         // console.log('API Response:', response.data); // Log the entire response object
         if (response.status === 200) {
-          const { userId, username, title,  officeID} = response.data.user;
+          const { userId, username, title, officeID } = response.data.user;
           setUserInfo({ userId, username, title, officeID });
           setOfficeID(officeID);
           setUserID(userId);
@@ -139,116 +139,120 @@ const Sidebar = ({setOfficeID, setUserID,setTitle}) => {
     }
   };
   return (
-    <div className='sidebar'>
-      <div className='logo'>
-        <img src={logo} alt='' />
-        <span>
-          Magic<span>Magic</span>
-        </span>
-      </div>
-      {userInfo.title === 'admin' && (
-        <div className='menu'>
-          {menuItems.map((item, index) => (
-            <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
-              <div
-                key={index}
-                className={`menuItem ${index === activeItem ? 'active' : ''}`}
-                onClick={() => handleItemClick(index)}
-              >
-                <div>{item.icon}</div>
-                <span>{item.text}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-
-      {userInfo.title === 'Trưởng điểm' && (
-        <div className='menu'>
-          {menuItems2.map((item, index) => (
-            <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
-              <div
-                className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                onClick={() => handleItemClick(index)}
-              >
-                <div>{item.icon}</div>
-                <span>{item.text}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-
-      {userInfo.title === 'Nhân viên tập kết' && (
-        <div className='menu'>
-          {menuItems3.map((item, index) => (
-            <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
-              <div
-                className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                onClick={() => handleItemClick(index)}
-              >
-                <div>{item.icon}</div>
-                <span>{item.text}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-      {userInfo.title === 'Nhân viên giao dịch' && (
-        <div className='menu'>
-          {menuItems4.map((item, index) => (
-            <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
-              <div
-                className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                onClick={() => handleItemClick(index)}
-              >
-                <div>{item.icon}</div>
-                <span>{item.text}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-
-
-      <div className="items">
-        <div className="item">
-          <Dropdown className='custom-dropdown'>
-            <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
-              <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <EditIcon />
-                <span>Sửa hồ sơ</span>
-              </Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout}>
-                <LogoutOutlinedIcon />
-                <span>Đăng xuất</span>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-        {userInfo.title === 'admin' && (
-          <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Lãnh đạo
+    <div>
+      <div>
+        <div className='sidebar'>
+          <div className='logo'>
+            <img src={logo} alt='' />
+            <span>
+              Magic<span>Magic</span>
+            </span>
           </div>
-        )}
-        {userInfo.title === 'Trưởng điểm' && (
-          <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Trưởng điểm
+          {userInfo.title === 'admin' && (
+            <div className='menu'>
+              {menuItems.map((item, index) => (
+                <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+                  <div
+                    key={index}
+                    className={`menuItem ${index === activeItem ? 'active' : ''}`}
+                    onClick={() => handleItemClick(index)}
+                  >
+                    <div>{item.icon}</div>
+                    <span>{item.text}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {userInfo.title === 'Trưởng điểm' && (
+            <div className='menu'>
+              {menuItems2.map((item, index) => (
+                <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+                  <div
+                    className={`menuItem ${activeItem === index ? 'active' : ''}`}
+                    onClick={() => handleItemClick(index)}
+                  >
+                    <div>{item.icon}</div>
+                    <span>{item.text}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {userInfo.title === 'Nhân viên tập kết' && (
+            <div className='menu'>
+              {menuItems3.map((item, index) => (
+                <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+                  <div
+                    className={`menuItem ${activeItem === index ? 'active' : ''}`}
+                    onClick={() => handleItemClick(index)}
+                  >
+                    <div>{item.icon}</div>
+                    <span>{item.text}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+          {userInfo.title === 'Nhân viên giao dịch' && (
+            <div className='menu'>
+              {menuItems4.map((item, index) => (
+                <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+                  <div
+                    className={`menuItem ${activeItem === index ? 'active' : ''}`}
+                    onClick={() => handleItemClick(index)}
+                  >
+                    <div>{item.icon}</div>
+                    <span>{item.text}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+
+          <div className="items">
+            <div className="item">
+              <Dropdown className='custom-dropdown'>
+                <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
+                  <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <EditIcon />
+                    <span>Sửa hồ sơ</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>
+                    <LogoutOutlinedIcon />
+                    <span>Đăng xuất</span>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+            {userInfo.title === 'admin' && (
+              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+                Lãnh đạo
+              </div>
+            )}
+            {userInfo.title === 'Trưởng điểm' && (
+              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+                Trưởng điểm
+              </div>
+            )}
+            {userInfo.title === 'Nhân viên giao dịch' && (
+              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+                Nhân viên<br />giao dịch
+              </div>
+            )}
+            {userInfo.title === 'Nhân viên tập kết' && (
+              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+                Nhân viên<br />tập kết
+              </div>
+            )}
           </div>
-        )}
-        {userInfo.title === 'Nhân viên giao dịch' && (
-          <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Nhân viên<br/>giao dịch
-          </div>
-        )}
-        {userInfo.title === 'Nhân viên tập kết' && (
-          <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-            Nhân viên<br/>tập kết
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

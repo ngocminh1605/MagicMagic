@@ -74,13 +74,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="rmb-fg">
-            <label>
-              <input type="checkbox" />
-              <div>Remember me</div>
-            </label>
-            <div className="forget">Forget password</div>
-          </div>
+          
           <button onClick={handleLogin}>Login</button>
         </div>
       </div>
