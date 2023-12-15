@@ -56,7 +56,7 @@ const getQRCode = async (db, res) => {
 
 // Tạo đơn hàng
 const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res) => {
-    const insertOrderQuery = "INSERT INTO good (Name_sender, Address_sender, Phone_sender, Name_receiver, Phone_receiver, Address_receiver, Type, Weight, QR_code,  mainPrice, secondPrice, GTVT, VAT, Price, ID_user, Senddate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    const insertOrderQuery = "INSERT INTO good (Name_sender, Address_sender, Phone_sender, Name_receiver, Address_receiver, Phone_receiver, Type, Weight, QR_code,  mainPrice, secondPrice, GTVT, VAT, Price, ID_user, Senddate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     return new Promise((resolve, reject) => {
         db.query(insertOrderQuery, [nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate], (err) => {
@@ -66,6 +66,51 @@ const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver,
             } else {
                 resolve();
             }
+        });
+    });
+};
+
+const getOrderByQRCode = async (QRCode, db) => {
+    const query = 'SELECT * FROM good WHERE QR_code = ?';
+    return new Promise((resolve, reject) => {
+        db.query(query, [QRCode], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+const getStateWait = async (officeID, db, res) => {
+    const query = `SELECT DISTINCT * FROM good g
+                    JOIN bookinghistory b ON b.ID_good = g.ID_good
+                    WHERE b.ID_Office = ? AND b.State IN ("Đang đợi", "Đang chờ");`;
+    return new Promise((resolve, reject) => {
+        db.query(query, [officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+const getStateNhan = async (officeID, db, res) => {
+    const query = `SELECT DISTINCT * FROM good g
+                    JOIN bookinghistory b ON b.ID_good = g.ID_good
+                    WHERE b.ID_Office = ? AND b.State IN ("Đã nhận");`;
+    return new Promise((resolve, reject) => {
+        db.query(query, [officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
         });
     });
 };
@@ -104,14 +149,14 @@ const getSend = async (officeID, db, res) => {
     if (!officeID) {
         // Nếu officeID rỗng
         getSendQuery = `
-            SELECT * FROM bookinghistory
+            SELECT DISTINCT * FROM bookinghistory
             JOIN good ON good.ID_good = bookinghistory.ID_good
             WHERE bookinghistory.State IN ("Đã gửi", "Gửi trả về");
         `;
     } else {
         // Nếu officeID khác rỗng
         getSendQuery = `
-            SELECT * FROM bookinghistory
+            SELECT DISTINCT * FROM bookinghistory
             JOIN good ON good.ID_good = bookinghistory.ID_good
             WHERE bookinghistory.State IN ("Đã gửi", "Gửi trả về") AND bookinghistory.ID_Office = ?;
         `;
@@ -135,14 +180,14 @@ const getReceive = async (officeID, db, res) => {
     if (!officeID) {
         // Nếu officeID rỗng
         getReceiveQuery = `
-            SELECT * FROM bookinghistory
+            SELECT DISTINCT * FROM bookinghistory
             JOIN good ON good.ID_good = bookinghistory.ID_good
             WHERE bookinghistory.State IN ("Đã nhận", "Nhận trả về");
         `;
     } else {
         // Nếu officeID khác rỗng
         getReceiveQuery = `
-            SELECT * FROM bookinghistory
+            SELECT DISTINCT * FROM bookinghistory
             JOIN good ON good.ID_good = bookinghistory.ID_good
             WHERE bookinghistory.State IN ("Đã nhận", "Nhận trả về") AND bookinghistory.ID_Office = ?;
         `;
@@ -173,6 +218,5 @@ const getOrderInfo = async (goodID, db, res) => {
     });
 };
 
-
-
-module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64 };
+module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64, getOrderByQRCode, 
+                    getStateWait, getStateNhan};
