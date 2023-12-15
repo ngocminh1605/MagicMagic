@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import "./congvieclist.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import OrdersTable from '../../components/table/OrdersTable';
-import DonHangNew from '../new/DonHangNew';
 
 const DonHang = () => {
   const [officeID, setOfficeID] = useState(null);
   const [userID, setUserID] = useState(null);
-  const {} = useParams();
+  const [title, setTitle] = useState(null);
 
   return (
     <div className="list">
-      <Sidebar setOfficeID={setOfficeID} setUserID={setUserID} />
+      <Sidebar setOfficeID={setOfficeID} setUserID={setUserID} setTitle={setTitle}/>
       <div className="container">
         <div className='title'>Orders</div>
-        <OrdersTable officeID={officeID} userID={userID} />
+        <OrdersTable officeID={officeID} userID={userID} title={title} />
       </div>
     </div>
   );

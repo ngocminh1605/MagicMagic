@@ -7,9 +7,9 @@
     display: none;
   }
   @page {
-    size: landscape; 
+    size: 100%;
+    orientation: landscape;
   }
-
   body {
     font-size: 10pt;
   }
@@ -86,7 +86,7 @@ p {
 
 .spacer {
   margin-right: 100px; 
-  fontWeight:"bold";
+  font-weight: bold;
 }
 
 

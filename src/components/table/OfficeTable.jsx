@@ -117,7 +117,7 @@ const OfficeTable = () => {
     headerHeight: 45,
     rowHeight: 45,
     suppressHorizontalScroll: false,
-    PaginationPanel: true,
+    pagination: true,
   };
   return (
     // Container with theme & dimensions

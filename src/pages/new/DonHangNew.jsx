@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { InputLabel, Select, MenuItem } from '@mui/material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./donhangnew.scss";
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from "../../components/sidebar/Sidebar";
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 
 const DonHangNew = () => {
     const navigate = useNavigate();
+    const [officeID, setOfficeID] = useState(null);
     const { userID } = useParams();
 
     const [senderFullName, setSenderFullName] = useState('');
@@ -18,7 +20,7 @@ const DonHangNew = () => {
     const [receiverFullName, setReceiverFullName] = useState('');
     const [receiverAddress, setReceiverAddress] = useState('');
     const [receiverPhoneNumber, setReceiverPhoneNumber] = useState('');
-    const [shipmentType, setShipmentType] = useState('document');
+    const [shipmentType, setShipmentType] = useState('Tài liệu');
     const [sendDateTime, setSendDateTime] = useState(new Date());
     const [mainFee, setMainFee] = useState('');
     const [extraFee, setExtraFee] = useState('');
@@ -61,12 +63,32 @@ const DonHangNew = () => {
             GTVT: gtvtFee,
             VAT: vatFee,
             IdUser: userID,
-            Senddate: sendDateTime.toISOString(),
+            Senddate: format(utcToZonedTime((sendDateTime), 'Asia/Ho_Chi_Minh'), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         };
 
-    
+       
+
+        async function handleConfirmRequest(confirmData) {
+            try {
+                const confirmResponse = await fetch('http://localhost:3001/transfer/confirmReceive', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(confirmData),
+                });
+        
+                // Handle the response from the server for confirming the order
+                if (!confirmResponse.ok) {
+                    console.error('Failed to confirm receiving order:', confirmResponse.statusText);
+                    alert('Nhận đơn hàng thất bại! Vui lòng kiểm tra lại thông tin!');
+                }
+            } catch (confirmError) {
+                console.error('Error confirming order:', confirmError);
+            }
+        };
+
         try {
-            // Send a POST request to the server
             const response = await fetch('http://localhost:3001/goods/order', {
                 method: 'POST',
                 headers: {
@@ -78,13 +100,18 @@ const DonHangNew = () => {
             // Handle the response from the server
             if (response.ok) {
                 const responseData = await response.json();
+                const confirmData = {
+                    goodID: responseData.data[0].ID_good, 
+                    officeID: officeID
+                };
                 console.log(responseData.message); // Log success message
                 alert('Đã thêm đơn hàng!');
-                navigate(`/orders`)
-
+                await handleConfirmRequest(confirmData);
+                navigate(`/orders/transfer/${responseData.data[0].ID_good}`);
+                return;
             } else {
                 console.error('Failed to create order:', response.statusText);
-                alert('Thêm đơn hàng thất bại!Vui lòng kiểm tra lại thông tin!');
+                alert('Thêm đơn hàng thất bại! Vui lòng kiểm tra lại thông tin!');
                 return;
             }
         } catch (error) {
@@ -95,7 +122,7 @@ const DonHangNew = () => {
 
     return (
         <div className='add'>
-            <Sidebar />
+            <Sidebar setOfficeID={setOfficeID}/>
             <form onSubmit={handleAddClick}>
                 <div style={{ overflowY: 'auto', height: '100vh' }}>
                     <div className="title">
@@ -140,8 +167,8 @@ const DonHangNew = () => {
                             <div className="form-group">
                                 <InputLabel htmlFor="shipmentType">Loại hàng hóa</InputLabel>
                                 <Select id="shipmentType" value={shipmentType} onChange={e => setShipmentType(e.target.value)} className="form-control">
-                                    <MenuItem value="document">Tài liệu</MenuItem>
-                                    <MenuItem value="goods">Hàng hóa</MenuItem>
+                                    <MenuItem value="Tài liệu">Tài liệu</MenuItem>
+                                    <MenuItem value="Hàng hóa">Hàng hóa</MenuItem>
                                 </Select>
                             </div>
                             <div className="form-group">
