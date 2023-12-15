@@ -161,7 +161,7 @@ router.get("/me", isAuthenticated, (req, res) => {
 
 router.get("/logout", isAuthenticated, (req, res) => {
     try {
-        res.setHeader("Authorization", ""); // Xóa token khỏi header
+        // Xóa token khỏi header
         res.status(200).json({ message: "Logout successful" });
     } catch (error) {
         console.error("Error during logout:", error);
@@ -170,7 +170,8 @@ router.get("/logout", isAuthenticated, (req, res) => {
 });
 
 
-//thêm thông tin bản thân
+
+//sửa thông tin người dùng
 const createInfo = async (userid, fullname, phone, db, res) => {
     //xem đây là thông tin của ai
     const checkID = "Select * from user WHERE ID_user = ?"
@@ -181,8 +182,8 @@ const createInfo = async (userid, fullname, phone, db, res) => {
             return res.status(500).json({ message: "Lỗi thêm thông tin người dùng." });
         }
         const insertUserQuery =
-            "UPDATE user set FullName = ? ,Phone = ? WHERE ID_user = ?";
-        db.query(insertUserQuery, [fullname, phone, userid], (err) => {
+            "UPDATE user set UserName = ? ,email = ?, Title = ?, OfficeId = ? WHERE ID_user = ?";
+        db.query(insertUserQuery, [username, email,title,officeid, userid], (err) => {
             if (err) {
                 console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi update dữ liệu người dùng." });
@@ -191,15 +192,14 @@ const createInfo = async (userid, fullname, phone, db, res) => {
         });
 
     })
-
 }
 
 // sửa đổi thông tin người dùng
 router.put("/info", async (req, res) => {
     try {
         const db = req.app.locals.db;
-        const { userid, fullname, phone } = req.body;
-        await createInfo(userid, fullname, phone, db, res);
+        const { userid, username, email,title,officeid } = req.body;
+        await createInfo(userid, username, email,title,officeid, db, res);
     }
     catch (error) {
         console.error("Error during registration:", error);
@@ -207,8 +207,24 @@ router.put("/info", async (req, res) => {
     }
 });
 
+router.get("/info", async (req, res) => {
+    const db = req.app.locals.db;
+    const { userid } = req.body;
+    const getUser = "Select * from user where ID_user = ?";
+    db.query(getUser,[userid],(err, results) => {
+        if (err) {
+            console.error("Lỗi truy cập csdl" + err.message);
+            return res.status(500).json({ message: "Lỗi lấy thông tin người dùng." });
+        }
+        return res.status(200).json(results);
+    });
 
-// lấy thông tin người dùng
+});
+
+
+
+
+// lấy thông tin list người dùng
 router.get("/info_users", async (req, res) => {
     const db = req.app.locals.db;
     const { userID, officeID, title } = req.query;
@@ -229,7 +245,7 @@ router.get("/info_users", async (req, res) => {
         console.log("trưởng điểm hay không", officeID);
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
         getUsersQuery = "SELECT * FROM user WHERE OfficeId = ?";
-        db.query(getUsersQuery,[officeID], (err, results) => {
+        db.query(getUsersQuery, [officeID], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi lấy thông tin người dùng." });

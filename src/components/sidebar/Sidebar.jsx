@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './sidebar.scss';
 import logo from '../../assets/logo/express-delivery.png';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -21,30 +21,9 @@ import { axiosInstance } from '../../constant/axios';
 const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-  //  useEffect(() => {
-  //       const checkTokenExpiration = async () => {
-  //           try {
-  //               const token = localStorage.getItem('token');
-  //               if (token) {
-  //                   // Decode the token to get its expiration time
-  //                   const decodedToken = JSON.parse(atob(token.split('.')[1]));
-  //                   const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
-
-  //                   // Check if the token is expired
-  //                   if (expirationTime < Date.now()) {
-  //                       // Token has expired, navigate to login page
-  //                       window.location.href = '/';
-  //                   }
-  //               }
-  //           } catch (error) {
-  //               console.error('Error checking token expiration:', error);
-  //           }
-  //       };
-
-  //       checkTokenExpiration();
-  //   }, []);
 
   useEffect(() => {
+    
     const fetchUserInfo = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -77,7 +56,17 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
 
   const handleItemClick = (index) => {
     setActiveItem(index);
+    const path = menuItems[index].path;
+    navigate(path);
   };
+
+  useEffect(() => {
+  }, [activeItem])
+
+  // const handleLinkClick = (e, index) => {
+  //   e.preventDefault(); 
+  //   handleItemClick(index);
+  // };
 
   const menuItems = [
     { icon: <DashboardIcon />, text: 'Home', path: '/home' },

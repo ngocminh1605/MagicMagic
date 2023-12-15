@@ -10,8 +10,9 @@ import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import { useEffect } from "react";
 import DonHangPrint from "./pages/new/DonHangPrint";
-import NhanVienDetail from "./components/table/edit"
+import NhanVienEdit from "./pages/edit/NhanVienEdit"
 import Main from "./pages/main/main"
+
 
 function App() {
     return (
@@ -30,7 +31,7 @@ function App() {
                             <Route path="edit/:nhanvienID" element={<NhanVienNew/>}/>
                              <Route path="new" element={<NhanVienNew/>}/> */}
                                 <Route path="add" element={<NhanVienNew />} />
-                                <Route path="detail" element={<NhanVienDetail />} />
+                                <Route path="edit/:userID" element={<NhanVienEdit/>} />
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />

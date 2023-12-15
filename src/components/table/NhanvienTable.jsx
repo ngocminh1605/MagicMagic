@@ -16,7 +16,21 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
       <Button
-        onClick={() => navigate('/nhanvien/detail')}
+        onClick={() => navigate(`/nhanvien/view/${props.data["ID_User"]}`)}
+        style={{
+          textTransform: 'none',
+          backgroundColor: 'green',
+          color: 'white',
+          width: 60,
+          marginRight: 15,
+          borderRadius: 20,
+          height: 35,
+        }}
+      >
+        View
+      </Button>
+      <Button
+        onClick={() => navigate(`/nhanvien/edit/${props.data["ID_User"]}`)}
         style={{
           textTransform: 'none',
           backgroundColor: 'orange',
@@ -48,10 +62,11 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
   ]);
+
   useEffect(() => {
     const fetchUser = async (officeID, userID, title) => {
       try {
-        
+
         const response = await axios.get('http://localhost:3001/users/info_users', {
           params: {
             officeID: officeID,
@@ -61,12 +76,15 @@ const NhanVienTable = ({ officeID, userID, title }) => {
         });
         if (response.status === 200) {
           const userData = response.data.users;
-          console.log("Dữ liệu người dùng:", userData);
-          // Format và set dữ liệu cho rowData
+          const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+          console.log("Dữ liệu người dùng:",userData);
           const formattedData = userData.map(item => {
             return {
               "ID_User": item.ID_user,
               "UserName": item.UserName,
+              "Title": item.title,
+              "Office": item.UserName.substring(3),
+              "DateStart": new Date(item.datestart).toLocaleDateString(undefined, options),
             };
           });
           setRowData(formattedData);
@@ -86,13 +104,12 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     { field: "ID_User" },
     { field: "UserName" },
     { field: "Title" },
-    { field: "Office" },
-    { field: "DateStart" },
-    { field: "Ngày bắt đầu"},
+    { field: "Office"},
+    { field: "DateStart"},
     {
       headerName: "Action",
-      minWidth: 250,
-      cellRenderer: ActionButtonsRenderer, // Sử dụng trực tiếp hàm renderer
+      minWidth: 245,
+      cellRenderer: ActionButtonsRenderer,
     },
   ]);
 
@@ -100,14 +117,12 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     filter: true,
   }));
   const gridOptions = {
-    // domLayout: 'autoHeight',
     headerHeight: 45,
     rowHeight: 45,
     suppressHorizontalScroll: false,
-    PaginationPanel: true,
+    PaginationPanel: false,
   };
   return (
-    // Container with theme & dimensions
     <div
       className={
         "ag-theme-quartz ag-theme-acmecorp"
