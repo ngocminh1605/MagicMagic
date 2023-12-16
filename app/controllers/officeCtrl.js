@@ -106,6 +106,21 @@ const officeCtrl = {
         }
     },
 
+    getProvinceOffice: async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.body;
+           
+            const data = await officeQueries.getOfficeByID(officeID, db, res);
+            const results = extractProvinceName(data[0].Address)
+    
+            res.status(201).json({ message: "Lấy tỉnh/tp office theo ID thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy tỉnh/tp office theo ID: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 function extractProvinceName(address) {

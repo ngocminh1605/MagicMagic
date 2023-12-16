@@ -9,5 +9,6 @@ router.get("/gathering", officeCtrl.getOfficeGathering);
 router.get("/byID", officeCtrl.getOfficeByID);
 
 router.post("/options", officeCtrl.getOption);
+router.post("/provinceOffice", officeCtrl.getProvinceOffice);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputLabel, Select, MenuItem } from '@mui/material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from "../../components/sidebar/Sidebar";
 import { format, utcToZonedTime } from 'date-fns-tz';
+import { calculateShippingFee, calculateVatFee } from '../../constant/function';
 
 
 const DonHangNew = () => {
@@ -22,11 +23,48 @@ const DonHangNew = () => {
     const [receiverPhoneNumber, setReceiverPhoneNumber] = useState('');
     const [shipmentType, setShipmentType] = useState('Tài liệu');
     const [sendDateTime, setSendDateTime] = useState(new Date());
-    const [mainFee, setMainFee] = useState('');
     const [extraFee, setExtraFee] = useState('');
     const [gtvtFee, setGtvtFee] = useState('');
     const [vatFee, setVatFee] = useState('');
     const [weight, setWeight] = useState('');
+    const [mainFee, setMainFee] = useState(calculateShippingFee(weight, shipmentType));
+    const [province, setProvince] = useState('');
+    
+    useEffect(() => {
+        const calculateAndSetVatFee = () => {
+            const calculatedVatFee = calculateVatFee(mainFee, extraFee, gtvtFee);
+            setVatFee(calculatedVatFee);
+        };
+        calculateAndSetVatFee();
+    }, [mainFee, extraFee, gtvtFee, shipmentType]);
+
+    useEffect(() => {
+        if (officeID) {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch('http://localhost:3001/office/provinceOffice', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({officeID: officeID}),
+                    });
+    
+                    if (response.ok) {
+                        const data = await response.json();
+                        setProvince(data.data);
+                    } else {
+                        console.error('Lỗi lấy tỉnh:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Lỗi fetch data:', error);
+                }
+            };
+    
+            fetchData();
+        }
+        
+    }, [officeID]);
 
     const handleAddClick = async (e) => {
         e.preventDefault();
@@ -78,7 +116,6 @@ const DonHangNew = () => {
                     body: JSON.stringify(confirmData),
                 });
         
-                // Handle the response from the server for confirming the order
                 if (!confirmResponse.ok) {
                     console.error('Failed to confirm receiving order:', confirmResponse.statusText);
                     alert('Nhận đơn hàng thất bại! Vui lòng kiểm tra lại thông tin!');
@@ -97,7 +134,6 @@ const DonHangNew = () => {
                 body: JSON.stringify(requestData),
             });
     
-            // Handle the response from the server
             if (response.ok) {
                 const responseData = await response.json();
                 const confirmData = {
@@ -118,7 +154,17 @@ const DonHangNew = () => {
             console.error('Error creating order:', error);
         }
     };
+
+    const handleWeightChange = (e) => {
+        const newWeight = e.target.value;
+        setWeight(newWeight);
     
+        const newMainFee = calculateShippingFee(newWeight, shipmentType);
+        setMainFee(newMainFee);
+
+        const calculatedVatFee = calculateVatFee(mainFee, extraFee, gtvtFee);
+        setVatFee(calculatedVatFee);
+    };
 
     return (
         <div className='add'>
@@ -138,6 +184,11 @@ const DonHangNew = () => {
                             <div className="form-group">
                                 <InputLabel htmlFor="senderAddress">Địa chỉ người gửi</InputLabel>
                                 <input id="senderAddress" value={senderAddress} onChange={e => setSenderAddress(e.target.value)} className="form-control" />
+                            </div>
+
+                            <div className="form-group" style={{width: '430px'}}>
+                                <InputLabel htmlFor="senderAddress">Tỉnh/ Thành phố người gửi</InputLabel>
+                                <input id="provinceSenderAddress" value={province}  className="form-control" readOnly/>
                             </div>
 
                             <div className="form-group">
@@ -172,9 +223,10 @@ const DonHangNew = () => {
                                 </Select>
                             </div>
                             <div className="form-group">
-                                <InputLabel htmlFor="weight">Khối lượng</InputLabel>
-                                <input id="weight" value={weight} onChange={e => setWeight(e.target.value)} className="form-control" />
+                                <InputLabel htmlFor="weight">Khối lượng (gram)</InputLabel>
+                                <input id="weight" value={weight} onChange={handleWeightChange} className="form-control" />
                             </div>
+
                             
                             <div className="form-group">
                                 <div style = {{marginLeft: "20px"}}>
@@ -189,7 +241,7 @@ const DonHangNew = () => {
                         <div className="content2">
                             <div className="form-group">
                                 <InputLabel htmlFor="mainFee">Cước chính</InputLabel>
-                                <input id="mainFee" value={mainFee} onChange={e => setMainFee(e.target.value)} className="form-control" />
+                                <input id="mainFee" value={mainFee} className="form-control" readOnly />
                             </div>
 
                             <div className="form-group">
@@ -198,13 +250,13 @@ const DonHangNew = () => {
                             </div>
 
                             <div className="form-group">
-                                <InputLabel htmlFor="gtvtFee">Cước gtvt</InputLabel>
+                                <InputLabel htmlFor="gtvtFee">Cước GTGT</InputLabel>
                                 <input id="gtvtFee" value={gtvtFee} onChange={e => setGtvtFee(e.target.value)} className="form-control" />
                             </div>
 
                             <div className="form-group">
                                 <InputLabel htmlFor="vatFee">Cước VAT</InputLabel>
-                                <input id="vatFee" value={vatFee} onChange={e => setVatFee(e.target.value)} className="form-control" />
+                                <input id="vatFee" value={vatFee} className="form-control" readOnly/>
                             </div>
                         </div>
 
@@ -222,5 +274,6 @@ const DonHangNew = () => {
         </div>
     );
 };
+
 
 export default DonHangNew;
