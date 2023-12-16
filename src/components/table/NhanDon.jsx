@@ -4,11 +4,9 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const NhanDon = ({ officeID }) => {
-  const navigate = useNavigate();
   const officeIDRef = useRef(officeID);
 
   const fetchOrders = async (officeID) => {
@@ -107,7 +105,7 @@ const NhanDon = ({ officeID }) => {
     </div>
   );
 
-  const [colDefs, setColDefs] = useState([
+  const [colDefs] = useState([
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },
     { field: "Ngày gửi" },
@@ -127,7 +125,7 @@ const NhanDon = ({ officeID }) => {
 
   const defaultColDef = useMemo(() => ({
     filter: true,
-  }));
+  }), []);
 
   const gridOptions = {
     headerHeight: 45,

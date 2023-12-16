@@ -100,6 +100,22 @@ const getStateWait = async (officeID, db, res) => {
 };
 
 // Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+const getStateReturn = async (officeID, db, res) => {
+    const query = `SELECT DISTINCT * FROM good g
+                    JOIN bookinghistory b ON b.ID_good = g.ID_good
+                    WHERE b.ID_Office = ? AND b.State IN ("Chờ nhận", "Đợi nhận");`;
+    return new Promise((resolve, reject) => {
+        db.query(query, [officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
 const getStateNhan = async (officeID, db, res) => {
     const query = `SELECT DISTINCT * FROM good g
                     JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -219,4 +235,4 @@ const getOrderInfo = async (goodID, db, res) => {
 };
 
 module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64, getOrderByQRCode, 
-                    getStateWait, getStateNhan};
+                    getStateWait, getStateNhan, getStateReturn};
