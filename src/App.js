@@ -12,8 +12,9 @@ import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import DonHangPrint from "./pages/new/DonHangPrint";
 import DonHangChuyen from "./pages/new/DonHangChuyen";
-import NhanVienDetail from "./components/table/edit"
-import Main from "./pages/main/main"
+import DonHangReturn from "./pages/list/DonHangReturn";
+import NhanVienDetail from "./components/table/edit";
+import Main from "./pages/main/main";
 
 function App() {
     return (
@@ -36,29 +37,28 @@ function App() {
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
-                                {/* <Route path=":phongbanID" element={<PhongBanSingle/>}/>
-                            <Route path="new" element={<PhongBanNew/>}/> */}
                             </Route>
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
-
                                 <Route path="add/:userID" element={<DonHangNew />} />
                                 <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
+
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
-
-                                {/* <Route path=":chucvuID" element={<ChucVuSingle/>}/>
-                            <Route path="new" element={<ChucVuNew/>}/> */}
                             </Route>
+
                             <Route path="create">
                                 <Route index element={<ConfirmDon />} />
-
                                 <Route path="transfer/:goodID" element={<DonHangChuyen/>}/>
                             </Route>
 
                             <Route path="receive">
                                 <Route index element={<DonHangNhan />} />
+                            </Route>
+
+                            <Route path="return">
+                                <Route index element={<DonHangReturn />} />
                             </Route>
                         </Route>
                     </Routes>

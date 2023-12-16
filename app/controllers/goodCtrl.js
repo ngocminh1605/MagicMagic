@@ -141,6 +141,19 @@ const goodCtrl = {
         }
     },
 
+    getStateReturn: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.query; 
+            const results = await goodQueries.getStateReturn(officeID, db);
+        
+            res.status(200).json({ message: "Truy vấn lấy các đơn hàng trạng thái đang đợi thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy các đơn hàng trạng thái đang đợi: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 module.exports = goodCtrl;

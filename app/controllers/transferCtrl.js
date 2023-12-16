@@ -89,8 +89,86 @@ const transferCtrl = {
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
+
+    confirmSuccess : async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID } = req.body;
+            const currentTime = new Date();
+            const state = "Thành công";
+
+            const office = await transferQueries.getIDOficeTransfer(goodID, db, res);
+            office.map(async row => {
+                await transferQueries.addHistory(goodID, state, row.ID_Office, currentTime, db, res);
+            });
     
+            res.status(201).json({ message: "Thêm history thành công ở cả 4 office!" });
+        } catch (error) {
+            console.error("Lỗi thêm state thành công: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
     
+    getGoodWaitConfirm: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.body;
+    
+            const idResults = await transferQueries.getIDtransfer(officeID, db, res);
+    
+            const promiseArray = idResults.map(async row => {
+                const data = await transferQueries.gettransfer(row.ID_good, officeID, db, res);
+                const state = await transferQueries.getStatetransfer(row.ID_good, officeID, db, res);
+                
+                const hasReceived = state.some(s => s.State === 'Đã nhận' || s.State === 'Đã gửi' || s.State === 'Chờ nhận' || s.State === 'Đợi nhận');
+                const hasSent = state.some(s => s.State === 'Thành công' || s.State === 'Trả về');
+
+                if (hasReceived && !hasSent) {
+                    return data;
+                }
+                return null;
+            });
+    
+            const filteredResults = await Promise.all(promiseArray);
+    
+            res.status(201).json({ message: "Lấy dữ liệu thành công!", data: filteredResults });
+        } catch (error) {
+            console.error("Lỗi lấy dữ liệu: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+  
+    confirmFail : async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID, officeID } = req.body;
+            const currentTime = new Date();
+            const state1 = "Trả về";
+
+            await transferQueries.updateReturn(goodID, state1, officeID, currentTime, db, res);
+
+            const order = await transferQueries.gettransfer(goodID, officeID, db, res);
+
+            const newNameSender = order[0].Name_receiver;
+            const newAddressSender = order[0].Address_receiver;
+            const newPhoneSender = order[0].Phone_receiver;
+
+            const newNameReceiver = order[0].Name_sender;
+            const newAddressReceiver = order[0].Address_sender;
+            const newPhoneReceiver = order[0].Phone_sender;
+
+            await transferQueries.updateGood(newNameSender, newAddressSender, newPhoneSender, newNameReceiver, newAddressReceiver, newPhoneReceiver, goodID, db, res);
+
+            const state2 = "Đã nhận"
+            await transferQueries.addHistory(goodID, state2, officeID, currentTime, db, res);
+    
+            res.status(201).json({ message: "Trả lại đơn hàng thành công!" });
+        } catch (error) {
+            console.error("Lỗi trả lại đơn hàng: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 module.exports = transferCtrl;

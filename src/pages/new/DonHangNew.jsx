@@ -107,7 +107,7 @@ const DonHangNew = () => {
                 console.log(responseData.message); // Log success message
                 alert('Đã thêm đơn hàng!');
                 await handleConfirmRequest(confirmData);
-                navigate(`/orders/transfer/${responseData.data[0].ID_good}`);
+                navigate(`/orders`);
                 return;
             } else {
                 console.error('Failed to create order:', response.statusText);
