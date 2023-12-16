@@ -3,14 +3,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NhanVienList from "./pages/list/NhanVienList";
 import PhongBanList from "./pages/list/PhongBanList";
 import DonHang from "./pages/list/Donhang";
+import DonHangNhan from "./pages/list/DonHangNhan";
+import ConfirmDon from "./pages/list/ConfirmDon"
 import Login from "./login/signup/login";
 import NhanVienNew from "./pages/new/NhanVienNew";
 import ChucvuList from "./pages/list/ChucvuList";
 import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
-import { useEffect } from "react";
 import DonHangPrint from "./pages/new/DonHangPrint";
+
 import NhanVienEdit from "./pages/edit/NhanVienEdit"
+import DonHangChuyen from "./pages/new/DonHangChuyen";
 import Main from "./pages/main/main"
 
 
@@ -51,7 +54,13 @@ function App() {
                             <Route path="new" element={<ChucVuNew/>}/> */}
                             </Route>
                             <Route path="create">
-                                <Route index element={<DonHangNew />} />
+                                <Route index element={<ConfirmDon />} />
+
+                                <Route path="transfer/:goodID" element={<DonHangChuyen/>}/>
+                            </Route>
+
+                            <Route path="receive">
+                                <Route index element={<DonHangNhan />} />
                             </Route>
                         </Route>
                     </Routes>

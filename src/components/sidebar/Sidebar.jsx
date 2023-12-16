@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './sidebar.scss';
 import logo from '../../assets/logo/express-delivery.png';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
-import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
+import ShippingIcon from '@mui/icons-material/LocalShippingOutlined';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import nv from '../navbar/nv.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from '../../constant/axios';
 
 
 const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
+  const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
 
@@ -41,9 +43,16 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
         if (response.status === 200) {
           const { userId, username, title, officeID } = response.data.user;
           setUserInfo({ userId, username, title, officeID });
-          setOfficeID(officeID);
-          setUserID(userId);
-          setTitle(title);
+          if (setUserID) {
+            setUserID(userId);
+          }
+          if(setOfficeID) {
+            setOfficeID(officeID);
+          }
+          if (setTitle) {
+            setTitle(title);
+          }
+          
         } else {
           console.error('Failed to fetch user info:', response.data.message);
         }
@@ -52,7 +61,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
       }
     };
     fetchUserInfo();
-  }, [setOfficeID, setUserID, setTitle]);
+  }, [setOfficeID, setUserID, setTitle, navigate]);
 
   const handleItemClick = (index) => {
     setActiveItem(index);
@@ -69,34 +78,35 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   // };
 
   const menuItems = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
     { icon: <BusinessOutlinedIcon />, text: 'Office', path: '/office' },
     { icon: <WorkOutlinedIcon />, text: 'Position', path: '/position' },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems2 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems3 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
-    { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
+    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
 
   ];
 
   const menuItems4 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
     { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
   ];
 
   // console.log(userInfo.title)
-  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");

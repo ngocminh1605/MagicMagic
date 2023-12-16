@@ -45,7 +45,6 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       </Button>
       <Button
         style={{
-          //onclick = {DeleteHandle(${prop.data["ID"]})}
           textTransform: 'none',
           backgroundColor: "crimson",
           color: 'white',
@@ -54,6 +53,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
           borderRadius: 20,
           height: 35,
         }}
+        onClick={() => DeleteHandle(props.data["ID_User"])}
       >
         Delete
       </Button>
@@ -62,50 +62,65 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
   ]);
+  const fetchUser = async (officeID, userID, title) => {
+    try {
+      const response = await axios.get('http://localhost:3001/users/info_users', {
+        params: {
+          officeID: officeID,
+          userID: userID,
+          title: title
+        }
+      });
+      if (response.status === 200) {
+        const userData = response.data.users;
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        console.log("Dữ liệu người dùng:", userData);
+        const formattedData = userData.map(item => {
+          return {
+            "ID_User": item.ID_user,
+            "UserName": item.UserName,
+            "Title": item.title,
+            "Office": item.UserName.substring(3),
+            "DateStart": new Date(item.datestart).toLocaleDateString(undefined, options),
+          };
+        });
+        setRowData(formattedData);
+      } else {
+        console.error("Request failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUser = async (officeID, userID, title) => {
-      try {
-
-        const response = await axios.get('http://localhost:3001/users/info_users', {
-          params: {
-            officeID: officeID,
-            userID: userID,
-            title: title
-          }
-        });
-        if (response.status === 200) {
-          const userData = response.data.users;
-          const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-          console.log("Dữ liệu người dùng:",userData);
-          const formattedData = userData.map(item => {
-            return {
-              "ID_User": item.ID_user,
-              "UserName": item.UserName,
-              "Title": item.title,
-              "Office": item.UserName.substring(3),
-              "DateStart": new Date(item.datestart).toLocaleDateString(undefined, options),
-            };
-          });
-          setRowData(formattedData);
-        } else {
-          console.error("Request failed with status:", response.status);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    console.log('useEffect is called');
     fetchUser(officeID, userID, title);
   }, [officeID, userID, title]);
 
+  const DeleteHandle = async (userID) => {
+    const confirmed = window.confirm("Bạn có chắc là muốn xóa người này ?");
+    if (confirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:3001/users/delete/${userID}`);
+        fetchUser(officeID, userID, title)
+        if (response.status === 200) {
+          console.log('Xóa nhân viên thành công');
+        } else {
+          console.error('Delete failed with status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
+    }
+  };
 
-  // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
     { field: "ID_User" },
     { field: "UserName" },
     { field: "Title" },
-    { field: "Office"},
-    { field: "DateStart"},
+    { field: "Office" },
+    { field: "DateStart" },
     {
       headerName: "Action",
       minWidth: 245,

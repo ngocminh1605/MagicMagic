@@ -5,25 +5,26 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-const OrdersTable = ({ officeID, userID, title }) => {
+const ConfirmTable = ({ officeID, userID, title }) => {
   const navigate = useNavigate();
 
   const ActionButtonsRenderer = (props) => (
+
+    
     <div>
       <Button
-        onClick={() => navigate(`/orders/view/${props.data["ID"]}`)}
+        onClick={() => navigate(`transfer/${props.data["ID"]}`)} ///GoodID
         style={{
           textTransform: 'none',
           backgroundColor: 'green',
           color: 'white',
-          width: 60,
+          width: 70,
           borderRadius: 20,
           height: 35,
         }}
       >
-        View
+        Confirm
       </Button>
     </div>
   );
@@ -34,68 +35,67 @@ const OrdersTable = ({ officeID, userID, title }) => {
   ]);
 
 
+
   useEffect(() => {
     const fetchOrders = async (officeID) => {
-      try {
-        const response = await axios.get('http://localhost:3001/goods/getAll', {
-          params: {
-            "officeID": officeID
+      if (officeID != null) {
+        try {
+          const response = await fetch('http://localhost:3001/transfer/getTransfer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ officeID: officeID}),
         });
-  
-        const formattedData = response.data.data.map(item => ({
-          "ID": item.ID_good,
-          "Mã đơn hàng": item.QR_code,
-          "Loại hàng": item.Type,
-          "Ngày gửi": new Date(item.Senddate).toLocaleString(),
-          "Giá": item.Price,
-          "Cân nặng": item.Weight,
-          "Mã Bưu chính": item.Postalcode,
-          "Tên người gửi": item.Name_sender,
-          "Địa chỉ người gửi": item.Address_sender,
-          "Số điện thoại người gửi": item.Phone_sender,
-          "Tên người nhận": item.Name_receiver,
-          "Địa chỉ người nhận": item.Address_receiver,
-          "Số điện thoại người nhận": item.Phone_receiver,
-        }));
-  
-        setRowData(formattedData);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
+
+        const responseData = await response.json();
+          
+          const formattedData = responseData.data
+          .filter(item => Array.isArray(item) && item !== null)
+          .flatMap(item => item.map(innerItem => ({
+            "ID": innerItem.ID_good,
+            "Mã đơn hàng": innerItem.QR_code,
+            "Loại hàng": innerItem.Type,
+            "Ngày gửi": new Date(innerItem.Senddate).toLocaleString(),
+            "Tên người gửi": innerItem.Name_sender,
+            "Địa chỉ người gửi": innerItem.Address_sender,
+            "Số điện thoại người gửi": innerItem.Phone_sender,
+            "Tên người nhận": innerItem.Name_receiver,
+            "Địa chỉ người nhận": innerItem.Address_receiver,
+            "Số điện thoại người nhận": innerItem.Phone_receiver,
+          })));
+          setRowData(formattedData);
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+        }
       }
+      
     };
 
     fetchOrders(officeID);
   }, [officeID]);
 
-  const colDefsBase = [
+  const [colDefs] = useState([
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },
     { field: "Ngày gửi" },
-    { field: "Giá" },
-    { field: "Cân nặng" },
-    { field: "Mã Bưu chính" },
     { field: "Tên người gửi" },
     { field: "Địa chỉ người gửi" },
     { field: "Số điện thoại người gửi" },
     { field: "Tên người nhận" },
     { field: "Địa chỉ người nhận" },
     { field: "Số điện thoại người nhận" },
-  ];
-
-  const actionColDef = {
-    headerName: "Action",
-    minWidth: 100,
-    maxWidth: 120,
-    cellRenderer: ActionButtonsRenderer,
-  };
-
-  const colDefs = title === "Nhân viên giao dịch" ? [...colDefsBase, actionColDef] : colDefsBase;
-
+    {
+      headerName: "Action",
+      minWidth: 100,
+      maxWidth: 120,
+      cellRenderer: ActionButtonsRenderer, 
+    },
+  ]);
+  
   const defaultColDef = useMemo(() => ({
     filter: true,
   }), []);
-
   const gridOptions = {
     // domLayout: 'autoHeight',
     headerHeight: 45,
@@ -121,4 +121,4 @@ const OrdersTable = ({ officeID, userID, title }) => {
     </div>
   );
 }
-export default OrdersTable;
+export default ConfirmTable;

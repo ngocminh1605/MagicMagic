@@ -7,6 +7,9 @@ require('dotenv').config();
 app.use(cors());
 var usersRouter = require('./routes/users.js');
 var goodsRouter = require('./routes/goods.js');
+var transferRouter = require('./routes/transfer.js');
+var officeRouter = require('./routes/office.js');
+
 
 var mysql = require('mysql2');
 var conn = mysql.createConnection({
@@ -27,10 +30,11 @@ conn.connect((err) => {
 
 app.locals.db = conn;
 app.use(express.json());
+
 app.use('/users', usersRouter);
-
-app.use('/goods', goodsRouter)
-
+app.use('/goods', goodsRouter);
+app.use('/transfer', transferRouter);
+app.use('/office', officeRouter);
 
 
 app.get('/', (req, res) => {

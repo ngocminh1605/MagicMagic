@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import "./donhangprint.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import axios from "axios";
-import { Button } from '@mui/material';
 import logo from '../../assets/logo/express-delivery.png';
 import { BiSquare, BiCheckSquare } from "react-icons/bi";
 import { Link } from 'react-router-dom';
-import { margin } from '@mui/system';
 
 const DonHangPrint = () => {
-  const navigate = useNavigate();
   const { goodID } = useParams();
   const [orderInfo, setOrderInfo] = useState(null);
   const [qrCodeImage, setQrCodeImage] = useState(null);
@@ -112,8 +109,8 @@ const DonHangPrint = () => {
 
               <div className="grid-item" style = {{borderLeft:"2px solid black"}}>
                 <p style={{ fontWeight: "bold" }}>5. Dịch vụ đặc biệt/ Cộng thêm:</p>
-                <p>.......................................................................................................................</p>
-                <p style = {{marginBottom:"0.025px"}}>.......................................................................................................................</p>
+                <p>............................................................................................................................................</p>
+                <p style = {{marginBottom:"0.025px"}}>............................................................................................................................................</p>
               </div>
               <div className="grid-item" style = {{borderLeft:"2px solid black"}}>
                 <p style={{ fontWeight: "bold" }}>6. Cam kết của người gửi khi không phát được bưu gửi:</p>
@@ -134,7 +131,7 @@ const DonHangPrint = () => {
                 <p style={{ fontWeight: "bold" }}>7. Cam kết của người gửi:</p>
                 <p>Tôi chấp nhận các điều khoản tại mặt sau phiếu gửi và cam đoan bưu gửi này không chứa những mặt hàng nguy hiểm, cấm gửi. Trường hợp không phát được hãy thực hiện chỉ dẫn tại mục 6.</p>
                 
-                <p style={{ fontWeight: "bold" }}><span class="spacer">8. Ngày giờ gửi:</span> <span class="spacer">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chữ ký người gửi</span></p>
+                <p style={{ fontWeight: "bold" }}><span className="spacer">8. Ngày giờ gửi:</span> <span className="spacer">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chữ ký người gửi</span></p>
                 <p style={{marginTop:"6.1px"}}>{new Date(orderInfo.Senddate).toLocaleString()}
                 </p>
               </div>
@@ -146,8 +143,8 @@ const DonHangPrint = () => {
               <div className="grid-item-nhan">
                 <p style={{ fontWeight: "bold" }}>2. Họ tên địa chỉ người nhận:</p>
                 <p>{orderInfo.Name_receiver}</p>
-                <p>{orderInfo.Phone_receiver}</p>
-                <p style={{ fontWeight: "bold" }}>Điện thoại: {orderInfo.Address_receiver}</p>
+                <p>{orderInfo.Address_receiver}</p>
+                <p style={{ fontWeight: "bold" }}>Điện thoại: {orderInfo.Phone_receiver}</p>
                 <p style={{ fontWeight: "bold" }}>Mã bưu chính:</p>
               </div>
 

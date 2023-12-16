@@ -34,7 +34,6 @@ const NhanVienNew = () => {
 
         if (!isProceed) {
             // setAlert({ status: 'error', title: 'Error', description: 'Please enter the value in' });
-            alert('Vui lòng điền đầy đủ thông tin !');
         } else {
             if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
                 isProceed = false;
@@ -49,7 +48,7 @@ const NhanVienNew = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!IsValidate()) {
-            alert('Vui lòng điền đầy đủ thông tin!');
+            // alert('Bạn chưa điền thông tin!');
             return;
         }
         try {
@@ -127,6 +126,7 @@ const NhanVienNew = () => {
 
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>
+                        
                         <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
                     </div>
                 </form>
