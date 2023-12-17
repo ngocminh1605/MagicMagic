@@ -15,4 +15,6 @@ router.post("/getWaitConfirm", transferCtrl.getGoodWaitConfirm);
 router.post("/receiveSuccess", transferCtrl.confirmSuccess);
 router.post("/receiveFail", transferCtrl.confirmFail);
 
+router.post("/checkTransfer", transferCtrl.getByIDandOffice)
+
 module.exports = router;

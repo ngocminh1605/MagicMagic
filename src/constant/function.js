@@ -7,22 +7,22 @@ function calculateShippingFee(weight, shipmentType) {
 
     if (shipmentType === 'Hàng hóa') {
         if (weight < 50) {
-            baseFee = 11000;
+            baseFee = 10000;
         } else if (weight <= 100) {
             baseFee = 16000;
         } else if (weight <= 250) {
-            baseFee = 22000;
+            baseFee = 20000;
         } else if (weight <= 500) {
-            baseFee = 31000;
+            baseFee = 25000;
         } else if (weight <= 1000) {
-            baseFee = 43000;
+            baseFee = 35000;
         } else if (weight <= 1500) {
-            baseFee = 52000;
+            baseFee = 41000;
         } else if (weight <= 2000) {
-            baseFee = 64000;
+            baseFee = 50000;
         } else {
             const additionalWeight = Math.ceil((weight - 2000) / 0.5);
-            baseFee = 64000 + additionalWeight * 5;
+            baseFee = 50000 + additionalWeight * 5;
         }
     } else if (shipmentType === 'Tài liệu') {
         if (weight < 50) {
@@ -30,18 +30,18 @@ function calculateShippingFee(weight, shipmentType) {
         } else if (weight <= 100) {
             baseFee = 15000;
         } else if (weight <= 250) {
-            baseFee = 20000;
+            baseFee = 18000;
         } else if (weight <= 500) {
-            baseFee = 28000;
+            baseFee = 22000;
         } else if (weight <= 1000) {
-            baseFee = 38000;
+            baseFee = 30000;
         } else if (weight <= 1500) {
-            baseFee = 45000;
+            baseFee = 38000;
         } else if (weight <= 2000) {
-            baseFee = 55000;
+            baseFee = 45000;
         } else {
             const additionalWeight = Math.ceil((weight - 2000) / 0.5);
-            baseFee = 64000 + additionalWeight * 3.5;
+            baseFee = 45000 + additionalWeight * 3.5;
         }
     }
 
