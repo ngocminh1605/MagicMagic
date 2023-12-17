@@ -81,7 +81,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
             "ID_User": item.ID_user,
             "UserName": item.UserName,
             "Title": item.title,
-            "Office": item.UserName.substring(3),
+            "Office": item.Name,
             "DateStart": new Date(item.datestart).toLocaleDateString(undefined, options),
           };
         });
@@ -117,7 +117,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   };
 
   const [colDefs, setColDefs] = useState([
-    { field: "ID_User" },
+    { field: "ID_User", maxWidth: 150},
     { field: "UserName" },
     { field: "Title" },
     { field: "Office" },

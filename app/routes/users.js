@@ -267,7 +267,7 @@ router.get("/info_users", async (req, res) => {
     if (title === "admin") {
         // Nếu title là admin, truy vấn tất cả user là trưởng điểm
         console.log("là admin");
-        getUsersQuery = "SELECT * FROM user WHERE Title = 'Trưởng điểm'";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.Title = 'Trưởng điểm';";
         db.query(getUsersQuery, (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -278,7 +278,7 @@ router.get("/info_users", async (req, res) => {
     } else if (title === "Trưởng điểm") {
         console.log("trưởng điểm hay không", officeID);
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
-        getUsersQuery = "SELECT * FROM user WHERE OfficeId = ?";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm';";
         db.query(getUsersQuery, [officeID], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -290,9 +290,6 @@ router.get("/info_users", async (req, res) => {
         return res.status(400).json({ message: "Title không hợp lệ." });
     }
 });
-
-
-
 
 
 
