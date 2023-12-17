@@ -62,9 +62,24 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     fetchUserInfo();
   }, [setOfficeID, setUserID, setTitle, navigate]);
 
-  const handleItemClick = (index) => {
+  const handleItemClick1 = (index) => {
     setActiveItem(index);
     const path = menuItems[index].path;
+    navigate(path);
+  };
+  const handleItemClick2 = (index) => {
+    setActiveItem(index);
+    const path = menuItems2[index].path;
+    navigate(path);
+  };
+  const handleItemClick3 = (index) => {
+    setActiveItem(index);
+    const path = menuItems3[index].path;
+    navigate(path);
+  };
+  const handleItemClick4 = (index) => {
+    setActiveItem(index);
+    const path = menuItems4[index].path;
     navigate(path);
   };
 
@@ -153,7 +168,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                   <div
                     key={index}
                     className={`menuItem ${index === activeItem ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick1(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -169,7 +184,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick2(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -185,7 +200,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick3(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -200,7 +215,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick4(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
