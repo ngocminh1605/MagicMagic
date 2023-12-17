@@ -40,7 +40,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log('API Response:', response.data); // Log the entire response object
         if (response.status === 200) {
           const { userId, username, title, officeID } = response.data.user;
           setUserInfo({ userId, username, title, officeID });
@@ -53,7 +52,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
           if (setTitle) {
             setTitle(title);
           }
-          
         } else {
           console.error('Failed to fetch user info:', response.data.message);
         }

@@ -12,7 +12,7 @@ const DonHang = () => {
     <div className="list">
       <Sidebar setOfficeID={setOfficeID} setUserID={setUserID} setTitle={setTitle}/>
       <div className="container">
-        <div className='title'>Orders</div>
+        <div className='title' style = {{marginBottom:"50px"}}>Orders</div>
         <OrdersTable officeID={officeID} userID={userID} title={title} />
       </div>
     </div>

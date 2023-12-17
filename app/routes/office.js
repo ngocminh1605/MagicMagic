@@ -11,6 +11,4 @@ router.post("/options", officeCtrl.getOption);
 router.post("/provinceOffice", officeCtrl.getProvinceOffice);
 
 
-// lấy các tên office tương ứng vs officeID
-// router.get("/officeName", officeCtrl.getOfffice);
 module.exports = router;

@@ -4,7 +4,7 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
-
+import Select from "react-select"
 
 const NhanVienNew = () => {
     const [username, setUsername] = useState('');
@@ -13,7 +13,18 @@ const NhanVienNew = () => {
     const [office, setOffice] = useState('');
     const [position, setPosition] = useState('');
     const navigate = useNavigate();
-
+    const options = [
+        { value: '1', label: 'Option 1' },
+        { value: '2', label: 'Option 2' },
+        // ... add more options
+    ];
+    const customStyles = {
+        menu: provided => ({
+            ...provided,
+            maxHeight: '200px', // Set the maximum height for the dropdown
+            overflowY: 'auto',  // Enable vertical scrolling if needed
+        }),
+    };
     const IsValidate = () => {
         let isProceed = true;
         let errorMessage = 'Please enter the value in ';
@@ -44,6 +55,8 @@ const NhanVienNew = () => {
 
         return isProceed;
     };
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,7 +91,7 @@ const NhanVienNew = () => {
             <Sidebar />
             <div className="container">
                 <div className="title">Employee</div>
-                
+
                 <form className="offset-lg-1 col-lg-8" onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="content2">
@@ -110,6 +123,10 @@ const NhanVienNew = () => {
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                 </select>
+                                <Select
+                                    options={options}
+                                    styles={customStyles}
+                                />
                             </div>
 
                             <div className="form-group">
@@ -120,13 +137,15 @@ const NhanVienNew = () => {
                                     <option value="Nhân viên giao dịch">Nhân viên giao dịch</option>
                                     <option value="Nhân viên tập kết">Nhân viên tập kết</option>
                                 </select>
+                                
                             </div>
                         </div>
                     </div>
 
+
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>
-                        
+
                         <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
                     </div>
                 </form>
