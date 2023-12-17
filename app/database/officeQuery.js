@@ -43,4 +43,18 @@ const getOfficeByID = async (officeID, db, res) => {
 };
 
 
-module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID };
+const getAllOffice = async (db, res) => {
+    const getQuery = "SELECT ID_office, Name FROM office;";
+    return new Promise((resolve, reject) => {
+        db.query(getQuery, (err, results) => {
+            if (err) {
+                console.error("Lỗi lấy dữ liệu office: ", err.message);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
+module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID, getAllOffice };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './nhanviennew.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,15 +13,29 @@ const NhanVienNew = () => {
     const [office, setOffice] = useState('');
     const [position, setPosition] = useState('');
     const navigate = useNavigate();
-    const options = [
-        { value: '1', label: 'Option 1' },
-        { value: '2', label: 'Option 2' },
-        // ... add more options
-    ];
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        const fetchOfficeOptions = async () => {
+            try {
+                const officeData = await optionOffice();
+                const mappedOptions = officeData.map(office => ({
+                    value: office.ID_office,
+                    label: office.Name
+                }));
+                setOptions(mappedOptions);
+            } catch (error) {
+                console.error('Error fetching office options:', error);
+            }
+        };
+
+        fetchOfficeOptions();
+    }, []);
+
     const customStyles = {
         menu: provided => ({
             ...provided,
-            maxHeight: '200px', // Set the maximum height for the dropdown
+            // maxHeight: '200px', // Set the maximum height for the dropdown
             overflowY: 'auto',  // Enable vertical scrolling if needed
         }),
     };
@@ -56,7 +70,26 @@ const NhanVienNew = () => {
         return isProceed;
     };
 
+    const optionOffice = async () => {
+        try {
+          const response = await fetch('http://localhost:3001/office/allOffice', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(),
+          });
     
+          if (response.ok) {
+            const data = await response.json();
+            return data.data;
+          } else {
+            console.error('Lỗi lấy office:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Lỗi lấy office:', error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -117,18 +150,13 @@ const NhanVienNew = () => {
 
                             <div className="form-group">
                                 <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
-                                <select id="office" value={office} onChange={(e) => setOffice(e.target.value)} className="form-control">
-                                    <option value="">-- Select Office --</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
                                 <Select
                                     options={options}
                                     styles={customStyles}
+                                    onChange={(selectedOption) => setOffice(selectedOption.value)}
+                                    
                                 />
                             </div>
-
                             <div className="form-group">
                                 <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
                                 <select id="position" value={position} onChange={(e) => setPosition(e.target.value)} className="form-control">
