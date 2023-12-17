@@ -21,7 +21,6 @@ const ReturnTable = ({ officeID }) => {
       });
 
       const responseData = await response.json();
-        
         const formattedData = responseData.data
         .filter(item => Array.isArray(item) && item !== null)
         .flatMap(item => item.map(innerItem => ({
@@ -51,7 +50,6 @@ const ReturnTable = ({ officeID }) => {
   const handleConfirmButtonClick = useCallback(
     async (goodID) => {
         const currentOfficeID = officeIDRef.current;
-  
         if (currentOfficeID != null) {
           try {
             const confirmResponse = await fetch('http://localhost:3001/transfer/receiveSuccess',
@@ -84,9 +82,7 @@ const ReturnTable = ({ officeID }) => {
   const handleReturnButtonClick = useCallback(
     async (goodID) => {
         const currentOfficeID = officeIDRef.current;
-  
         if (currentOfficeID != null) {
-
             const data = {
                 goodID: goodID,
                 officeID: currentOfficeID
@@ -119,6 +115,7 @@ const ReturnTable = ({ officeID }) => {
       []
   );
 
+  
   const [rowData, setRowData] = useState([]);
 
   const ActionButtonsRenderer = (props) => (

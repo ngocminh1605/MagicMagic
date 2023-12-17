@@ -76,7 +76,6 @@ const NhanVienNew = () => {
                 alert('Thêm nhân viên thành công :3');
                 navigate('/nhanvien');
             } else {
-                // Registration failed
                 console.log("fails");
             }
         } catch (error) {
@@ -145,7 +144,6 @@ const NhanVienNew = () => {
 
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>
-
                         <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
                     </div>
                 </form>

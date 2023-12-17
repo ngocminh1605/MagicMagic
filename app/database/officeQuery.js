@@ -42,5 +42,4 @@ const getOfficeByID = async (officeID, db, res) => {
     });
 };
 
-
 module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID };

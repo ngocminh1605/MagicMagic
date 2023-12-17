@@ -5,13 +5,12 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { createRoot } from 'react-dom/client';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { axiosInstance } from '../../constant/axios';
 
 const NhanVienTable = ({ officeID, userID, title }) => {
+  console.log("hi",officeID, userID, title);
   const navigate = useNavigate();
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
@@ -62,6 +61,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
   ]);
+
   const fetchUser = async (officeID, userID, title) => {
     console.log('useEffect is called');
     try {
@@ -99,13 +99,13 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     fetchUser(officeID, userID, title);
   }, [officeID, userID, title]);
 
-  const DeleteHandle = async (userID) => {
+  const DeleteHandle = async (deleteUserId) => {
     const confirmed = window.confirm("Bạn có chắc là muốn xóa người này ?");
     if (confirmed) {
       try {
-        const response = await axios.delete(`http://localhost:3001/users/delete/${userID}`);
-        fetchUser(officeID, userID, title)
+        const response = await axios.delete(`http://localhost:3001/users/delete/${deleteUserId}`);
         if (response.status === 200) {
+          fetchUser(1,userID,"Trưởng điểm")
           console.log('Xóa nhân viên thành công');
         } else {
           console.error('Delete failed with status:', response.status);
@@ -116,8 +116,8 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     }
   };
 
-  const [colDefs, setColDefs] = useState([
-    { field: "ID_User", maxWidth: 150},
+  const [colDefs] = useState([
+    { field: "ID_User", maxWidth: 150 },
     { field: "UserName" },
     { field: "Title" },
     { field: "Office" },
@@ -131,7 +131,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
 
   const defaultColDef = useMemo(() => ({
     filter: true,
-  }));
+  }), []);
   const gridOptions = {
     headerHeight: 45,
     rowHeight: 45,

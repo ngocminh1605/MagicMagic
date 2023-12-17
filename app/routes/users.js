@@ -22,6 +22,7 @@ const comparePasswords = async (password, hashedPassword) => {
         throw "Error comparing passwords";
     }
 };
+
 const createUser = async (username, email, password, officeID, Title, db, res) => {
     // Kiểm tra có tồn tại mail chưa
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
@@ -48,6 +49,7 @@ const createUser = async (username, email, password, officeID, Title, db, res) =
         });
     });
 };
+
 
 router.post("/register", async (req, res) => {
     try {
@@ -253,8 +255,6 @@ router.get("/info/:userid", async (req, res) => {
         return res.status(200).json(results);
     });
 });
-
-
 
 
 

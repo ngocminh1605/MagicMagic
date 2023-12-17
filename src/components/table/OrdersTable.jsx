@@ -9,7 +9,6 @@ import axios from 'axios';
 
 const OrdersTable = ({ officeID, userID, title }) => {
   const navigate = useNavigate();
-
   const ActionButtonsRenderer = (props) => (
     <div>
       <Button
