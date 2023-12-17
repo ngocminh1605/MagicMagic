@@ -8,6 +8,7 @@ router.get("/transaction", officeCtrl.getOfficeTransaction);
 router.get("/gathering", officeCtrl.getOfficeGathering);
 router.get("/byID", officeCtrl.getOfficeByID);
 router.post("/options", officeCtrl.getOption);
+router.post("/provinceOffice", officeCtrl.getProvinceOffice);
 
 
 // lấy các tên office tương ứng vs officeID
