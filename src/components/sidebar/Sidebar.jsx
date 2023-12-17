@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './sidebar.scss';
 import logo from '../../assets/logo/express-delivery.png';
 import HomeIcon from '@mui/icons-material/Home';

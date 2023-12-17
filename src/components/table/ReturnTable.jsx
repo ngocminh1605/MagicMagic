@@ -8,6 +8,30 @@ import { Button } from '@mui/material';
 
 const ReturnTable = ({ officeID }) => {
   const officeIDRef = useRef(officeID);
+  const [rowData, setRowData] = useState([]);
+
+  const checkReturn = async (goodID) => {
+    try {
+      const response = await fetch('http://localhost:3001/transfer/checkTransfer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ officeID: officeIDRef.current, goodID: goodID }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.data;
+      } else {
+        console.error('Lỗi kiểm tra trả về:', response.statusText);
+        return false; // Trả về false nếu có lỗi
+      }
+    } catch (error) {
+      console.error('Lỗi kiểm tra trả về:', error);
+      return false;
+    }
+  };
 
   const fetchOrders = async (officeID) => {
     if (officeID != null) {
@@ -46,6 +70,7 @@ const ReturnTable = ({ officeID }) => {
     officeIDRef.current = officeID;
     fetchOrders(officeID);
   }, [officeID]);
+
   
   const handleConfirmButtonClick = useCallback(
     async (goodID) => {
@@ -115,40 +140,74 @@ const ReturnTable = ({ officeID }) => {
       []
   );
 
-  
-  const [rowData, setRowData] = useState([]);
+  const ActionButtonsRenderer = (props) => {
+    const goodID = `${props.data["ID"]}`;
+    const [canReturn, setCanReturn] = useState();
 
-  const ActionButtonsRenderer = (props) => (
-    <div style={{ justifyContent: "space-between" }}>
-      <Button
-        onClick={() => handleConfirmButtonClick(`${props.data["ID"]}`)} ///GoodID
-        style={{
-          textTransform: 'none',
-          backgroundColor: 'green',
-          color: 'white',
-          width: 70,
-          borderRadius: 20,
-          height: 35,
-          marginRight: '8px',
-        }}
-      >
-        Đã nhận
-      </Button>
-      <Button
-        onClick={() => handleReturnButtonClick(`${props.data["ID"]}`)} ///GoodID
-        style={{
-          textTransform: 'none',
-          backgroundColor: 'green',
-          color: 'white',
-          width: 70,
-          borderRadius: 20,
-          height: 35,
-        }}
-      >
-        Trả về
-      </Button>
-    </div>
-  );
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const result = await checkReturn(goodID);
+          setCanReturn(result);
+        } catch (error) {
+          console.error('Error checking return:', error);
+        } 
+      };
+
+      fetchData();
+    }, [goodID]);
+
+   return (
+      <div style={{ justifyContent: 'space-between' }}>
+        {canReturn ? (
+          <Button
+            onClick={() => handleConfirmButtonClick(goodID)}
+            style={{
+              textTransform: 'none',
+              backgroundColor: 'green',
+              color: 'white',
+              width: 75,
+              borderRadius: 20,
+              height: 35,
+            }}
+          >
+            Đã trả lại
+          </Button>
+        ) : (
+          <>
+            <Button
+              onClick={() => handleConfirmButtonClick(goodID)}
+              style={{
+                textTransform: 'none',
+                backgroundColor: 'green',
+                color: 'white',
+                width: 70,
+                borderRadius: 20,
+                height: 35,
+                marginRight: '8px',
+              }}
+            >
+              Đã nhận
+            </Button>
+            <Button
+              onClick={() => handleReturnButtonClick(goodID)}
+              style={{
+                textTransform: 'none',
+                backgroundColor: 'green',
+                color: 'white',
+                width: 70,
+                borderRadius: 20,
+                height: 35,
+              }}
+            >
+              Trả về
+            </Button>
+          </>
+        )}
+      </div>
+    );
+  };
+  
 
   const [colDefs] = useState([
     { field: "Mã đơn hàng" },

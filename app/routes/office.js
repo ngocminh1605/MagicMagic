@@ -10,5 +10,7 @@ router.get("/byID", officeCtrl.getOfficeByID);
 router.post("/options", officeCtrl.getOption);
 router.post("/provinceOffice", officeCtrl.getProvinceOffice);
 
+router.get("/allOffice", officeCtrl.getAllOffice);
+
 
 module.exports = router;

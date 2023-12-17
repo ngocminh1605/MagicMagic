@@ -120,7 +120,7 @@ const transferCtrl = {
                 const data = await transferQueries.gettransfer(row.ID_good, officeID, db, res);
                 const state = await transferQueries.getStatetransfer(row.ID_good, officeID, db, res);
                 
-                const hasReceived = state.some(s => s.State === 'Đã nhận' || s.State === 'Đã gửi' || s.State === 'Chờ nhận' || s.State === 'Đợi nhận');
+                const hasReceived = state.some(s => s.State === 'Chờ nhận' || s.State === 'Đợi nhận');
                 const hasSent = state.some(s => s.State === 'Thành công' || s.State === 'Trả về');
 
                 if (hasReceived && !hasSent) {
@@ -144,8 +144,21 @@ const transferCtrl = {
             const { goodID, officeID } = req.body;
             const currentTime = new Date();
             const state1 = "Trả về";
-
+            
             await transferQueries.updateReturn(goodID, state1, officeID, currentTime, db, res);
+
+            const office = await transferQueries.getIDOficeTransfer(goodID, db, res);
+            office.map(async row => {
+                const stateGui = "Gửi trả về";
+                const stateNhan = "Nhận trả về";
+
+                if (row.ID_Office != officeID) {
+                    await transferQueries.updateDaGui(goodID, stateGui, row.ID_Office, currentTime, db, res);
+                    await transferQueries.updateDaNhan(goodID, stateNhan, row.ID_Office, currentTime, db, res);
+                }
+            });
+
+            
 
             const order = await transferQueries.gettransfer(goodID, officeID, db, res);
 
@@ -165,6 +178,22 @@ const transferCtrl = {
             res.status(201).json({ message: "Trả lại đơn hàng thành công!" });
         } catch (error) {
             console.error("Lỗi trả lại đơn hàng: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    getByIDandOffice : async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID, officeID } = req.body;
+    
+            const dataCheck = await transferQueries.getByIDandOffice(goodID, officeID, db, res);
+
+            const isReturn = dataCheck.some(s => s.State.includes("trả về") || s.State.includes("Trả về") );
+    
+            res.status(201).json({ message: "Lấy dữ liệu trả về thành công!", data: isReturn});
+        } catch (error) {
+            console.error("Lỗi lấy dữ liệu trả về: ", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
