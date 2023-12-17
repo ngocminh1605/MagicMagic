@@ -5,11 +5,9 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { createRoot } from 'react-dom/client';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { axiosInstance } from '../../constant/axios';
 
 const NhanVienTable = ({ officeID, userID, title }) => {
   const navigate = useNavigate();
@@ -116,7 +114,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     }
   };
 
-  const [colDefs, setColDefs] = useState([
+  const [colDefs] = useState([
     { field: "ID_User", maxWidth: 150},
     { field: "UserName" },
     { field: "Title" },
@@ -131,7 +129,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
 
   const defaultColDef = useMemo(() => ({
     filter: true,
-  }));
+  }), []);
   const gridOptions = {
     headerHeight: 45,
     rowHeight: 45,

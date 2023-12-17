@@ -120,7 +120,7 @@ const transferCtrl = {
                 const data = await transferQueries.gettransfer(row.ID_good, officeID, db, res);
                 const state = await transferQueries.getStatetransfer(row.ID_good, officeID, db, res);
                 
-                const hasReceived = state.some(s => s.State === 'Đã nhận' || s.State === 'Đã gửi' || s.State === 'Chờ nhận' || s.State === 'Đợi nhận');
+                const hasReceived = state.some(s => s.State === 'Chờ nhận' || s.State === 'Đợi nhận');
                 const hasSent = state.some(s => s.State === 'Thành công' || s.State === 'Trả về');
 
                 if (hasReceived && !hasSent) {

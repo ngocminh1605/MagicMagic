@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/new/nhanviennew.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
-import { axiosInstance } from '../../constant/axios';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
