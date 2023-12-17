@@ -11,6 +11,7 @@ import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import ShippingIcon from '@mui/icons-material/LocalShippingOutlined';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -95,7 +96,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
     { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
-
   ];
 
   const menuItems4 = [
@@ -104,6 +104,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
     { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
     { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
+    { icon: <ContactMailIcon />, text: 'Return', path: `/return`},
   ];
 
   // console.log(userInfo.title)

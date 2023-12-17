@@ -31,7 +31,6 @@ const NhanVienEdit = () => {
                 console.error('Error fetching default data:', error);
             }
         };
-
         fetchDefaultUserInfo();
     }, [userID]);
 

@@ -10,5 +10,9 @@ router.post("/sendAndWait", transferCtrl.SendAndWaitOrder);
 router.post("/updateReceive", transferCtrl.updateReceive);
 
 router.post("/getTransfer", transferCtrl.getTransferOrder);
+router.post("/getWaitConfirm", transferCtrl.getGoodWaitConfirm);
+
+router.post("/receiveSuccess", transferCtrl.confirmSuccess);
+router.post("/receiveFail", transferCtrl.confirmFail);
 
 module.exports = router;

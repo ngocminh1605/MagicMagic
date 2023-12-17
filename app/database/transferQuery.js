@@ -28,6 +28,21 @@ const updtaeHistory = async (goodID, state, officeID, time, db, res) => {
     });
 };
 
+const updateReturn = async (goodID, state, officeID, time, db, res) => {
+    const confirmReceiveQuery = `UPDATE bookinghistory SET State = ?, Time_update=?  WHERE ID_Office = ? AND ID_good = ? AND State IN ("Chờ nhận", "Đợi nhận");`;
+
+    return new Promise((resolve, reject) => {
+        db.query(confirmReceiveQuery, [state, time, officeID, goodID], (err) => {
+            if (err) {
+                console.error("Lỗi thêm vào history: ", err.message);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
 const gettransfer = async (goodID, officeID, db, res) => {
     const query = `SELECT DISTINCT good.* FROM good 
                     JOIN bookinghistory ON bookinghistory.ID_good = good.ID_good
@@ -79,5 +94,55 @@ const getIDtransfer = async (officeID, db, res) => {
     });
 };
 
+const getIDOficeTransfer = async (goodID, db, res) => {
+    const query = `SELECT DISTINCT b.ID_Office FROM good g 
+                    JOIN bookinghistory b ON b.ID_good = g.ID_good
+                    WHERE b.ID_good = ?`;
 
-module.exports = { addHistory, updtaeHistory, gettransfer, getIDtransfer, getStatetransfer };
+    return new Promise((resolve, reject) => {
+        db.query(query, [goodID], (err, results) => {
+            if (err) {
+                console.error("Lỗi thêm vào history: ", err.message);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
+const getStateGood = async (goodID, db, res) => {
+    const query = `SELECT DISTINCT b.* FROM good g 
+                    JOIN bookinghistory b ON b.ID_good = g.ID_good
+                    WHERE b.ID_good = ?`;
+
+    return new Promise((resolve, reject) => {
+        db.query(query, [goodID], (err, results) => {
+            if (err) {
+                console.error("Lỗi thêm vào history: ", err.message);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
+
+const updateGood = async (nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, goodID, db, res) => {
+    const updateQuery = `UPDATE good SET Name_sender = ?, Address_sender= ?, Phone_sender = ?, Name_receiver = ?, Address_receiver = ?, Phone_receiver = ?  WHERE ID_good = ?;`;
+
+    return new Promise((resolve, reject) => {
+        db.query(updateQuery, [nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, goodID], (err) => {
+            if (err) {
+                console.error("Lỗi thêm vào history: ", err.message);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
+
+module.exports = { addHistory, updtaeHistory, gettransfer, getIDtransfer, getStatetransfer, getIDOficeTransfer, getStateGood, updateReturn, updateGood };

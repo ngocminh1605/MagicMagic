@@ -63,6 +63,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   const [rowData, setRowData] = useState([
   ]);
   const fetchUser = async (officeID, userID, title) => {
+    console.log('useEffect is called');
     try {
       const response = await axios.get('http://localhost:3001/users/info_users', {
         params: {

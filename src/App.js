@@ -11,10 +11,10 @@ import ChucvuList from "./pages/list/ChucvuList";
 import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import DonHangPrint from "./pages/new/DonHangPrint";
-
 import NhanVienEdit from "./pages/edit/NhanVienEdit"
 import DonHangChuyen from "./pages/new/DonHangChuyen";
-import Main from "./pages/main/main"
+import DonHangReturn from "./pages/list/DonHangReturn";
+import Main from "./pages/main/main";
 
 
 function App() {
@@ -24,43 +24,37 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/">
-                            <Route index element={<Main />} />
+                            <Route index element={<Main/>} />
                             <Route index path="login"  element={<Login />} />
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
-
-                                {/* <Route path=":nhanvienID" element={<NhanVienSingle/>}/>
-                            <Route path="edit/:nhanvienID" element={<NhanVienNew/>}/>
-                             <Route path="new" element={<NhanVienNew/>}/> */}
                                 <Route path="add" element={<NhanVienNew />} />
                                 <Route path="edit/:userID" element={<NhanVienEdit/>} />
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
-                                {/* <Route path=":phongbanID" element={<PhongBanSingle/>}/>
-                            <Route path="new" element={<PhongBanNew/>}/> */}
                             </Route>
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
-
                                 <Route path="add/:userID" element={<DonHangNew />} />
                                 <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
+
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
-
-                                {/* <Route path=":chucvuID" element={<ChucVuSingle/>}/>
-                            <Route path="new" element={<ChucVuNew/>}/> */}
                             </Route>
-                            <Route path="create">
-                                <Route index element={<ConfirmDon />} />
 
+                            <Route path="create">
+                                <Route index element={<ConfirmDon />}/>
                                 <Route path="transfer/:goodID" element={<DonHangChuyen/>}/>
                             </Route>
 
                             <Route path="receive">
                                 <Route index element={<DonHangNhan />} />
+                            </Route>
+                            <Route path="return">
+                                <Route index element={<DonHangReturn />} />
                             </Route>
                         </Route>
                     </Routes>
