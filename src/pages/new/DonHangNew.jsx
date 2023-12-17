@@ -76,7 +76,6 @@ const DonHangNew = () => {
             receiverFullName.trim() === '' ||
             receiverAddress.trim() === '' ||
             receiverPhoneNumber.trim() === '' ||
-            mainFee.trim() === '' ||
             extraFee.trim() === '' ||
             gtvtFee.trim() === '' ||
             vatFee.trim() === '' ||
@@ -89,7 +88,7 @@ const DonHangNew = () => {
         // Prepare data to be sent to the server
         const requestData = {
             nameSender: senderFullName,
-            addressSender: senderAddress,
+            addressSender: senderAddress + ", " + province,
             phoneSender: senderPhoneNumber,
             nameReceiver: receiverFullName,
             addressReceiver: receiverAddress,
