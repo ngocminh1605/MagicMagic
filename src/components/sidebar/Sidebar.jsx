@@ -1,50 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './sidebar.scss';
 import logo from '../../assets/logo/express-delivery.png';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
-import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
+import ShippingIcon from '@mui/icons-material/LocalShippingOutlined';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import nv from '../navbar/nv.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from '../../constant/axios';
 
 
 const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
+  const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-  //  useEffect(() => {
-  //       const checkTokenExpiration = async () => {
-  //           try {
-  //               const token = localStorage.getItem('token');
-  //               if (token) {
-  //                   // Decode the token to get its expiration time
-  //                   const decodedToken = JSON.parse(atob(token.split('.')[1]));
-  //                   const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
-
-  //                   // Check if the token is expired
-  //                   if (expirationTime < Date.now()) {
-  //                       // Token has expired, navigate to login page
-  //                       window.location.href = '/';
-  //                   }
-  //               }
-  //           } catch (error) {
-  //               console.error('Error checking token expiration:', error);
-  //           }
-  //       };
-
-  //       checkTokenExpiration();
-  //   }, []);
 
   useEffect(() => {
+    
     const fetchUserInfo = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -58,13 +40,18 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log('API Response:', response.data); // Log the entire response object
         if (response.status === 200) {
           const { userId, username, title, officeID } = response.data.user;
           setUserInfo({ userId, username, title, officeID });
-          setOfficeID(officeID);
-          setUserID(userId);
-          setTitle(title);
+          if (setUserID) {
+            setUserID(userId);
+          }
+          if(setOfficeID) {
+            setOfficeID(officeID);
+          }
+          if (setTitle) {
+            setTitle(title);
+          }
         } else {
           console.error('Failed to fetch user info:', response.data.message);
         }
@@ -73,41 +60,67 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
       }
     };
     fetchUserInfo();
-  }, [setOfficeID, setUserID, setTitle]);
+  }, [setOfficeID, setUserID, setTitle, navigate]);
 
-  const handleItemClick = (index) => {
+  const handleItemClick1 = (index) => {
     setActiveItem(index);
+    const path = menuItems[index].path;
+    navigate(path);
+  };
+  const handleItemClick2 = (index) => {
+    setActiveItem(index);
+    const path = menuItems2[index].path;
+    navigate(path);
+  };
+  const handleItemClick3 = (index) => {
+    setActiveItem(index);
+    const path = menuItems3[index].path;
+    navigate(path);
+  };
+  const handleItemClick4 = (index) => {
+    setActiveItem(index);
+    const path = menuItems4[index].path;
+    navigate(path);
   };
 
+  useEffect(() => {
+  }, [activeItem])
+
+  // const handleLinkClick = (e, index) => {
+  //   e.preventDefault(); 
+  //   handleItemClick(index);
+  // };
+
   const menuItems = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
     { icon: <BusinessOutlinedIcon />, text: 'Office', path: '/office' },
     { icon: <WorkOutlinedIcon />, text: 'Position', path: '/position' },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems2 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems3 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
-    { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
-
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
+    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
   ];
 
   const menuItems4 = [
-    { icon: <DashboardIcon />, text: 'Home', path: '/home' },
+    { icon: <HomeIcon />, text: 'Home', path: '/home' },
+    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
     { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
-    { icon: <AccountTreeOutlinedIcon />, text: 'Orders', path: '/orders' },
+    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
+    { icon: <ContactMailIcon />, text: 'Return', path: `/return`},
   ];
 
   // console.log(userInfo.title)
-  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -155,7 +168,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                   <div
                     key={index}
                     className={`menuItem ${index === activeItem ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick1(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -171,7 +184,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick2(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -187,7 +200,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick3(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>
@@ -202,7 +215,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
                   <div
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
-                    onClick={() => handleItemClick(index)}
+                    onClick={() => handleItemClick4(index)}
                   >
                     <div>{item.icon}</div>
                     <span>{item.text}</span>

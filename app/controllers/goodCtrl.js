@@ -24,10 +24,25 @@ const goodCtrl = {
             } while (isDuplicate);
 
             await goodQueries.createOrder(nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res);
+
+            const newOrder = await goodQueries.getOrderByQRCode(goodQR, db);
     
-            res.status(201).json({ message: "Tạo đơn hàng thành công!" });
+            res.status(201).json({ message: "Tạo đơn hàng thành công!", data: newOrder});
         } catch (error) {
             console.error("Lỗi tạo đơn hàng: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    getByID: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID } = req.query;
+            const results = await goodQueries.getOrderByID(goodID, db);
+        
+            res.status(200).json({ message: "Truy vấn lấy thông tin đơn hàng theo Id_good thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy thông đơn hàng: ", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
@@ -84,7 +99,7 @@ const goodCtrl = {
     getReceiveByOffice: async (req, res) => {
         try {
             const db = req.app.locals.db;
-            const { officeID } = req.body;
+            const { officeID } = req.query;
             const results = await goodQueries.getReceive(officeID, db);
             
             res.status(200).json({ message: "Truy vấn lấy các đơn hàng đã nhận theo office thành công!", data: results });
@@ -103,7 +118,6 @@ const goodCtrl = {
                 return res.status(404).json({ message: 'Đơn hàng không tồn tại.' });
             }
 
-            // Chuyển thành Image Base64
             const qrCodeData = results[0].QR_code;
             const qrCodeImageBase64 = await goodQueries.generateQRCodeBase64(qrCodeData);
 
@@ -111,6 +125,31 @@ const goodCtrl = {
         } catch (error) {
             console.error('Lỗi lấy thông tin đơn hàng: ', error);
             res.status(500).json({ message: 'Lỗi máy chủ Internal Server.' });
+        }
+    },
+
+    getStateWait: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.query; 
+            const results = await goodQueries.getStateWait(officeID, db);
+            res.status(200).json({ message: "Truy vấn lấy các đơn hàng trạng thái đang đợi thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy các đơn hàng trạng thái đang đợi: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    getStateReturn: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.query; 
+            const results = await goodQueries.getStateReturn(officeID, db);
+        
+            res.status(200).json({ message: "Truy vấn lấy các đơn hàng trạng thái đang đợi thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy các đơn hàng trạng thái đang đợi: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
 

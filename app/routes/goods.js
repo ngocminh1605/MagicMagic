@@ -8,6 +8,8 @@ const goodCtrl = require("../controllers/goodCtrl");
 router.post("/order", goodCtrl.createOrder);
 
 router.get("/getAll", goodCtrl.getAll);
+router.get("/getWait", goodCtrl.getStateWait);
+router.get("/getReturn", goodCtrl.getStateReturn);
 
 router.get("/getSendAll", goodCtrl.getSendAll);
 router.get("/getSendByOffice", goodCtrl.getSendByOffice);

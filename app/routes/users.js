@@ -22,6 +22,7 @@ const comparePasswords = async (password, hashedPassword) => {
         throw "Error comparing passwords";
     }
 };
+
 const createUser = async (username, email, password, officeID, Title, db, res) => {
     // Kiểm tra có tồn tại mail chưa
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
@@ -48,6 +49,7 @@ const createUser = async (username, email, password, officeID, Title, db, res) =
         });
     });
 };
+
 
 router.post("/register", async (req, res) => {
     try {
@@ -143,8 +145,7 @@ const isAuthenticated = (req, res, next) => {
             res.setHeader('Authorization', 'Bearer ' + newToken); // Include 'Bearer' before the new token
         }
         // Thêm thông tin người dùng vào req để sử dụng ở các middleware hoặc route khác
-        console.log("sử dụng decodedToken");
-        // console.log("user", decodedToken.id);
+        
         req.user = decodedToken;
 
         next();
@@ -161,7 +162,7 @@ router.get("/me", isAuthenticated, (req, res) => {
 
 router.get("/logout", isAuthenticated, (req, res) => {
     try {
-        res.setHeader("Authorization", ""); // Xóa token khỏi header
+        // Xóa token khỏi header
         res.status(200).json({ message: "Logout successful" });
     } catch (error) {
         console.error("Error during logout:", error);
@@ -170,45 +171,94 @@ router.get("/logout", isAuthenticated, (req, res) => {
 });
 
 
-//thêm thông tin bản thân
-const createInfo = async (userid, fullname, phone, db, res) => {
-    //xem đây là thông tin của ai
-    const checkID = "Select * from user WHERE ID_user = ?"
-    console.log(userid);
-    db.query(checkID, [userid], (err, results) => {
-        if (err) {
-            console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
-            return res.status(500).json({ message: "Lỗi thêm thông tin người dùng." });
-        }
-        const insertUserQuery =
-            "UPDATE user set FullName = ? ,Phone = ? WHERE ID_user = ?";
-        db.query(insertUserQuery, [fullname, phone, userid], (err) => {
+
+//sửa thông tin người dùng
+const createInfo = async (userid, username, email, title, officeid, db, res) => {
+    // Update user information directly
+    const updateUserInfoQuery =
+        "UPDATE user SET UserName = ?, email = ?, Title = ?, OfficeId = ? WHERE ID_user = ?";
+    db.query(
+        updateUserInfoQuery,
+        [username, email, title, officeid, userid],
+        (err) => {
             if (err) {
-                console.error("Lỗi thêm người dùng vào cơ sở dữ liệu: " + err.message);
-                return res.status(500).json({ message: "Lỗi update dữ liệu người dùng." });
+                console.error("Lỗi update dữ liệu người dùng: " + err.message);
+                return res
+                    .status(500)
+                    .json({ message: "Lỗi update dữ liệu người dùng." });
             }
-            return res.status(201).json({ message: "update dữ liệu thành công" });
-        });
-
-    })
-
-}
+            return res.status(201).json({ message: "Update dữ liệu thành công" });
+        }
+    );
+};
 
 // sửa đổi thông tin người dùng
-router.put("/info", async (req, res) => {
+router.put("/info/:userid", async (req, res) => {
     try {
         const db = req.app.locals.db;
-        const { userid, fullname, phone } = req.body;
-        await createInfo(userid, fullname, phone, db, res);
-    }
-    catch (error) {
+        const { userid } = req.params;
+        const { username, email, title, officeid } = req.body;
+
+        // Check if the user with the specified ID exists
+        const checkIDQuery = "SELECT * FROM user WHERE ID_user = ?";
+        db.query(checkIDQuery, [userid], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+                return res
+                    .status(500)
+                    .json({ message: "Lỗi thêm thông tin người dùng." });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ message: "User not found." });
+            }
+
+            // User exists, proceed with updating information
+            createInfo(userid, username, email, title, officeid, db, res);
+        });
+    } catch (error) {
         console.error("Error during registration:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
+// xóa người dùng theo id
+router.delete("/delete/:userid", async (req, res) => {
+    const db = req.app.locals.db;
+    const { userid } = req.params;
+    console.log(userid);
+    const deleteUser = 'DELETE FROM user WHERE ID_User = ?';
+    db.query(deleteUser, [userid], (err, results) => {
+        if (err) {
+            console.error("Error: " + err.message);
+            return res.status(500).send({ message: 'Internal Server Error' });
+        }
+        // Check if any rows were affected
+        if (results.affectedRows > 0) {
+            return res.status(200).send({ message: 'User deleted successfully' });
+        } else {
+            return res.status(404).send({ message: 'User not found' });
+        }
+    });
+});
 
-// lấy thông tin người dùng
+router.get("/info/:userid", async (req, res) => {
+    const db = req.app.locals.db;
+    const { userid } = req.params;
+
+    const getUser = "SELECT * FROM user WHERE ID_user = ?";
+    db.query(getUser, [userid], (err, results) => {
+        if (err) {
+            console.error("Lỗi truy cập csdl" + err.message);
+            return res.status(500).json({ message: "Lỗi lấy thông tin người dùng." });
+        }
+        return res.status(200).json(results);
+    });
+});
+
+
+
+// lấy thông tin list người dùng
 router.get("/info_users", async (req, res) => {
     const db = req.app.locals.db;
     const { userID, officeID, title } = req.query;
@@ -216,8 +266,7 @@ router.get("/info_users", async (req, res) => {
     console.log("titless", title);
     if (title === "admin") {
         // Nếu title là admin, truy vấn tất cả user là trưởng điểm
-        console.log("là admin");
-        getUsersQuery = "SELECT * FROM user WHERE Title = 'Trưởng điểm'";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.Title = 'Trưởng điểm';";
         db.query(getUsersQuery, (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -226,10 +275,9 @@ router.get("/info_users", async (req, res) => {
             return res.status(200).json({ users: results });
         });
     } else if (title === "Trưởng điểm") {
-        console.log("trưởng điểm hay không", officeID);
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
-        getUsersQuery = "SELECT * FROM user WHERE OfficeId = ?";
-        db.query(getUsersQuery,[officeID], (err, results) => {
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm';";
+        db.query(getUsersQuery, [officeID], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
                 return res.status(500).json({ message: "Lỗi lấy thông tin người dùng." });
