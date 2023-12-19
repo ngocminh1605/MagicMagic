@@ -220,7 +220,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                   <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/profile')}>
                     <EditIcon />
                     <span>Sửa hồ sơ</span>
                   </Dropdown.Item>

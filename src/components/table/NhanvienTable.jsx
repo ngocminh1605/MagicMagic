@@ -16,7 +16,21 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
       <Button
-        onClick={() => navigate('/nhanvien/detail')}
+       onClick={() => navigate('/nhanvien/detail')}
+        style={{
+          textTransform: 'none',
+          backgroundColor: 'green',
+          color: 'white',
+          width: 60,
+          marginRight: 15,
+          borderRadius: 20,
+          height: 35,
+        }}
+      >
+        View
+      </Button>
+      <Button
+        onClick={() => navigate('/nhanvien/edit')}
         style={{
           textTransform: 'none',
           backgroundColor: 'orange',
@@ -51,7 +65,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   useEffect(() => {
     const fetchUser = async (officeID, userID, title) => {
       try {
-        
+
         const response = await axios.get('http://localhost:3001/users/info_users', {
           params: {
             officeID: officeID,

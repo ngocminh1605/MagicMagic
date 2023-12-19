@@ -164,7 +164,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
 
 
-const NhanVienDetail = () => {
+const NhanVienEdit = () => {
   const [username, setUsername] = useState('ely');
   const [password, setPassword] = useState('ely');
   const [email, setEmail] = useState('ely@gmail.com');
@@ -288,4 +288,4 @@ const NhanVienDetail = () => {
       </div>
   );
 };
-export default NhanVienDetail;
+export default NhanVienEdit;

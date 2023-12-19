@@ -10,8 +10,10 @@ import './App.css';
 import DonHangNew from "./pages/new/DonHangNew";
 import { useEffect } from "react";
 import DonHangPrint from "./pages/new/DonHangPrint";
-import NhanVienDetail from "./components/table/edit"
+import NhanVienEdit from "./components/table/edit";
+import NhanVienDetail from "./components/table/view";
 import Main from "./pages/main/main"
+import EditProfile from "./components/table/editProfile"
 
 function App() {
     return (
@@ -22,6 +24,7 @@ function App() {
                         <Route path="/">
                             <Route index element={<Main />} />
                             <Route index path="login"  element={<Login />} />
+                            <Route index path="profile" element={<EditProfile/>}/>
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
@@ -30,7 +33,9 @@ function App() {
                             <Route path="edit/:nhanvienID" element={<NhanVienNew/>}/>
                              <Route path="new" element={<NhanVienNew/>}/> */}
                                 <Route path="add" element={<NhanVienNew />} />
+                                <Route path="edit" element={<NhanVienEdit />} />
                                 <Route path="detail" element={<NhanVienDetail />} />
+
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
