@@ -26,7 +26,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    
+
     const fetchUserInfo = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -42,11 +42,12 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
         });
         if (response.status === 200) {
           const { userId, username, title, officeID } = response.data.user;
+          console.log(username);
           setUserInfo({ userId, username, title, officeID });
           if (setUserID) {
             setUserID(userId);
           }
-          if(setOfficeID) {
+          if (setOfficeID) {
             setOfficeID(officeID);
           }
           if (setTitle) {
@@ -61,6 +62,8 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     };
     fetchUserInfo();
   }, [setOfficeID, setUserID, setTitle, navigate]);
+
+  
 
   const handleItemClick1 = (index) => {
     setActiveItem(index);
@@ -108,7 +111,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const menuItems3 = [
     { icon: <HomeIcon />, text: 'Home', path: '/home' },
     { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
-    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive` },
   ];
 
   const menuItems4 = [
@@ -116,8 +119,8 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
     { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
     { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
-    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive`},
-    { icon: <ContactMailIcon />, text: 'Return', path: `/return`},
+    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive` },
+    { icon: <ContactMailIcon />, text: 'Return', path: `/return` },
   ];
 
   // console.log(userInfo.title)

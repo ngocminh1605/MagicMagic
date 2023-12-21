@@ -35,8 +35,12 @@ const NhanVienNew = () => {
     const customStyles = {
         menu: provided => ({
             ...provided,
-            // maxHeight: '200px', // Set the maximum height for the dropdown
             overflowY: 'auto',  // Enable vertical scrolling if needed
+        }),
+        control: provided => ({
+            ...provided,
+            padding: "6px",
+            borderRadius: "5px" // Adjust the border-radius for the main control
         }),
     };
     const IsValidate = () => {
@@ -72,22 +76,22 @@ const NhanVienNew = () => {
 
     const optionOffice = async () => {
         try {
-          const response = await fetch('http://localhost:3001/office/allOffice', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(),
-          });
-    
-          if (response.ok) {
-            const data = await response.json();
-            return data.data;
-          } else {
-            console.error('Lỗi lấy office:', response.statusText);
-          }
+            const response = await fetch('http://localhost:3001/office/allOffice', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.data;
+            } else {
+                console.error('Lỗi lấy office:', response.statusText);
+            }
         } catch (error) {
-          console.error('Lỗi lấy office:', error);
+            console.error('Lỗi lấy office:', error);
         }
     };
 
@@ -117,6 +121,12 @@ const NhanVienNew = () => {
 
         }
     };
+
+    const options2 = [
+        { value: 'Trưởng điểm', label: 'Trưởng điểm' },
+        { value: 'Nhân viên giao dịch', label: 'Nhân viên giao dịch' },
+        { value: 'Nhân viên tập kết', label: 'Nhân viên tập kết' },
+    ];
 
     return (
         <div className="add">
@@ -153,22 +163,19 @@ const NhanVienNew = () => {
                                     options={options}
                                     styles={customStyles}
                                     onChange={(selectedOption) => setOffice(selectedOption.value)}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
                                 <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
-                                <select id="position" value={position} onChange={(e) => setPosition(e.target.value)} className="form-control">
-                                    <option value="">-- Select Title--</option>
-                                    <option value="Trưởng điểm">Trưởng điểm</option>
-                                    <option value="Nhân viên giao dịch">Nhân viên giao dịch</option>
-                                    <option value="Nhân viên tập kết">Nhân viên tập kết</option>
-                                </select>
-                                
+                                <Select
+                                    options={options2}
+                                    styles={customStyles}
+                                    onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                />
                             </div>
                         </div>
                     </div>
-
 
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>

@@ -117,7 +117,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   };
 
   const [colDefs] = useState([
-    { field: "ID_User", maxWidth: 150 },
+    { field: "ID_User", maxWidth: 190 },
     { field: "UserName" },
     { field: "Title" },
     { field: "Office" },
