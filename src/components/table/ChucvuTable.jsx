@@ -93,17 +93,46 @@ const ChucVuTable = () => {
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
-    { field: "fullName" },
-    { field: "gender" },
-    { field: "birth" },
-    { field: "phone" },
-    { field: "email" },
-    { field: "iden" },
-    { field: "start" },
-    { field: "officeid" },
-    { field: "position" },
     {
-      headerName: "Action",
+      field: "fullName", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "gender", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "birth", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "phone", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "email", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "iden", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "start", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "officeid", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      field: "position", headerAlign: 'center',
+      align: 'center'
+    },
+    {
+      headerName: "Action", 
+      headerAlign: 'center',
+      align: 'center',
       minWidth: 250,
       cellRenderer: ActionButtonsRenderer, // Sử dụng trực tiếp hàm renderer
     },

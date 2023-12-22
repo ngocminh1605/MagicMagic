@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const NhanVienTable = ({ officeID, userID, title }) => {
-  console.log("hi",officeID, userID, title);
+  console.log("hi", officeID, userID, title);
   const navigate = useNavigate();
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
@@ -105,7 +105,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       try {
         const response = await axios.delete(`http://localhost:3001/users/delete/${deleteUserId}`);
         if (response.status === 200) {
-          fetchUser(1,userID,"Trưởng điểm")
+          fetchUser(1, userID, "Trưởng điểm")
           console.log('Xóa nhân viên thành công');
         } else {
           console.error('Delete failed with status:', response.status);
@@ -117,11 +117,11 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   };
 
   const [colDefs] = useState([
-    { field: "ID_User", maxWidth: 190 },
-    { field: "UserName" },
-    { field: "Title" },
-    { field: "Office" },
-    { field: "DateStart" },
+    { field: "ID_User", maxWidth: 190, headerAlign: 'center', align: 'center' },
+    { field: "UserName", headerAlign: 'center', align: 'center' },
+    { field: "Title", headerAlign: 'center', align: 'center' },
+    { field: "Office", headerAlign: 'center', align: 'center' },
+    { field: "DateStart", headerAlign: 'center', align: 'center' },
     {
       headerName: "Action",
       minWidth: 245,
