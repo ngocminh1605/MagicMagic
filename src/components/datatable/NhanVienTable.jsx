@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom'
 import NhanVienNew from "../../pages/new/NhanVienNew";
 import CongViecNew from "../../pages/new/CongViecNew";
-// import CongViecNew from "../../pages/new/CongViecNew";
 
 const NhanVienTable = () =>
 {

@@ -15,6 +15,9 @@ import NhanVienEdit from "./pages/edit/NhanVienEdit"
 import DonHangChuyen from "./pages/new/DonHangChuyen";
 import DonHangReturn from "./pages/list/DonHangReturn";
 import Main from "./pages/main/main";
+import NhanVienDetail from "./pages/view/NhanVienDetail";
+import EditProfile from "./pages/edit/EditProfile";
+
 
 
 function App() {
@@ -26,11 +29,13 @@ function App() {
                         <Route path="/">
                             <Route index element={<Main/>} />
                             <Route index path="login"  element={<Login />} />
+                            <Route index path="profile" element={<EditProfile/>}/>
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
                                 <Route path="add" element={<NhanVienNew />} />
                                 <Route path="edit/:userID" element={<NhanVienEdit/>} />
+                                <Route path="view/:userID" element={<NhanVienDetail />}/>
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
@@ -40,7 +45,6 @@ function App() {
                                 <Route path="add/:userID" element={<DonHangNew />} />
                                 <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
-
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
                             </Route>

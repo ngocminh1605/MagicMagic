@@ -50,7 +50,7 @@ const Widget = () =>
     {
         case "nhansu":
             data = {
-                title: "TỔNG NHÂN VIÊN",
+                title: "TỔNG QUẢN LÝ",
                 counter: giatri.tongNV,
                 link: "Xem tất cả",
                 path: "nhanvien",
@@ -72,7 +72,7 @@ const Widget = () =>
             break;
         case "duan":
             data = {
-                title: "TỔNG DỰ ÁN",
+                title: "TỔNG ĐƠN HÀNG",
                 counter: giatri.tongDA,
                 link: "Xem tất cả",
                 path: "duan",
@@ -84,23 +84,13 @@ const Widget = () =>
             break;
         case "chamcong":
             data = {
-                title: "TỔNG NGÀY LÀM",
+                title: "TỔNG NHÂN VIÊN",
                 counter: giatri.tongLuong,
                 link: "Xem tất cả",
                 icon: (<TimelapseOutlinedIcon className="icon" style={{
                     color: "orangered",
                     backgroundColor: "rgba(244, 173, 100, 0.87)"
                 }}/>)
-            };
-            break;
-        case "luong":
-            data = {
-                title: "TỔNG LƯƠNG",
-                counter: giatri.tongLuong,
-                link: "Xem tất cả",
-                path: "luong",
-                icon: (<PaidOutlinedIcon className="icon"
-                                         style={{color: "rebeccapurple", backgroundColor: "rgba(164, 95, 227, 0.9)"}}/>)
             };
             break;
         default:
@@ -114,7 +104,6 @@ const Widget = () =>
 
     return (
         <div className="widget">
-
             <div className="left">
                 <span className="title">
                     {data.title}
@@ -128,12 +117,7 @@ const Widget = () =>
             </div>
 
             <div className="right">
-                {/*<div className="percentage positive">*/}
-                {/*    <KeyboardArrowUpOutlinedIcon/>*/}
-                {/*    Up*/}
-                {/*</div>*/}
                 {data.icon}
-                {/*<PersonOutlinedIcon />*/}
             </div>
 
         </div>

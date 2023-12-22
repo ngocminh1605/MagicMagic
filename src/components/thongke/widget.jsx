@@ -33,7 +33,7 @@ const Widget = ({ type }) => {
     switch (type) {
         case 'nhansu':
             data = {
-                title: 'TỔNG NHÂN VIÊN',
+                title: 'TỔNG QUẢN LÝ',
                 counter: giatri.tongNV,
                 link: 'Xem tất cả',
                 path: 'nhanvien',
@@ -42,7 +42,7 @@ const Widget = ({ type }) => {
             break;
         case 'phongban':
             data = {
-                title: 'TỔNG PHÒNG BAN',
+                title: 'TỔNG NHÂN VIÊN',
                 counter: giatri.tongPB,
                 link: 'Xem tất cả',
                 path: 'phongban',
@@ -51,7 +51,7 @@ const Widget = ({ type }) => {
             break;
         case 'duan':
             data = {
-                title: 'TỔNG DỰ ÁN',
+                title: 'TỔNG PHÒNG BAN',
                 counter: giatri.tongDA,
                 link: 'Xem tất cả',
                 path: 'duan',
@@ -65,7 +65,7 @@ const Widget = ({ type }) => {
             break;   
         default:
             data = {
-                title: 'TỔNG NGÀY LÀM',
+                title: 'TỔNG ĐƠN HÀNG',
                 counter: giatri.tongLuong, // Lưu ý: Có thể cần điều chỉnh giatri.tongLuong thành giá trị chính xác
                 link: 'Xem tất cả',
                 // icon: (

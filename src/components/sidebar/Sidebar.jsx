@@ -181,6 +181,21 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
             </div>
           )}
 
+          {userInfo.title === 'Trưởng điểm giao dịch' && (
+            <div className='menu'>
+              {menuItems2.map((item, index) => (
+                <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
+                  <div
+                    className={`menuItem ${activeItem === index ? 'active' : ''}`}
+                    onClick={() => handleItemClick2(index)}
+                  >
+                    <div>{item.icon}</div>
+                    <span>{item.text}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
           {userInfo.title === 'Trưởng điểm' && (
             <div className='menu'>
               {menuItems2.map((item, index) => (
@@ -196,7 +211,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
-
           {userInfo.title === 'Nhân viên tập kết' && (
             <div className='menu'>
               {menuItems3.map((item, index) => (
@@ -236,7 +250,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                   <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/profile')}>
                     <EditIcon />
                     <span>Sửa hồ sơ</span>
                   </Dropdown.Item>
@@ -254,7 +268,12 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
             )}
             {userInfo.title === 'Trưởng điểm' && (
               <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
-                Trưởng điểm
+                Trưởng điểm<br/>tập kết
+              </div>
+            )}
+            {userInfo.title === 'Trưởng điểm giao dịch' && (
+              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+                Trưởng điểm<br/>giao dịch
               </div>
             )}
             {userInfo.title === 'Nhân viên giao dịch' && (
