@@ -117,7 +117,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
   };
 
   const [colDefs] = useState([
-    { field: "ID_User", maxWidth: 190, headerAlign: 'center', align: 'center' },
+    { field: "ID_User", maxWidth: 175, headerAlign: 'center', align: 'center' },
     { field: "UserName", headerAlign: 'center', align: 'center' },
     { field: "Title", headerAlign: 'center', align: 'center' },
     { field: "Office", headerAlign: 'center', align: 'center' },
@@ -143,7 +143,11 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       className={
         "ag-theme-quartz ag-theme-acmecorp"
       }
-      style={{ width: '100%', height: '70%', flexDirection: "column" }}
+      style={{
+        width: '100%', height: '70%', flexDirection: "column",
+
+      }}
+
     >
       <Button
         onClick={() => navigate('/nhanvien/add')}

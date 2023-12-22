@@ -266,7 +266,7 @@ router.get("/info_users", async (req, res) => {
     console.log("titless", title);
     if (title === "admin") {
         // Nếu title là admin, truy vấn tất cả user là trưởng điểm
-        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.Title = 'Trưởng điểm';";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.Title = 'Trưởng điểm giao dịch' OR user.Title = 'Trưởng điểm tập kết';";
         db.query(getUsersQuery, (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -274,7 +274,7 @@ router.get("/info_users", async (req, res) => {
             }
             return res.status(200).json({ users: results });
         });
-    } else if (title === "Trưởng điểm" || title === "Trưởng điểm giao dịch") {
+    } else if (title === "Trưởng điểm tập kết" || title === "Trưởng điểm giao dịch") {
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
         getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm';";
         db.query(getUsersQuery, [officeID], (err, results) => {
