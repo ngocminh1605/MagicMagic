@@ -16,7 +16,7 @@ const EditProfile = () => {
         birthday: '',
         gender: '',
         address: '',
-        phone: '',
+        Phone: '',
         email: ''
     });
     console.log(userID)
@@ -40,39 +40,16 @@ const EditProfile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if (!IsValidate()) {
-        //     return;
-        // }
-        // try {
-        //     const response = await axiosInstance.post('users/register', {
-        //         fullname: fullname,
-        //         gender: gender,
-        //         birth: birth,
-        //         email: email,
-        //         phone: phone,
-        //         address: address,
-        //     });
-        //     if (response.status === 201) {
-        //         navigate('/nhanvien');
-        //     } else {
-        //         // Registration failed
-        //         console.log("fails");
-        //     }
-        // } catch (error) {
-
-        //     console.error('Error during registration:', error);
-
-        // }
         console.log(
             userData.FullName,
-            userData.phone,
+            userData.Phone,
         )
         try {
             const response = await axios.put(`http://localhost:3001/users/info1/${userID}`, {
                 fullname: userData.FullName,
                 birthday: userData.birthday,
                 gender: userData.gender,
-                phone: userData.phone,
+                phone: userData.Phone,
                 email: userData.email,
                 address: userData.address
             });
@@ -129,7 +106,7 @@ const EditProfile = () => {
 
                             <div className="form-group">
                                 <InputLabel htmlFor="phone">Phone <span className="errmsg">*</span></InputLabel>
-                                <input id="phone" value={userData.phone ? userData.phone : "0903336476"} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} type="text" className="form-control" />
+                                <input id="phone" value={userData.Phone ? userData.Phone : "0903336476"} onChange={(e) => setUserData({ ...userData, Phone: e.target.value })} type="text" className="form-control" />
                             </div>
                         </div>
 

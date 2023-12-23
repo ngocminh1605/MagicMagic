@@ -105,7 +105,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       try {
         const response = await axios.delete(`http://localhost:3001/users/delete/${deleteUserId}`);
         if (response.status === 200) {
-          fetchUser(1, userID, "Trưởng điểm")
+          fetchUser(1, userID, "Trưởng điểm giao dịch")
           console.log('Xóa nhân viên thành công');
         } else {
           console.error('Delete failed with status:', response.status);
@@ -150,7 +150,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
 
     >
       <Button
-        onClick={() => navigate('/nhanvien/add')}
+        onClick={() => navigate(`/nhanvien/add/${userID}/${officeID}/${title}`)}
         style={{
           textTransform: 'none',
           backgroundColor: "#FF9AA2",

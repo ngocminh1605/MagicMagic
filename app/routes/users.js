@@ -323,7 +323,7 @@ router.get("/info_users", async (req, res) => {
         });
     } else if (title === "Trưởng điểm tập kết" || title === "Trưởng điểm giao dịch") {
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
-        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm';";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm giao dịch' OR user.Title != 'Trưởng điểm tập kết' ;";
         db.query(getUsersQuery, [officeID], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
 import Select from "react-select"
+import { useParams } from 'react-router-dom';
 
 const NhanVienNew = () => {
     const [username, setUsername] = useState('');
@@ -14,6 +15,8 @@ const NhanVienNew = () => {
     const [position, setPosition] = useState('');
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
+    const { userID, officeID, title } = useParams();
+    console.log("ming", userID, officeID, title);
 
     useEffect(() => {
         const fetchOfficeOptions = async () => {
@@ -121,11 +124,15 @@ const NhanVienNew = () => {
 
         }
     };
-
+    
     const options2 = [
         { value: 'Trưởng điểm giao dịch', label: 'Trưởng điểm giao dịch' },
         { value: 'Trưởng điểm tập kết', label: 'Trưởng điểm tập kết' },
+    ];
+    const options3 = [
         { value: 'Nhân viên giao dịch', label: 'Nhân viên giao dịch' },
+    ];
+    const options4 = [
         { value: 'Nhân viên tập kết', label: 'Nhân viên tập kết' },
     ];
 
@@ -167,20 +174,43 @@ const NhanVienNew = () => {
 
                                 />
                             </div>
-                            <div className="form-group">
-                                <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
-                                <Select
-                                    options={options2}
-                                    styles={customStyles}
-                                    onChange={(selectedOption) => setPosition(selectedOption.value)}
-                                />
-                            </div>
+                            {title === 'admin' && (
+                                <div className="form-group">
+                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                    <Select
+                                        options={options2}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                    />
+                                </div>
+                            )}
+                            {title === 'Trưởng điểm giao dịch' && (
+                                <div className="form-group">
+                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                    <Select
+                                        options={options3}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                    />
+                                </div>
+                            )}
+                            {title === 'Trưởng điểm tập kết' && (
+                                <div className="form-group">
+                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                    <Select
+                                        options={options4}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                    />
+                                </div>
+                            )}
+
                         </div>
                     </div>
 
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>
-                        <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
+                        <button className="btn2" onClick={() => navigate("/nhanvien")}>Back</button>
                     </div>
                 </form>
             </div>
