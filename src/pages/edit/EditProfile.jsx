@@ -9,14 +9,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 const EditProfile = () => {
+    const [userID, setUserID] = useState(null);
     const [fullname, setFullName] = useState('Nguyễn Phương Linh');
     const [gender, setGender] = useState('Nữ');
     const [birth, setBirth] = useState(new Date());
     const [address, setAddress] = useState('hi');
     const [phone, setPhone] = useState('0963282003');
     const [email, setEmail] = useState('ely@gmail.com');
-
-
+    
     const navigate = useNavigate();
     const IsValidate = () => {
         let isProceed = true;
@@ -77,10 +77,9 @@ const EditProfile = () => {
 
     return (
         <div className="add">
-            <Sidebar />
+            <Sidebar setUserID={setUserID}/>
             <div className="container">
                 <div className="title">Profile</div>
-
                 <form className="offset-lg-1 col-lg-8" onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="content1">
