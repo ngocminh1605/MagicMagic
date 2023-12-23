@@ -44,10 +44,10 @@ const updateReturn = async (goodID, state, officeID, time, db, res) => {
 };
 
 const updateDaGui = async (goodID, state, officeID, time, db, res) => {
-    const confirmReceiveQuery = `UPDATE bookinghistory SET State = ?, Time_update=?  WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã gửi");`;
+    const confirmReceiveQuery = `UPDATE bookinghistory SET State = ? WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã gửi");`;
 
     return new Promise((resolve, reject) => {
-        db.query(confirmReceiveQuery, [state, time, officeID, goodID], (err) => {
+        db.query(confirmReceiveQuery, [state, officeID, goodID], (err) => {
             if (err) {
                 console.error("Lỗi thêm vào history: ", err.message);
                 reject(err);
@@ -59,10 +59,10 @@ const updateDaGui = async (goodID, state, officeID, time, db, res) => {
 };
 
 const updateDaNhan = async (goodID, state, officeID, time, db, res) => {
-    const confirmReceiveQuery = `UPDATE bookinghistory SET State = ?, Time_update=?  WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã nhận");`;
+    const confirmReceiveQuery = `UPDATE bookinghistory SET State = ? WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã nhận");`;
 
     return new Promise((resolve, reject) => {
-        db.query(confirmReceiveQuery, [state, time, officeID, goodID], (err) => {
+        db.query(confirmReceiveQuery, [state, officeID, goodID], (err) => {
             if (err) {
                 console.error("Lỗi thêm vào history: ", err.message);
                 reject(err);

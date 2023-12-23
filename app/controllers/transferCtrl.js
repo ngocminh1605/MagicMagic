@@ -153,8 +153,8 @@ const transferCtrl = {
                 const stateNhan = "Nhận trả về";
 
                 if (row.ID_Office != officeID) {
-                    await transferQueries.updateDaGui(goodID, stateGui, row.ID_Office, currentTime, db, res);
-                    await transferQueries.updateDaNhan(goodID, stateNhan, row.ID_Office, currentTime, db, res);
+                    await transferQueries.updateDaGui(goodID, stateGui, row.ID_Office, db, res);
+                    await transferQueries.updateDaNhan(goodID, stateNhan, row.ID_Office, db, res);
                 }
             });
 

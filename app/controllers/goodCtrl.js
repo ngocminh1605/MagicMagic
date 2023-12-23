@@ -153,6 +153,40 @@ const goodCtrl = {
         }
     },
 
+    checkQRExist : async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodCode } = req.query; 
+            
+            const QRCodeList = await goodQueries.getQRCode(db);
+            let results = QRCodeList.map(s => s.QR_code === goodCode);
+            const exists = results.includes(true);
+
+            res.status(200).json({ message: "Lấy Mã đơn hàng thành công!", data: exists });
+        } catch (error) {
+            console.error("Lỗi lấy các mã đơn hàng.", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    getStateOrder  : async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodCode } = req.body; 
+
+            const info = await goodQueries.getInfoByQR(goodCode, db, res);
+            const stateTemp = await goodQueries.getStateByQR(goodCode, db, res);
+    
+            const successIndex = stateTemp.findIndex(row => row.State === "Thành công");
+            const stateResult = successIndex !== -1 ? stateTemp.slice(0, successIndex + 1) : stateTemp;
+    
+            res.status(200).json({ message: "Lấy thông tin và trạng thái đơn hàng thành công!", info: info, state: stateResult });
+        } catch (error) {
+            console.error("Lỗi thông tin và trạng thái đơn hàng.", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 module.exports = goodCtrl;
