@@ -17,7 +17,7 @@ import DonHangReturn from "./pages/list/DonHangReturn";
 import Main from "./pages/main/main";
 import NhanVienDetail from "./pages/view/NhanVienDetail";
 import EditProfile from "./pages/edit/EditProfile";
-
+import Sidebar from "./components/sidebar/Sidebar";
 
 
 function App() {
@@ -25,17 +25,18 @@ function App() {
         <div className="App">
             <div className="AppGlass">
                 <BrowserRouter>
+                    {/* <Sidebar /> */}
                     <Routes>
                         <Route path="/">
-                            <Route index element={<Main/>} />
-                            <Route index path="login"  element={<Login />} />
-                            <Route index path="profile" element={<EditProfile/>}/>
+                            <Route index element={<Main />} />
+                            <Route index path="login" element={<Login />} />
+                            <Route index path="profile" element={<EditProfile />} />
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
                                 <Route path="add" element={<NhanVienNew />} />
-                                <Route path="edit/:userID" element={<NhanVienEdit/>} />
-                                <Route path="view/:userID" element={<NhanVienDetail />}/>
+                                <Route path="edit/:userID" element={<NhanVienEdit />} />
+                                <Route path="view/:userID" element={<NhanVienDetail />} />
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
@@ -50,8 +51,8 @@ function App() {
                             </Route>
 
                             <Route path="create">
-                                <Route index element={<ConfirmDon />}/>
-                                <Route path="transfer/:goodID" element={<DonHangChuyen/>}/>
+                                <Route index element={<ConfirmDon />} />
+                                <Route path="transfer/:goodID" element={<DonHangChuyen />} />
                             </Route>
 
                             <Route path="receive">

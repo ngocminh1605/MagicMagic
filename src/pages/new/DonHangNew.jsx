@@ -29,7 +29,7 @@ const DonHangNew = () => {
     const [weight, setWeight] = useState('');
     const [mainFee, setMainFee] = useState(calculateShippingFee(weight, shipmentType));
     const [province, setProvince] = useState('');
-    
+
     useEffect(() => {
         const calculateAndSetVatFee = () => {
             const calculatedVatFee = calculateVatFee(mainFee, extraFee, gtvtFee);
@@ -47,9 +47,9 @@ const DonHangNew = () => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({officeID: officeID}),
+                        body: JSON.stringify({ officeID: officeID }),
                     });
-    
+
                     if (response.ok) {
                         const data = await response.json();
                         setProvince(data.data);
@@ -60,10 +60,10 @@ const DonHangNew = () => {
                     console.error('Lỗi fetch data:', error);
                 }
             };
-    
+
             fetchData();
         }
-        
+
     }, [officeID]);
 
     const handleAddClick = async (e) => {
@@ -84,7 +84,7 @@ const DonHangNew = () => {
             alert('Vui lòng điền đầy đủ thông tin!');
             return;
         }
-    
+
         // Prepare data to be sent to the server
         const requestData = {
             nameSender: senderFullName,
@@ -103,7 +103,7 @@ const DonHangNew = () => {
             Senddate: format(utcToZonedTime((sendDateTime), 'Asia/Ho_Chi_Minh'), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         };
 
-       
+
 
         async function handleConfirmRequest(confirmData) {
             try {
@@ -114,7 +114,7 @@ const DonHangNew = () => {
                     },
                     body: JSON.stringify(confirmData),
                 });
-        
+
                 if (!confirmResponse.ok) {
                     console.error('Failed to confirm receiving order:', confirmResponse.statusText);
                     alert('Nhận đơn hàng thất bại! Vui lòng kiểm tra lại thông tin!');
@@ -132,11 +132,11 @@ const DonHangNew = () => {
                 },
                 body: JSON.stringify(requestData),
             });
-    
+
             if (response.ok) {
                 const responseData = await response.json();
                 const confirmData = {
-                    goodID: responseData.data[0].ID_good, 
+                    goodID: responseData.data[0].ID_good,
                     officeID: officeID
                 };
                 console.log(responseData.message); // Log success message
@@ -157,7 +157,7 @@ const DonHangNew = () => {
     const handleWeightChange = (e) => {
         const newWeight = e.target.value;
         setWeight(newWeight);
-    
+
         const newMainFee = calculateShippingFee(newWeight, shipmentType);
         setMainFee(newMainFee);
 
@@ -167,7 +167,7 @@ const DonHangNew = () => {
 
     return (
         <div className='add'>
-            <Sidebar setOfficeID={setOfficeID}/>
+            <Sidebar setOfficeID={setOfficeID} />
             <form onSubmit={handleAddClick}>
                 <div style={{ overflowY: 'auto', height: '100vh' }}>
                     <div className="title">
@@ -185,9 +185,9 @@ const DonHangNew = () => {
                                 <input id="senderAddress" value={senderAddress} onChange={e => setSenderAddress(e.target.value)} className="form-control" />
                             </div>
 
-                            <div className="form-group" style={{width: '430px'}}>
+                            <div className="form-group" style={{ width: '430px' }}>
                                 <InputLabel htmlFor="senderAddress">Tỉnh/ Thành phố người gửi</InputLabel>
-                                <input id="provinceSenderAddress" value={province}  className="form-control" readOnly/>
+                                <input id="provinceSenderAddress" value={province} className="form-control" readOnly />
                             </div>
 
                             <div className="form-group">
@@ -222,16 +222,14 @@ const DonHangNew = () => {
                                 </Select>
                             </div>
                             <div className="form-group">
-                                <InputLabel htmlFor="weight">Khối lượng (gram)</InputLabel>
-                                <input id="weight" value={weight} onChange={handleWeightChange} className="form-control" />
-                            </div>
-
-                            
-                            <div className="form-group">
-                                <div style = {{marginLeft: "20px"}}>
+                                <div style={{ marginLeft: "20px" }}>
                                     <InputLabel htmlFor="sendDateTime">Ngày giờ gửi</InputLabel>
                                 </div>
                                 <DatePicker id="sendDateTime" selected={sendDateTime} onChange={date => setSendDateTime(date)} showTimeSelect dateFormat="Pp" className="form-control" />
+                            </div>
+                            <div className="form-group">
+                                <InputLabel htmlFor="weight">Khối lượng (gram)</InputLabel>
+                                <input id="weight" value={weight} onChange={handleWeightChange} className="form-control" />
                             </div>
                         </div>
                     </div>
@@ -255,7 +253,7 @@ const DonHangNew = () => {
 
                             <div className="form-group">
                                 <InputLabel htmlFor="vatFee">Cước VAT</InputLabel>
-                                <input id="vatFee" value={vatFee} className="form-control" readOnly/>
+                                <input id="vatFee" value={vatFee} className="form-control" readOnly />
                             </div>
                         </div>
 
@@ -265,11 +263,11 @@ const DonHangNew = () => {
                         <button type="submit" className="btn1">Add</button>
                         <button className="btn2"><Link to={'/orders'} style={{ textDecoration: 'none', color: 'grey' }}>Back</Link></button>
                     </div>
-                    
+
                 </div>
-                
+
             </form>
-            
+
         </div>
     );
 };

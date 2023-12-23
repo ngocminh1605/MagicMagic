@@ -12,13 +12,12 @@ const EditProfile = () => {
     const [fullname, setFullName] = useState('Nguyễn Phương Linh');
     const [gender, setGender] = useState('Nữ');
     const [birth, setBirth] = useState(new Date());
-    const [iden, setIden] = useState('001303011618');
-
+    const [address, setAddress] = useState('hi');
     const [phone, setPhone] = useState('0963282003');
     const [email, setEmail] = useState('ely@gmail.com');
 
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const IsValidate = () => {
         let isProceed = true;
         let errorMessage = 'Please enter the value in ';
@@ -61,7 +60,7 @@ const EditProfile = () => {
                 birth: birth,
                 email: email,
                 phone: phone,
-                iden: iden,
+                address: address,
             });
             if (response.status === 201) {
                 navigate('/nhanvien');
@@ -92,7 +91,10 @@ const EditProfile = () => {
                         </div>
 
                         <div className="content2" >
-
+                            <div className="form-group" >
+                                <InputLabel htmlFor="birth">Birth<span className="errmsg">*</span></InputLabel>
+                                <DatePicker id="birth" selected={birth} onChange={date => setBirth(date)} className="form-control" />
+                            </div>
                             <div className="form-group">
                                 <InputLabel htmlFor="gender">Gender <span className="errmsg">*</span></InputLabel>
                                 <select id="gender" value={gender} onChange={(e) => setGender(e.target.value)} className="form-control">
@@ -101,18 +103,12 @@ const EditProfile = () => {
                                     <option value="2">Nữ</option>
                                 </select>
                             </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="birth">Birth <span className="errmsg">*</span></InputLabel>
-                                <DatePicker id="birth" selected={birth} onChange={date => setBirth(date)}   className="form-control" />
-
-                            </div>
                         </div>
 
                         <div className="content2">
                             <div className="form-group">
-                                <InputLabel htmlFor="iden">Identity Card<span className="errmsg">*</span></InputLabel>
-                                <input id="iden" value={iden} onChange={(e) => setIden(e.target.value)} className="form-control" />
+                                <InputLabel htmlFor="address">Address<span className="errmsg">*</span></InputLabel>
+                                <input id="address" value={address} onChange={(e) => setAddress(e.target.value)} className="form-control" />
                             </div>
 
                             <div className="form-group">

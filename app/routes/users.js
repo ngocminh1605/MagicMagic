@@ -171,6 +171,54 @@ router.get("/logout", isAuthenticated, (req, res) => {
 });
 
 
+// edit hồ sơ
+
+const createInfo_me = async (userid, fullname, birthday, gender, address, phone, email, db, res) => {
+    const updateUserInfoQuery1 =
+        "UPDATE user SET fullname = ?, birthday = ?, gender = ?, address = ?, phone = ?, email = ? WHERE ID_user = ?";
+    db.query(
+        updateUserInfoQuery1,
+        [fullname, birthday, gender, address, phone, email, userid],
+        (err) => {
+            if (err) {
+                console.error("Lỗi update dữ liệu người dùng: " + err.message);
+                return res
+                    .status(500)
+                    .json({ message: "Lỗi update dữ liệu người dùng." });
+            }
+            return res.status(201).json({ message: "Update dữ liệu thành công" });
+        }
+    );
+};
+
+router.put("/info1/:userid", async (req, res) => {
+    try {
+        const db = req.app.locals.db;
+        const { userid } = req.params;
+        const { fullname, birthday, gender, address, phone, email } = req.body;
+        const checkIDQuery = "SELECT * FROM user WHERE ID_user = ?";
+        db.query(checkIDQuery, [userid], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
+                return res
+                    .status(500)
+                    .json({ message: "Lỗi thêm thông tin người dùng." });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ message: "User not found." });
+            }
+
+            // User exists, proceed with updating information
+            createInfo_me(userid, fullname, birthday, gender, address, phone, email, db, res);
+        });
+    } catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
 
 //sửa thông tin người dùng
 const createInfo = async (userid, username, email, title, officeid, db, res) => {
@@ -198,7 +246,6 @@ router.put("/info/:userid", async (req, res) => {
         const db = req.app.locals.db;
         const { userid } = req.params;
         const { username, email, title, officeid } = req.body;
-
         // Check if the user with the specified ID exists
         const checkIDQuery = "SELECT * FROM user WHERE ID_user = ?";
         db.query(checkIDQuery, [userid], (err, results) => {
