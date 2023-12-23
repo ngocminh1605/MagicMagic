@@ -68,65 +68,33 @@ const ChucVuTable = () => {
   );
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-    { fullName: 'linh ph', gender: 'female', birth: '2 / 8 / 2003', phone: '0963282003', email: 'linhph@gmail.com', iden: '123243', start: '10 / 12 / 2023', officeid: 'office1', position: 'boss1' },
-
-
+    { ID: '1', "Chức Vụ": "Lãnh đạo","Phòng ban làm việc":"Trụ sở chính" },
+    { ID: '2', "Chức Vụ": "Trưởng điểm giao dịch", "Phòng ban làm việc":"Điểm giao dịch" },
+    { ID: '3', "Chức Vụ": "Trưởng điểm tập kết","Phòng ban làm việc":"Điểm tập kết" },
+    { ID: '4', "Chức Vụ": "Nhân viên giao dịch","Phòng ban làm việc":"Điểm giao dịch" },
+    { ID: '5', "Chức Vụ": "Nhân viên tập kết","Phòng ban làm việc":"Điểm tập kết" },
   ]);
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
     {
-      field: "fullName", headerAlign: 'center',
+      field: "ID", headerAlign: 'center',maxWidth: 175,
       align: 'center'
     },
     {
-      field: "gender", headerAlign: 'center',
+      field: "Chức Vụ", headerAlign: 'center',
       align: 'center'
     },
     {
-      field: "birth", headerAlign: 'center',
+      field: "Phòng ban làm việc", headerAlign: 'center',
       align: 'center'
     },
     {
-      field: "phone", headerAlign: 'center',
+      field: "Mô tả về chức vụ", headerAlign: 'center',
       align: 'center'
     },
     {
-      field: "email", headerAlign: 'center',
-      align: 'center'
-    },
-    {
-      field: "iden", headerAlign: 'center',
-      align: 'center'
-    },
-    {
-      field: "start", headerAlign: 'center',
-      align: 'center'
-    },
-    {
-      field: "officeid", headerAlign: 'center',
-      align: 'center'
-    },
-    {
-      field: "position", headerAlign: 'center',
+      field: "Ghi chú", headerAlign: 'center',
       align: 'center'
     },
     {

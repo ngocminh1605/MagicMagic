@@ -123,7 +123,8 @@ const NhanVienNew = () => {
     };
 
     const options2 = [
-        { value: 'Trưởng điểm', label: 'Trưởng điểm' },
+        { value: 'Trưởng điểm giao dịch', label: 'Trưởng điểm giao dịch' },
+        { value: 'Trưởng điểm tập kết', label: 'Trưởng điểm tập kết' },
         { value: 'Nhân viên giao dịch', label: 'Nhân viên giao dịch' },
         { value: 'Nhân viên tập kết', label: 'Nhân viên tập kết' },
     ];
