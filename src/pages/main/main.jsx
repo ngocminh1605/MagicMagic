@@ -12,8 +12,40 @@ import img1 from '../../assets/view.jpg'
 
 const Main = () => {
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [goodCode, setGoodCode] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleClick = async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/goods/checkExist?goodCode=${goodCode}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                if (data.data) {
+                    navigate(`/search/${goodCode}`);
+                } else {
+                    setMessage("Không tìm thấy thông tin đơn hàng.\nMã đơn hàng không hợp lệ hoặc không tồn tại. Vui lòng thử lại.");
+                }
+            } else {
+                console.error('Lỗi lấy dữ liệu theo Mã QR:', response.statusText);
+                return;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleClick();
+        }
+    }
+    
 
     return (
         <div>
@@ -56,10 +88,12 @@ const Main = () => {
                             <input
                                 type="text"
                                 placeholder="Nhập mã đơn hàng"
+                                onChange={(e) => setGoodCode(e.target.value)}
+                                onKeyDown={handleKeyPress}
                             />
                             <span className='idk'>
                                 <Button
-                                    onClick={() => navigate('login')}
+                                    onClick={handleClick}
                                     style={{
                                         textTransform: 'none',
                                         backgroundColor: "#FF9AA2",
@@ -82,6 +116,7 @@ const Main = () => {
                     </div>
                 </div>
             </div>
+            {message && <div style={{ color: 'red', whiteSpace: 'pre-line' }}>{message}</div>}
         </div>
     );
 };

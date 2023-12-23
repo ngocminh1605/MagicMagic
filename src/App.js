@@ -6,6 +6,7 @@ import DonHang from "./pages/list/Donhang";
 import DonHangNhan from "./pages/list/DonHangNhan";
 import ConfirmDon from "./pages/list/ConfirmDon"
 import Login from "./login/signup/login";
+import TraCuu from "./pages/main/TraCuu";
 import NhanVienNew from "./pages/new/NhanVienNew";
 import ChucvuList from "./pages/list/ChucvuList";
 import './App.css';
@@ -28,9 +29,10 @@ function App() {
                     {/* <Sidebar /> */}
                     <Routes>
                         <Route path="/">
-                            <Route index element={<Main />} />
-                            <Route index path="login" element={<Login />} />
-                            <Route index path="profile" element={<EditProfile />} />
+                            <Route index element={<Main/>} />
+                            <Route index path="search/:goodCode"  element={<TraCuu />} />
+                            <Route index path="login"  element={<Login />} />
+                            <Route index path="profile" element={<EditProfile/>}/>
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
