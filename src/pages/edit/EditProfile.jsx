@@ -129,7 +129,7 @@ const EditProfile = () => {
 
                             <div className="form-group">
                                 <InputLabel htmlFor="phone">Phone <span className="errmsg">*</span></InputLabel>
-                                <input id="phone" value={userData.phone ? userData.phone } onChange={(e) => setUserData({ ...userData, phone: e.target.value })} type="text" className="form-control" />
+                                <input id="phone" value={userData.phone ? userData.phone : "0903336476"} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} type="text" className="form-control" />
                             </div>
                         </div>
 
