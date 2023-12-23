@@ -26,7 +26,6 @@ function App() {
         <div className="App">
             <div className="AppGlass">
                 <BrowserRouter>
-                    {/* <Sidebar /> */}
                     <Routes>
                         <Route path="/">
                             <Route index element={<Main/>} />
