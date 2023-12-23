@@ -19,4 +19,7 @@ router.get("/getReceiveByOffice", goodCtrl.getReceiveByOffice);
 
 router.post("/infoOrder", goodCtrl.getInfoOrder);
 
+router.post("/checkExist", goodCtrl.checkQRExist);
+router.post("/stateInfo", goodCtrl.getStateOrder);
+
 module.exports = router;

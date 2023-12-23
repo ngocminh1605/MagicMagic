@@ -234,5 +234,38 @@ const getOrderInfo = async (goodID, db, res) => {
     });
 };
 
+const getInfoByQR = async (goodCode, db, res) => {
+    const query = `SELECT DISTINCT g.* FROM good g
+                            JOIN bookinghistory b ON b.ID_good = g.ID_good
+                            WHERE g.QR_code = ?;`;
+
+    return new Promise((resolve, reject) => {
+        db.query(query, [goodCode], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+const getStateByQR = async (goodCode, db, res) => {
+    const query = `SELECT DISTINCT b.State, b.ID_Office, b.Time_update, o.Name, o.Address FROM good g
+                        JOIN bookinghistory b ON b.ID_good = g.ID_good
+                        JOIN office o ON o.ID_office = b.ID_Office
+                        WHERE g.QR_code = ?;`;
+
+    return new Promise((resolve, reject) => {
+        db.query(query, [goodCode], (err, results) => {
+            if (err) {
+                console.error("Lỗi truy vấn: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
 module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64, getOrderByQRCode, 
-                    getStateWait, getStateNhan, getStateReturn};
+                    getStateWait, getStateNhan, getStateReturn, getInfoByQR, getStateByQR};
