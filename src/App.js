@@ -18,8 +18,6 @@ import DonHangReturn from "./pages/list/DonHangReturn";
 import Main from "./pages/main/main";
 import NhanVienDetail from "./pages/view/NhanVienDetail";
 import EditProfile from "./pages/edit/EditProfile";
-import Sidebar from "./components/sidebar/Sidebar";
-
 
 function App() {
     return (

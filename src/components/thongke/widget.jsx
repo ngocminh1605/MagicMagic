@@ -1,79 +1,108 @@
 import React, { useState, useEffect } from 'react';
 import './widget.scss';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
-import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
-import TimelapseOutlinedIcon from '@mui/icons-material/TimelapseOutlined';
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import { Link } from 'react-router-dom';
+import sendIcon from './image/box.png';
+import receiveIcon from './image/received.png';
+import orderIcon from './image/order.png';
+import successIcon from './image/success.png';
+import returnIcon from './image/return.png';
 
-const Widget = ({ type }) => {
-    const [giatri, setGaitri] = useState({
-        tongNV: 0,
-        tongPB: 0,
-        tongDA: 0,
-        tongLuong: 0,
+const Widget = ({ officeID, type}) => {
+    const [giatri, setGiatri] = useState({
+        tongNhanTQ: 0,
+        tongGuiTQ: 0,
+        tongTQ: 0,
+        tongSuccess: 0,
+        tongReturn: 0,
     });
 
     useEffect(() => {
-        // Dữ liệu mô phỏng cho mục đích minh họa
-        const simulatedData = {
-            tongNV: 10,
-            tongPB: 5,
-            tongDA: 8,
-            tongLuong: 100000000, // Giá trị ví dụ, thay thế bằng logic thực tế
-        };
+        const fetchData = async (officeID) => {
+            try {
+                const response = await fetch('http://localhost:3001/thongke/all', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: officeID }),
+                });
 
-        setGaitri(simulatedData);
-    }, []);
+                const responseData = await response.json();
+    
+                setGiatri({
+                    tongNhanTQ: responseData.receive,
+                    tongGuiTQ: responseData.send,
+                    tongTQ: responseData.all,
+                    tongSuccess: responseData.success,
+                    tongReturn: responseData.return,
+                });
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+    
+        fetchData(officeID); 
+    
+    }, [officeID]);
 
     let data;
 
     switch (type) {
-        case 'nhansu':
+        case 'nhan':
             data = {
-                title: 'TỔNG QUẢN LÝ',
-                counter: giatri.tongNV,
-                link: 'Xem tất cả',
-                path: 'nhanvien',
-               
+                title: 'TỔNG ĐƠN NHẬN',
+                counter: giatri.tongNhanTQ,
+                icon: (<img  
+                    src={receiveIcon}
+                    alt="Receive Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
             };
             break;
-        case 'phongban':
+        case 'gui':
             data = {
-                title: 'TỔNG NHÂN VIÊN',
-                counter: giatri.tongPB,
-                link: 'Xem tất cả',
-                path: 'phongban',
-            
+                title: 'TỔNG ĐƠN GỬI',
+                counter: giatri.tongGuiTQ,
+                icon: (<img  
+                    src={sendIcon}
+                    alt="Send Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
             };
             break;
-        case 'duan':
+
+        case 'thanhcong':
             data = {
-                title: 'TỔNG PHÒNG BAN',
-                counter: giatri.tongDA,
-                link: 'Xem tất cả',
-                path: 'duan',
-                // icon: (
-                //     <AccountTreeOutlinedIcon
-                //         className="icon"
-                //         style={{ color: 'forestgreen', backgroundColor: 'rgba(77, 199, 91, 0.9)' }}
-                //     />
-                // ),
+                title: 'TỔNG ĐƠN GỬI THÀNH CÔNG',
+                counter: giatri.tongSuccess,
+                icon: (<img  
+                    src={successIcon}
+                    alt="Success Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
             };
-            break;   
+            break;
+
+        case 'tralai':
+            data = {
+                title: 'TỔNG ĐƠN GỬI TRẢ LẠI',
+                counter: giatri.tongReturn,
+                icon: (<img  
+                    src={returnIcon}
+                    alt="Return Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
+            };
+            break;
+       
         default:
             data = {
                 title: 'TỔNG ĐƠN HÀNG',
-                counter: giatri.tongLuong, // Lưu ý: Có thể cần điều chỉnh giatri.tongLuong thành giá trị chính xác
-                link: 'Xem tất cả',
-                // icon: (
-                //     <TimelapseOutlinedIcon
-                //         className="icon"
-                //         style={{ color: 'orangered', backgroundColor: 'rgba(244, 173, 100, 0.87)' }}
-                //     />
-                // ),
+                counter: giatri.tongTQ,
+                icon: (<img  
+                    src={orderIcon}
+                    alt="Order Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
             };
             break;
     }
@@ -88,12 +117,10 @@ const Widget = ({ type }) => {
                 <span className="title">{data.title}</span>
                 <span className="counter">
                     {numberWithCommas(data.counter)}
-                </span>
-                <span className="link">
-                    <Link to={`${data.path}`} style={{ textDecoration: 'none' }}>
-                        {data.link}
-                    </Link>
-                </span>
+                </span>    
+            </div>
+            <div className="right">
+                {data.icon}
             </div>
         </div>
     );

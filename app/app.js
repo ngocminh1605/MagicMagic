@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users.js');
 var goodsRouter = require('./routes/goods.js');
 var transferRouter = require('./routes/transfer.js');
 var officeRouter = require('./routes/office.js');
-
+var tkeRouter = require('./routes/thongke.js');
 
 var mysql = require('mysql2');
 var conn = mysql.createConnection({
@@ -35,7 +35,7 @@ app.use('/users', usersRouter);
 app.use('/goods', goodsRouter);
 app.use('/transfer', transferRouter);
 app.use('/office', officeRouter);
-
+app.use('/thongke', tkeRouter);
 
 app.get('/', (req, res) => {
   res.send('Chào mừng đến với dự án của bạn với Express.js!');

@@ -53,6 +53,12 @@ const Login = () => {
     }
   }, [navigate]);
 
+  const handleEnter = (event) => {
+    if (event.key === 'Enter') {
+        handleLogin();
+    }
+}
+
   return (
     <div className="login-page">
       <div className="page">
@@ -72,6 +78,7 @@ const Login = () => {
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleEnter}
             />
           </div>
           
