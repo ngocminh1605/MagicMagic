@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './nhanviennew.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
 import Select from "react-select"

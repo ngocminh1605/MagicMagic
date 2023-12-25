@@ -42,7 +42,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
         });
         if (response.status === 200) {
           const { userId, username, title, officeID } = response.data.user;
-          console.log(username);
           setUserInfo({ userId, username, title, officeID });
           if (setUserID) {
             setUserID(userId);
@@ -196,7 +195,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
-          {userInfo.title === 'Trưởng điểm' && (
+          {userInfo.title === 'Trưởng điểm tập kết' && (
             <div className='menu'>
               {menuItems2.map((item, index) => (
                 <Link to={item.path} style={{ textDecoration: 'none' }} key={index}>
@@ -266,7 +265,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 Lãnh đạo
               </div>
             )}
-            {userInfo.title === 'Trưởng điểm' && (
+            {userInfo.title === 'Trưởng điểm tập kết' && (
               <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
                 Trưởng điểm<br/>tập kết
               </div>
