@@ -18,12 +18,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import nv from '../navbar/nv.png';
 import { axiosInstance } from '../../constant/axios';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 
 const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+
 
   useEffect(() => {
 
@@ -262,27 +265,27 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               </Dropdown>
             </div>
             {userInfo.title === 'admin' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
                 Lãnh đạo
               </div>
             )}
             {userInfo.title === 'Trưởng điểm' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
                 Trưởng điểm<br/>tập kết
               </div>
             )}
             {userInfo.title === 'Trưởng điểm giao dịch' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
                 Trưởng điểm<br/>giao dịch
               </div>
             )}
             {userInfo.title === 'Nhân viên giao dịch' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
                 Nhân viên<br />giao dịch
               </div>
             )}
             {userInfo.title === 'Nhân viên tập kết' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "20px", paddingBottom: "2rem" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
                 Nhân viên<br />tập kết
               </div>
             )}

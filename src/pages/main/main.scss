@@ -1,22 +1,37 @@
+.main-page {
+
+    background-color: #FDB3CC;
+    height: 100%;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .logo1 {
     display: flex;
     height: 5rem;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 4vh;
     gap: 1rem;
     justify-content: flex-start;
     height: 4%;
-    padding-left: 5rem;
-    margin-top: 1rem;
+    padding-left: 10vh;
+    margin-top: 2vh;
 }
 
 .logo1>img {
-    width: 4rem;
-    height: 4rem;
+    width: 10vh;
+    height: 10vh;
+
 }
 
 .logo1>span {
-    color: var(--black)
+    color: var(--black);
+    margin-top: 0.8rem;
+
 }
 
 .logo1>span>span {
@@ -25,30 +40,29 @@
 
 .nav-bar {
     display: flex;
-    padding-top: 1rem;
 
 }
 
 
 .slide>img {
+
     width: 100%;
-    height: 20rem;
+    height: 50%;
 }
 
 .nav-bar {
-    background-image: url(../../assets/delivery.jpg);
+    background-image: url(../../assets/banner2.png);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 360px;
-
+    height: 60vh;
 }
 
 .track {
     color: rgb(51, 51, 51);
-    font-size: 32px;
+    font-size: 5vh;
     font-weight: 700;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 
@@ -56,30 +70,28 @@
 .track-wrap {
     display: flex;
     justify-content: center;
-    
+
 }
 
 .input-wrap {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    max-width: 1120px;
-    height: 112px;
-    padding: 24px 32px;
-    background: rgb(255, 255, 255);
+    width: 80%;
+    height: 25%;
+    padding: 3vh 3vh;
+    background: var(--glass);
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px !important;
 }
 
-.input-wrap input{
-    width: 900px;
-    height: 64px;
+.input-wrap input {
+    width: 90%;
     border-radius: 6px;
     background-color: rgb(245, 246, 249);
     border: none;
-    justify-content: flex-start;
+    justify-content: center;
     padding-left: 20px;
-    font-size: 20px;
+    font-size: 3vh;
 }
 
 .input-wrap input:focus {
@@ -90,5 +102,11 @@
 
 .input-wrap ::placeholder {
     font-size: 20px;
+}
 
+.msg {
+    margin-top: 1vh;
+    color: red;
+    white-space: pre-line;
+    font-size: 2.8vh;
 }
