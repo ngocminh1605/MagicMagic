@@ -23,6 +23,7 @@ const NhanVienEdit = () => {
                 const response = await axios.get(`http://localhost:3001/users/info/${userID}`);
                 if (response.status === 200) {
                     setUserData(response.data[0]);
+                    console.log(userData);
                 } else {
                     console.error('Request failed with status:', response.status);
                 }
@@ -35,7 +36,8 @@ const NhanVienEdit = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        console.log(userData.UserName,
+        console.log(
+            userData.UserName,
             userData.email,
             userData.OfficeId,
             userData.title)

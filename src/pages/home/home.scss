@@ -23,3 +23,14 @@ body {
     }
   }
 }
+
+.tables {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.table {
+  flex: 1; /* Chia không gian cho mỗi bảng */
+  margin-right: 20px; /* Khoảng cách giữa hai bảng */
+}

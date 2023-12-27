@@ -1,22 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Widget from '../../components/thongke/widget';
-import DonHangChart from '../../components/thongke/chart';
-const Home = () =>
-{
-
+import Chart from '../../components/thongke/chart';
+import TableGD from '../../components/thongke/tableGD';
+import TableTK from '../../components/thongke/tableTK';
+const Home = () => {
+    const [title, setTitle] = useState(null);
+    const [officeID, setOfficeID] = useState(null);
     return (
         <div className="home">
-            <Sidebar/>
-            <div className="homeContainer">
+            <Sidebar setTitle={setTitle} setOfficeID={setOfficeID}/>
+            <div className="homeContainer" style={{ overflowY: 'auto', height: '100vh' }}>
                 <div className="widgets">
-                    <Widget type="nhansu"/>
-                    <Widget type="phongban"/>
-                    <Widget type="duan"/>
-                    <Widget type="chamcong"/>
+                {<Widget officeID={officeID} type="nhan" />}
+                {<Widget officeID={officeID} type="gui" />}
+                {<Widget officeID={officeID} type="tong"/>}
                 </div>
-                <DonHangChart/>
+
+                {title === 'Nhân viên giao dịch' &&
+                    <div className="widgets">
+                        {<Widget officeID={officeID} type="thanhcong" />}
+                        {<Widget officeID={officeID} type="tralai" />}
+                    </div>
+                }
+
+                {title === 'admin' && <Chart />}
+
+                {title === 'Trưởng điểm giao dịch' && <Chart officeID={officeID} />}
+                {title === 'Trưởng điểm tập kết' && <Chart officeID={officeID} />}
+                
+                {title === 'admin' && 
+                    <div className="tables">
+                        <div className="table">
+                            Điểm Giao dịch
+                            <TableGD/>
+                        </div>
+                        <div className="table">
+                            Điểm Tập kết
+                            <TableTK/>
+                        </div>
+                    </div>
+                }
+                
             </div>
         </div>
     );

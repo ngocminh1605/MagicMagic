@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './editProfile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,78 +6,69 @@ import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import axios from "axios";
 
 const EditProfile = () => {
-    const [userID, setUserID] = useState(null);
-    const [fullname, setFullName] = useState('Nguyễn Phương Linh');
-    const [gender, setGender] = useState('Nữ');
-    const [birth, setBirth] = useState(new Date());
-    const [address, setAddress] = useState('hi');
-    const [phone, setPhone] = useState('0963282003');
-    const [email, setEmail] = useState('ely@gmail.com');
-    
+    const [userID, setUserID] = useState('');
     const navigate = useNavigate();
-    const IsValidate = () => {
-        let isProceed = true;
-        let errorMessage = 'Please enter the value in ';
-        if (!phone) {
-            isProceed = false;
-            errorMessage += 'Phone';
-        }
-
-        if (!fullname) {
-            isProceed = false;
-            errorMessage += 'Full Name';
-        }
-
-        if (!email) {
-            isProceed = false;
-            errorMessage += 'Email';
-        }
-
-        if (!isProceed) {
-            // setAlert({ status: 'error', title: 'Error', description: 'Please enter the value in' });
-        } else {
-            if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
-                isProceed = false;
-                // setAlert({ status: 'error', title: 'Error', description: 'Please enter a valid email' });
+    const [userData, setUserData] = useState({
+        FullName: '',
+        birthday: '',
+        gender: '',
+        address: '',
+        Phone: '',
+        email: ''
+    });
+    console.log(userID)
+    useEffect(() => {
+        const fetchDefaultInfo = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/users/info/${userID}`);
+                if (response.status === 200) {
+                    setUserData(response.data[0]);
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching default data:', error);
             }
-        }
+        };
+        fetchDefaultInfo();
+    }, [userID]);
 
-        return isProceed;
-    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!IsValidate()) {
-            return;
-        }
+        console.log(
+            userData.FullName,
+            userData.Phone,
+        )
         try {
-            const response = await axiosInstance.post('users/register', {
-                fullname: fullname,
-                gender: gender,
-                birth: birth,
-                email: email,
-                phone: phone,
-                address: address,
+            const response = await axios.put(`http://localhost:3001/users/info1/${userID}`, {
+                fullname: userData.FullName,
+                birthday: userData.birthday,
+                gender: userData.gender,
+                phone: userData.Phone,
+                email: userData.email,
+                address: userData.address
             });
+
             if (response.status === 201) {
+                alert("Đã sửa đổi thông tin thành công")
                 navigate('/nhanvien');
             } else {
-                // Registration failed
-                console.log("fails");
+                console.error('Update failed with status:', response.status);
             }
         } catch (error) {
-
-            console.error('Error during registration:', error);
-
+            alert("Sửa đổi thông tin thất bại vui lòng kiểm tra lại")
+            console.error('Error updating data:', error);
         }
     };
 
     return (
         <div className="add">
-            <Sidebar setUserID={setUserID}/>
+            <Sidebar setUserID={setUserID} />
             <div className="container">
                 <div className="title">Profile</div>
                 <form className="offset-lg-1 col-lg-8" onSubmit={handleSubmit}>
@@ -85,21 +76,24 @@ const EditProfile = () => {
                         <div className="content1">
                             <div className="form-group2">
                                 <InputLabel htmlFor="fullname">Full Name <span className="errmsg">*</span></InputLabel>
-                                <input id="fullname" value={fullname} onChange={(e) => setFullName(e.target.value)} className="form-control" />
+                                <input id="fullname" value={userData.FullName} onChange={(e) => setUserData({ ...userData, FullName: e.target.value })} className="form-control" />
                             </div>
                         </div>
 
                         <div className="content2" >
                             <div className="form-group" >
                                 <InputLabel htmlFor="birth">Birth<span className="errmsg">*</span></InputLabel>
-                                <DatePicker id="birth" selected={birth} onChange={date => setBirth(date)} className="form-control" />
+                                <DatePicker id="birth"
+                                    selected={userData.birth ? new Date(userData.birth) : new Date()}
+                                    onChange={(e) => setUserData({ ...userData, birthday: e.target.value })}
+                                    className="form-control" />
                             </div>
                             <div className="form-group">
                                 <InputLabel htmlFor="gender">Gender <span className="errmsg">*</span></InputLabel>
-                                <select id="gender" value={gender} onChange={(e) => setGender(e.target.value)} className="form-control">
+                                <select id="gender" value={userData.gender} onChange={(e) => setUserData({ ...userData, gender: e.target.value })} className="form-control">
                                     <option value="">-- Select Office --</option>
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
                                 </select>
                             </div>
                         </div>
@@ -107,19 +101,19 @@ const EditProfile = () => {
                         <div className="content2">
                             <div className="form-group">
                                 <InputLabel htmlFor="address">Address<span className="errmsg">*</span></InputLabel>
-                                <input id="address" value={address} onChange={(e) => setAddress(e.target.value)} className="form-control" />
+                                <input id="address" value={userData.address} onChange={(e) => setUserData({ ...userData, address: e.target.value })} className="form-control" />
                             </div>
 
                             <div className="form-group">
                                 <InputLabel htmlFor="phone">Phone <span className="errmsg">*</span></InputLabel>
-                                <input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} type="text" className="form-control" />
+                                <input id="phone" value={userData.Phone ? userData.Phone : "0903336476"} onChange={(e) => setUserData({ ...userData, Phone: e.target.value })} type="text" className="form-control" />
                             </div>
                         </div>
 
                         <div className="content1">
                             <div className="form-group2">
                                 <InputLabel htmlFor="email">Email <span className="errmsg">*</span></InputLabel>
-                                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" />
+                                <input id="email" value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="form-control" />
                             </div>
                         </div>
 

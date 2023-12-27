@@ -17,7 +17,6 @@ const DonHangPrint = () => {
       try {
         const response = await axios.post(`http://localhost:3001/goods/infoOrder`, { goodID });
         if (!response.data || response.data.length === 0) {
-          // Handle case where no order information is found
           return;
         }
         setOrderInfo(response.data.data[0]);
@@ -109,8 +108,8 @@ const DonHangPrint = () => {
 
               <div className="grid-item" style = {{borderLeft:"2px solid black"}}>
                 <p style={{ fontWeight: "bold" }}>5. Dịch vụ đặc biệt/ Cộng thêm:</p>
-                <p>............................................................................................................................................</p>
-                <p style = {{marginBottom:"0.025px"}}>............................................................................................................................................</p>
+                <p>..........................................................................................................................</p>
+                <p style = {{marginBottom:"0.025px"}}>..........................................................................................................................</p>
               </div>
               <div className="grid-item" style = {{borderLeft:"2px solid black"}}>
                 <p style={{ fontWeight: "bold" }}>6. Cam kết của người gửi khi không phát được bưu gửi:</p>

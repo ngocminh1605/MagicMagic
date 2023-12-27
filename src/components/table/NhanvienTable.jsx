@@ -8,6 +8,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { format } from 'date-fns';
 
 const NhanVienTable = ({ officeID, userID, title }) => {
   console.log("hi", officeID, userID, title);
@@ -74,15 +75,15 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       });
       if (response.status === 200) {
         const userData = response.data.users;
-        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         console.log("Dữ liệu người dùng:", userData);
         const formattedData = userData.map(item => {
+          console.log(format(new Date(item.datestart), 'dd/MM/yyyy'))
           return {
             "ID_User": item.ID_user,
             "UserName": item.UserName,
             "Title": item.title,
             "Office": item.Name,
-            "DateStart": new Date(item.datestart).toLocaleDateString(undefined, options),
+            "DateStart": format(new Date(item.datestart), 'dd/MM/yyyy'),
           };
         });
         setRowData(formattedData);
@@ -105,7 +106,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       try {
         const response = await axios.delete(`http://localhost:3001/users/delete/${deleteUserId}`);
         if (response.status === 200) {
-          fetchUser(1, userID, "Trưởng điểm")
+          fetchUser(1, userID, "Trưởng điểm giao dịch")
           console.log('Xóa nhân viên thành công');
         } else {
           console.error('Delete failed with status:', response.status);
@@ -150,7 +151,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
 
     >
       <Button
-        onClick={() => navigate('/nhanvien/add')}
+        onClick={() => navigate(`/nhanvien/add/${userID}/${officeID}/${title}`)}
         style={{
           textTransform: 'none',
           backgroundColor: "#FF9AA2",

@@ -18,8 +18,6 @@ import DonHangReturn from "./pages/list/DonHangReturn";
 import Main from "./pages/main/main";
 import NhanVienDetail from "./pages/view/NhanVienDetail";
 import EditProfile from "./pages/edit/EditProfile";
-import Sidebar from "./components/sidebar/Sidebar";
-
 
 function App() {
     return (
@@ -35,7 +33,7 @@ function App() {
                             <Route index path="home" element={<Home />} />
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
-                                <Route path="add" element={<NhanVienNew />} />
+                                <Route path="add/:userID/:officeID/:title" element={<NhanVienNew />} />
                                 <Route path="edit/:userID" element={<NhanVienEdit />} />
                                 <Route path="view/:userID" element={<NhanVienDetail />} />
                             </Route>
