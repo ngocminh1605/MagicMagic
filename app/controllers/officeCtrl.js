@@ -147,6 +147,19 @@ const officeCtrl = {
         }
     },
 
+    getListOffice: async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+           
+            const data = await officeQueries.getListOffice(db, res);
+    
+            res.status(201).json({ message: "Lấy danh sách office thành công!", data: data });
+        } catch (error) {
+            console.error("Lỗi lấy danh sách office: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 

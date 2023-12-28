@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { InputLabel, Select, MenuItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from "../../components/sidebar/Sidebar";
 
 const ConfirmPopup = ({goodID}) => {
 

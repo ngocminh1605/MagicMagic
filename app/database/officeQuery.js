@@ -57,6 +57,20 @@ const getAllOffice = async (db, res) => {
     });
 };
 
+
+const getListOffice = async (db, res) => {
+    const getQuery = "SELECT * FROM office;";
+    return new Promise((resolve, reject) => {
+        db.query(getQuery, (err, results) => {
+            if (err) {
+                console.error("Lỗi lấy dữ liệu office: ", err.message);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
 function extractProvinceName(address) {
     const lowercaseAddress = address.toLowerCase();
   
@@ -136,4 +150,4 @@ function extractProvinceName(address) {
     return 'Không xác định';
 }
 
-module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID, getAllOffice, extractProvinceName};
+module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID, getAllOffice, extractProvinceName, getListOffice};
