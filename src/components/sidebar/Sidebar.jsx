@@ -65,7 +65,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     fetchUserInfo();
   }, [setOfficeID, setUserID, setTitle, navigate]);
 
-  
+
 
   const handleItemClick1 = (index) => {
     setActiveItem(index);
@@ -97,32 +97,32 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   // };
 
   const menuItems = [
-    { icon: <HomeIcon />, text: 'Home', path: '/home' },
-    { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
-    { icon: <BusinessOutlinedIcon />, text: 'Office', path: '/office' },
-    { icon: <WorkOutlinedIcon />, text: 'Position', path: '/position' },
-    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
+    { icon: <HomeIcon style={{ fontSize: '4vh' }} />, text: 'Home', path: '/home' },
+    { icon: <AccountCircleOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Employee', path: '/nhanvien' },
+    { icon: <BusinessOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Office', path: '/office' },
+    { icon: <WorkOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Position', path: '/position' },
+    { icon: <ListAltIcon style={{ fontSize: '4vh' }} />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems2 = [
-    { icon: <HomeIcon />, text: 'Home', path: '/home' },
-    { icon: <AccountCircleOutlinedIcon />, text: 'Employee', path: '/nhanvien' },
-    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
+    { icon: <HomeIcon style={{ fontSize: '4vh' }} />, text: 'Home', path: '/home' },
+    { icon: <AccountCircleOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Employee', path: '/nhanvien' },
+    { icon: <ListAltIcon style={{ fontSize: '4vh' }} />, text: 'Orders', path: '/orders' },
   ];
 
   const menuItems3 = [
-    { icon: <HomeIcon />, text: 'Home', path: '/home' },
-    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
-    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive` },
+    { icon: <HomeIcon style={{ fontSize: '4vh' }} />, text: 'Home', path: '/home' },
+    { icon: <ShippingIcon style={{ fontSize: '4vh' }} />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Confirm', path: `/receive` },
   ];
 
   const menuItems4 = [
-    { icon: <HomeIcon />, text: 'Home', path: '/home' },
-    { icon: <ListAltIcon />, text: 'Orders', path: '/orders' },
-    { icon: <AddBoxIcon />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
-    { icon: <ShippingIcon />, text: 'Transfer', path: `/create` },
-    { icon: <InventoryOutlinedIcon />, text: 'Confirm', path: `/receive` },
-    { icon: <ContactMailIcon />, text: 'Return', path: `/return` },
+    { icon: <HomeIcon style={{ fontSize: '4vh' }} />, text: 'Home', path: '/home' },
+    { icon: <ListAltIcon style={{ fontSize: '4vh' }} />, text: 'Orders', path: '/orders' },
+    { icon: <AddBoxIcon style={{ fontSize: '4vh' }} />, text: 'Create', path: `/orders/add/${userInfo.userId}` },
+    { icon: <ShippingIcon style={{ fontSize: '4vh' }} />, text: 'Transfer', path: `/create` },
+    { icon: <InventoryOutlinedIcon style={{ fontSize: '4vh' }} />, text: 'Confirm', path: `/receive` },
+    { icon: <ContactMailIcon style={{ fontSize: '4vh' }} />, text: 'Return', path: `/return` },
   ];
 
   // console.log(userInfo.title)
@@ -175,7 +175,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                     className={`menuItem ${index === activeItem ? 'active' : ''}`}
                     onClick={() => handleItemClick1(index)}
                   >
-                    <div>{item.icon}</div>
+                    <div className='bar-icon'>{item.icon}</div>
                     <span>{item.text}</span>
                   </div>
                 </Link>
@@ -191,7 +191,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
                     onClick={() => handleItemClick2(index)}
                   >
-                    <div>{item.icon}</div>
+                    <div className='bar-icon'>{item.icon}</div>
                     <span>{item.text}</span>
                   </div>
                 </Link>
@@ -206,7 +206,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
                     onClick={() => handleItemClick2(index)}
                   >
-                    <div>{item.icon}</div>
+                    <div className='bar-icon'>{item.icon}</div>
                     <span>{item.text}</span>
                   </div>
                 </Link>
@@ -221,7 +221,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
                     onClick={() => handleItemClick3(index)}
                   >
-                    <div>{item.icon}</div>
+                    <div className='bar-icon'>{item.icon}</div>
                     <span>{item.text}</span>
                   </div>
                 </Link>
@@ -236,7 +236,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                     className={`menuItem ${activeItem === index ? 'active' : ''}`}
                     onClick={() => handleItemClick4(index)}
                   >
-                    <div>{item.icon}</div>
+                    <div className='bar-icon'>{item.icon}</div>
                     <span>{item.text}</span>
                   </div>
                 </Link>
@@ -251,40 +251,42 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
                 <Dropdown.Toggle variant="success" id="avatar-dropdown" style={{ backgroundColor: "transparent", border: "none", marginTop: -30 }}>
                   <img className="avatar dropdown-toggle" src={nv} alt="Ảnh" />
                 </Dropdown.Toggle>
+
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => navigate('/profile')}>
-                    <EditIcon />
+                    <EditIcon style={{ fontSize: '3.5vh' }} />
                     <span>Sửa hồ sơ</span>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>
-                    <LogoutOutlinedIcon />
+                    <LogoutOutlinedIcon style={{ fontSize: '3.5vh' }}/>
                     <span>Đăng xuất</span>
                   </Dropdown.Item>
                 </Dropdown.Menu>
+
               </Dropdown>
             </div>
             {userInfo.title === 'admin' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
-                Lãnh đạo
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "4vh" }}>
+                Lãnh đạo <br />
               </div>
             )}
             {userInfo.title === 'Trưởng điểm' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
-                Trưởng điểm<br/>tập kết
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3vh", paddingBottom: "3.5vh" }}>
+                Trưởng điểm<br />tập kết
               </div>
             )}
             {userInfo.title === 'Trưởng điểm giao dịch' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
-                Trưởng điểm<br/>giao dịch
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3vh", paddingBottom: "3.5vh" }}>
+                Trưởng điểm<br />giao dịch
               </div>
             )}
             {userInfo.title === 'Nhân viên giao dịch' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3vh", paddingBottom: "3.5vh" }}>
                 Nhân viên<br />giao dịch
               </div>
             )}
             {userInfo.title === 'Nhân viên tập kết' && (
-              <div className="position" style={{ fontWeight: "bold", fontSize: "3.5vh", paddingBottom: "3vh" }}>
+              <div className="position" style={{ fontWeight: "bold", fontSize: "3vh", paddingBottom: "3.5vh" }}>
                 Nhân viên<br />tập kết
               </div>
             )}
