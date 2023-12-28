@@ -55,11 +55,11 @@ const getQRCode = async (db, res) => {
 };
 
 // Tạo đơn hàng
-const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res) => {
-    const insertOrderQuery = "INSERT INTO good (Name_sender, Address_sender, Phone_sender, Name_receiver, Address_receiver, Phone_receiver, Type, Weight, QR_code,  mainPrice, secondPrice, GTVT, VAT, Price, ID_user, Senddate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, PostalcodeSend, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res) => {
+    const insertOrderQuery = "INSERT INTO good (Name_sender, Address_sender, Phone_sender, Name_receiver, Address_receiver, Phone_receiver, PostalcodeSend, Type, Weight, QR_code,  mainPrice, secondPrice, GTVT, VAT, Price, ID_user, Senddate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     return new Promise((resolve, reject) => {
-        db.query(insertOrderQuery, [nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate], (err) => {
+        db.query(insertOrderQuery, [nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, PostalcodeSend, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate], (err) => {
             if (err) {
                 console.error("Lỗi tạo đơn hàng: ", err.message);
                 reject(err);
@@ -267,5 +267,45 @@ const getStateByQR = async (goodCode, db, res) => {
     });
 };
 
+
+const updateGood = async (code, goodID, db) => {
+    const query = 'UPDATE good SET good.PostalcodeReceive = ? WHERE good.ID_good = ?;';
+    return new Promise((resolve, reject) => {
+        db.query(query, [code, goodID], (err, results) => {
+            if (err) {
+                console.error("Lỗi cập nhật hàng hóa: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+const getAdressReceiver = async (goodID, db) => {
+    const query = 'SELECT Address_receiver FROM good WHERE ID_good = ?';
+    return new Promise((resolve, reject) => {
+        db.query(query, [goodID], (err, results) => {
+            if (err) {
+                console.error("Lỗi cập nhật hàng hóa: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+const getPostalCode = async (province, db) => {
+    const query = `SELECT Postalcode FROM office WHERE Address LIKE ? AND Name LIKE '%GD%';`;
+    return new Promise((resolve, reject) => {
+        db.query(query, [`%${province}%`], (err, results) => {
+            if (err) {
+                console.error("Lỗi cập nhật hàng hóa: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
 module.exports = { createOrder, getSend, getAll, getReceive, generateCode, getQRCode, getOrderInfo, generateQRCodeBase64, getOrderByQRCode, 
-                    getStateWait, getStateNhan, getStateReturn, getInfoByQR, getStateByQR};
+                    getStateWait, getStateNhan, getStateReturn, getInfoByQR, getStateByQR, updateGood, getAdressReceiver, getPostalCode};

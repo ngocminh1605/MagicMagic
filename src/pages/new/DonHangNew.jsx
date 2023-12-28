@@ -13,6 +13,7 @@ import { calculateShippingFee, calculateVatFee } from '../../constant/function';
 const DonHangNew = () => {
     const navigate = useNavigate();
     const [officeID, setOfficeID] = useState(null);
+    const [goodID, setGoodID] = useState(null);
     const { userID } = useParams();
 
     const [senderFullName, setSenderFullName] = useState('');
@@ -28,7 +29,9 @@ const DonHangNew = () => {
     const [vatFee, setVatFee] = useState('');
     const [weight, setWeight] = useState('');
     const [mainFee, setMainFee] = useState(calculateShippingFee(weight, shipmentType));
-    const [province, setProvince] = useState('');
+    const [province, setProvince] = useState('');	
+    const [PostalcodeSend, setPostalcodeSend] = useState('');	
+
 
     useEffect(() => {
         const calculateAndSetVatFee = () => {
@@ -39,6 +42,7 @@ const DonHangNew = () => {
     }, [mainFee, extraFee, gtvtFee, shipmentType]);
 
     useEffect(() => {
+        
         if (officeID) {
             const fetchData = async () => {
                 try {
@@ -53,6 +57,7 @@ const DonHangNew = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setProvince(data.data);
+                        setPostalcodeSend(data.code);
                     } else {
                         console.error('Lỗi lấy tỉnh:', response.statusText);
                     }
@@ -64,7 +69,28 @@ const DonHangNew = () => {
             fetchData();
         }
 
-    }, [officeID]);
+        if (goodID) {
+            async function updateGood(goodID) {
+                try {
+                    const response = await fetch('http://localhost:3001/goods/updateGood', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ goodID: goodID}),
+                    });
+                    
+                    if (!response.ok) {
+                    console.error('Failed to fetch updateorder information. Server responded with:', response.status, response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error fetching update order information:', error);
+                }
+            }
+
+            updateGood(goodID)
+        }
+    }, [officeID, goodID]);
 
     const handleAddClick = async (e) => {
         e.preventDefault();
@@ -93,6 +119,7 @@ const DonHangNew = () => {
             nameReceiver: receiverFullName,
             addressReceiver: receiverAddress,
             phoneReceiver: receiverPhoneNumber,
+            PostalcodeSend: PostalcodeSend,
             type: shipmentType,
             weight: weight,
             mainPrice: mainFee,
@@ -135,6 +162,7 @@ const DonHangNew = () => {
 
             if (response.ok) {
                 const responseData = await response.json();
+                setGoodID(responseData.data[0].ID_good);
                 const confirmData = {
                     goodID: responseData.data[0].ID_good,
                     officeID: officeID

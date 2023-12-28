@@ -22,4 +22,6 @@ router.post("/infoOrder", goodCtrl.getInfoOrder);
 router.post("/checkExist", goodCtrl.checkQRExist);
 router.post("/stateInfo", goodCtrl.getStateOrder);
 
+router.post("/updateGood", goodCtrl.updateGood);
+
 module.exports = router;

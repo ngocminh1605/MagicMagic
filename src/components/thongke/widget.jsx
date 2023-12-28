@@ -5,6 +5,9 @@ import receiveIcon from './image/received.png';
 import orderIcon from './image/order.png';
 import successIcon from './image/success.png';
 import returnIcon from './image/return.png';
+import employeeIcon from './image/employee.png';
+import TKIcon from './image/gather.png';
+import GDIcon from './image/transfer.png';
 
 const Widget = ({ officeID, type}) => {
     const [giatri, setGiatri] = useState({
@@ -13,6 +16,10 @@ const Widget = ({ officeID, type}) => {
         tongTQ: 0,
         tongSuccess: 0,
         tongReturn: 0,
+        tongNV1: 0,
+        tongNV2: 0,
+        tongTK: 0,
+        tongGD: 0,
     });
 
     useEffect(() => {
@@ -25,24 +32,91 @@ const Widget = ({ officeID, type}) => {
                     },
                     body: JSON.stringify({ id: officeID }),
                 });
-
+    
                 const responseData = await response.json();
     
-                setGiatri({
+                setGiatri(prevState => ({
+                    ...prevState,
                     tongNhanTQ: responseData.receive,
                     tongGuiTQ: responseData.send,
                     tongTQ: responseData.all,
                     tongSuccess: responseData.success,
                     tongReturn: responseData.return,
-                });
+                }));
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         };
     
-        fetchData(officeID); 
+        const fetchEmployeeAll = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/thongke/employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                const responseData = await response.json();
+    
+                setGiatri(prevState => ({
+                    ...prevState,
+                    tongNV1: responseData.employee,
+                }));
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+    
+        const fetchEmployeeLead = async (officeID) => {
+            try {
+                const response = await fetch('http://localhost:3001/thongke/employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ officeID: officeID }),
+                });
+    
+                const responseData = await response.json();
+    
+                setGiatri(prevState => ({
+                    ...prevState,
+                    tongNV2: responseData.employee,
+                }));
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+    
+        const fetchOffice = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/thongke/office', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                const responseData = await response.json();
+    
+                setGiatri(prevState => ({
+                    ...prevState,
+                    tongGD: responseData.gd,
+                    tongTK: responseData.tk,
+                }));
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+    
+        fetchData(officeID);
+        fetchEmployeeAll();
+        fetchEmployeeLead(officeID);
+        fetchOffice();
     
     }, [officeID]);
+    
 
     let data;
 
@@ -89,6 +163,53 @@ const Widget = ({ officeID, type}) => {
                 icon: (<img  
                     src={returnIcon}
                     alt="Return Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
+            };
+            break;
+
+        case 'officeGD':
+            data = {
+                title: 'SỐ ĐIỂM GIAO DỊCH',
+                counter: giatri.tongGD,
+                icon: (<img  
+                    src={GDIcon}
+                    alt="GD Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
+            };
+            break;
+
+        case 'officeTK':
+            data = {
+                title: 'SỐ ĐIỂM TẬP KẾT',
+                counter: giatri.tongTK,
+                icon: (<img  
+                    src={TKIcon}
+                    alt="TK Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
+            };
+            break;
+        case 'allEmployee':
+            data = {
+                title: 'TỔNG SỐ NHÂN VIÊN',
+                counter: giatri.tongNV1,
+                icon: (<img  
+                    src={employeeIcon}
+                    alt="Employee Icon"
+                    style={{ width: '50px', height: '50px' }}
+                />),
+            };
+            break;
+
+        case 'employee':
+            data = {
+                title: 'TỔNG SỐ NHÂN VIÊN',
+                counter: giatri.tongNV2,
+                icon: (<img  
+                    src={employeeIcon}
+                    alt="Employee Icon"
                     style={{ width: '50px', height: '50px' }}
                 />),
             };

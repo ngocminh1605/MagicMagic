@@ -79,6 +79,33 @@ const tkeCtrl = {
         }
     },
 
+    numOffice : async(req ,res) => {
+        try {
+            const db = req.app.locals.db;
+            const [numOfGD] = await tkQueries.office("GD", db, res);
+            const [numOfTK] = await tkQueries.office("TK", db, res);
+    
+            res.status(201).json({ message: "Thống kê số office thành công!", tk: numOfTK.numOfOffice, gd: numOfGD.numOfOffice});
+        } catch (error) {
+            console.error("Lỗi thống kê số office: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    numEmployee: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { officeID } = req.body;
+            const [employee] = await tkQueries.employee(officeID, db, res);
+    
+            res.status(200).json({ message: "Thống kê số nhân viên thành công!", employee: employee.numOfemployee });
+        } catch (error) {
+            console.error("Lỗi thống kê số nhân viên: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    }
+    
+
 }
 
 module.exports = tkeCtrl;

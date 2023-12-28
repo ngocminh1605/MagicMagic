@@ -69,7 +69,7 @@ const DonHangPrint = () => {
                 <p>{orderInfo.Name_sender}</p>
                 <p>{orderInfo.Address_sender}</p>
                 <p style={{ fontWeight: "bold" }}>Điện thoại: {orderInfo.Phone_sender}</p>
-                <p style={{ fontWeight: "bold" }}>Mã bưu chính:</p>
+                <p style={{ fontWeight: "bold" }}>Mã bưu chính: {orderInfo.PostalcodeSend}</p>
               </div>
 
               <div className="grid-item2" style = {{borderLeft:"2px solid black"}}>
@@ -144,7 +144,7 @@ const DonHangPrint = () => {
                 <p>{orderInfo.Name_receiver}</p>
                 <p>{orderInfo.Address_receiver}</p>
                 <p style={{ fontWeight: "bold" }}>Điện thoại: {orderInfo.Phone_receiver}</p>
-                <p style={{ fontWeight: "bold" }}>Mã bưu chính:</p>
+                <p style={{ fontWeight: "bold" }}>Mã bưu chính: {orderInfo.PostalcodeReceive}</p>
               </div>
 
               <div className='grid-container'>

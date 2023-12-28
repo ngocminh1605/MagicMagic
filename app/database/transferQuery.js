@@ -43,7 +43,7 @@ const updateReturn = async (goodID, state, officeID, time, db, res) => {
     });
 };
 
-const updateDaGui = async (goodID, state, officeID, time, db, res) => {
+const updateDaGui = async (goodID, state, officeID, db, res) => {
     const confirmReceiveQuery = `UPDATE bookinghistory SET State = ? WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã gửi");`;
 
     return new Promise((resolve, reject) => {
@@ -58,7 +58,7 @@ const updateDaGui = async (goodID, state, officeID, time, db, res) => {
     });
 };
 
-const updateDaNhan = async (goodID, state, officeID, time, db, res) => {
+const updateDaNhan = async (goodID, state, officeID, db, res) => {
     const confirmReceiveQuery = `UPDATE bookinghistory SET State = ? WHERE ID_Office = ? AND ID_good = ? AND State IN ("Đã nhận");`;
 
     return new Promise((resolve, reject) => {
