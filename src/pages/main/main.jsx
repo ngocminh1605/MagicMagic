@@ -6,7 +6,7 @@ import { axiosInstance } from '../../constant/axios';
 import { Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import logo1 from '../../assets/logo/express-delivery.png';
-import img1 from '../../assets/view.jpg'
+import img1 from '../../assets/main.png'
 
 
 
@@ -14,6 +14,7 @@ const Main = () => {
     const navigate = useNavigate();
     const [goodCode, setGoodCode] = useState('');
     const [message, setMessage] = useState('');
+
 
     const handleClick = async () => {
         try {
@@ -23,7 +24,8 @@ const Main = () => {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
+
             if (response.ok) {
                 const data = await response.json();
                 if (data.data) {
@@ -45,39 +47,37 @@ const Main = () => {
             handleClick();
         }
     }
-    
+
 
     return (
-        <div>
-            <div className="main-page">
-
+        <div className="main-page">
+            <div >
                 <div className='nav-bar'>
-                    <div className='logo1'>
-                        <img src={logo1} alt='' />
-                        <span>
-                            Magic<span>Magic</span>
-                        </span>
-                    </div>
-                    <Button
-                        onClick={() => navigate('login')}
-                        style={{
-                            textTransform: 'none',
-                            backgroundColor: "#FF9AA2",
-                            color: 'white',
-                            width: 150,
-                            marginRight: '5rem',
-                            marginTop: '1rem',
-                            borderRadius: 10,
-                            height: 40,
-                            marginLeft: 'auto',
-                            fontWeight: 'bold',
-                            fontSize: 20
+                        <div className='logo1'>
+                            <img src={logo1} alt='' />
+                            <span>
+                                Magic<span>Magic</span>
+                            </span>
+                        </div>
+                        <Button
+                            onClick={() => navigate('login')}
+                            style={{
+                                textTransform: 'none',
+                                backgroundColor: "var(--glass)",
+                                color: 'var(--black)',
+                                width: '27vh',
+                                marginRight: '10vh',
+                                marginTop: '3vh',
+                                borderRadius: 10,
+                                height: '10vh',
+                                marginLeft: 'auto',
+                                fontWeight: 'bold',
+                                fontSize: '3.5vh',
 
-                        }}
-                    >
-                        Đăng nhập
-                    </Button>
-
+                            }}
+                        >
+                            Đăng nhập
+                        </Button>
                 </div>
                 <div className='main-content'>
                     <div className='track'>
@@ -98,14 +98,14 @@ const Main = () => {
                                         textTransform: 'none',
                                         backgroundColor: "#FF9AA2",
                                         color: 'white',
-                                        width: 150,
+                                        width: '27vh',
                                         marginRight: '0',
                                         // marginTop: '1rem',
                                         borderRadius: 10,
-                                        height: '64px',
+                                        height: '10vh',
                                         marginLeft: 'auto',
                                         fontWeight: 'bold',
-                                        fontSize: 20
+                                        fontSize: '3.5vh'
 
                                     }}
                                 >
@@ -116,7 +116,7 @@ const Main = () => {
                     </div>
                 </div>
             </div>
-            {message && <div style={{ color: 'red', whiteSpace: 'pre-line' }}>{message}</div>}
+            {message && <div className='msg'>{message}</div>}
         </div>
     );
 };

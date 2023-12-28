@@ -5,31 +5,51 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import DonHangChuyen from '../../pages/new/DonHangChuyen';
 
 const ConfirmTable = ({ officeID, userID, title }) => {
   const navigate = useNavigate();
 
-  const ActionButtonsRenderer = (props) => (
+  const ActionButtonsRenderer = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-    
-    <div>
-      <Button
-        onClick={() => navigate(`transfer/${props.data["ID"]}`)} ///GoodID
-        style={{
-          textTransform: 'none',
-          backgroundColor: 'green',
-          color: 'white',
-          width: 70,
-          borderRadius: 20,
-          height: 35,
-        }}
-      >
-        Confirm
-      </Button>
-    </div>
-  );
+    const openPopup = () => {
+      setIsOpen(true);
+    };
   
-
+    const closePopup = () => {
+      setIsOpen(false);
+    };
+    return (
+      <div>
+        <Button
+          style={{
+            textTransform: 'none',
+            backgroundColor: 'green',
+            color: 'white',
+            width: 70,
+            borderRadius: 20,
+            height: 35,
+          }}
+          onClick={openPopup}
+        >
+          Confirm
+        </Button>
+  
+        <Popup modal open={isOpen} onClose={closePopup}>
+          {(close) => (
+            <div>
+              <button className="close" onClick={close}>&times;</button>
+              <DonHangChuyen goodID={props.data.ID} officeID={props.data.officeID} closePopup={close}/>
+            </div>
+          )}
+        </Popup>
+      </div>
+    );
+  };
+  
+  
   const [rowData, setRowData] = useState([
     
   ]);
@@ -53,6 +73,7 @@ const ConfirmTable = ({ officeID, userID, title }) => {
           const formattedData = responseData.data
           .filter(item => Array.isArray(item) && item !== null)
           .flatMap(item => item.map(innerItem => ({
+            "officeID": officeID,
             "ID": innerItem.ID_good,
             "Mã đơn hàng": innerItem.QR_code,
             "Loại hàng": innerItem.Type,
@@ -118,6 +139,7 @@ const ConfirmTable = ({ officeID, userID, title }) => {
         pagination={true}
         gridOptions={gridOptions}
       />
+      
     </div>
   );
 }
