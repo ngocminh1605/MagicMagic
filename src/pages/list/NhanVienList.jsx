@@ -12,7 +12,7 @@ const NhanVienList = () => {
         <div className="list">
             <Sidebar setOfficeID={setOfficeID} setUserID={setUserID} setTitle= {setTitle}/>
                 <div className="container">
-                    <div className='title'>Employee</div>
+                    <div className='title'>Nhân viên</div>
                     <NhanVienTable officeID = {officeID} userID = {userID} title = {title}/>
                 </div>
             </div>

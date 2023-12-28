@@ -16,7 +16,6 @@ const NhanVienNew = () => {
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
     const { userID, officeID, title } = useParams();
-    console.log("ming", userID, officeID, title);
 
     useEffect(() => {
         const fetchOfficeOptions = async () => {

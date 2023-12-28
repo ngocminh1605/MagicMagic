@@ -11,7 +11,7 @@ const PhongBanList = () =>
         <div className="list">
             <Sidebar />
                 <div className="container">
-                    <div className='title'>Office</div>
+                    <div className='title'>Phòng ban</div>
                     <OfficeTable />
                 </div>
             </div>

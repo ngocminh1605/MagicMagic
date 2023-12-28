@@ -171,93 +171,96 @@ const DonHangNew = () => {
             <form onSubmit={handleAddClick}>
                 <div style={{ overflowY: 'auto', height: '100vh' }}>
                     <div className="title">
-                        Create order
+                        Tạo đơn hàng mới
                     </div>
-                    <div className="row">
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="senderFullName">Họ tên người gửi</InputLabel>
-                                <input id="senderFullName" value={senderFullName} onChange={e => setSenderFullName(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="senderAddress">Địa chỉ người gửi</InputLabel>
-                                <input id="senderAddress" value={senderAddress} onChange={e => setSenderAddress(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group" style={{ width: '430px' }}>
-                                <InputLabel htmlFor="senderAddress">Tỉnh/ Thành phố người gửi</InputLabel>
-                                <input id="provinceSenderAddress" value={province} className="form-control" readOnly />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="senderPhoneNumber">Số điện thoại người gửi</InputLabel>
-                                <input id="senderPhoneNumber" value={senderPhoneNumber} onChange={e => setSenderPhoneNumber(e.target.value)} className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="receiverFullName">Họ tên người nhận</InputLabel>
-                                <input id="receiverFullName" value={receiverFullName} onChange={e => setReceiverFullName(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="receiverAddress">Địa chỉ người nhận</InputLabel>
-                                <input id="receiverAddress" value={receiverAddress} onChange={e => setReceiverAddress(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="receiverPhoneNumber">Số điện thoại người nhận</InputLabel>
-                                <input id="receiverPhoneNumber" value={receiverPhoneNumber} onChange={e => setReceiverPhoneNumber(e.target.value)} className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="shipmentType">Loại hàng hóa</InputLabel>
-                                <Select id="shipmentType" value={shipmentType} onChange={e => setShipmentType(e.target.value)} className="form-control">
-                                    <MenuItem value="Tài liệu">Tài liệu</MenuItem>
-                                    <MenuItem value="Hàng hóa">Hàng hóa</MenuItem>
-                                </Select>
-                            </div>
-                            <div className="form-group">
-                                <div style={{ marginLeft: "20px" }}>
-                                    <InputLabel htmlFor="sendDateTime">Ngày giờ gửi</InputLabel>
+                    <div style = {{backgroundColor:"#FEDBDC", margin:"20px",borderRadius:20,padding:"20px"}}>
+                        <div className="row">
+                            <div className="content2">
+                                <div className="form-group">
+                                    <InputLabel htmlFor="senderFullName">Họ tên người gửi</InputLabel>
+                                    <input id="senderFullName" value={senderFullName} onChange={e => setSenderFullName(e.target.value)} className="form-control" />
                                 </div>
-                                <DatePicker id="sendDateTime" selected={sendDateTime} onChange={date => setSendDateTime(date)} showTimeSelect dateFormat="Pp" className="form-control" />
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="senderAddress">Địa chỉ người gửi</InputLabel>
+                                    <input id="senderAddress" value={senderAddress} onChange={e => setSenderAddress(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group" style={{ width: '430px' }}>
+                                    <InputLabel htmlFor="senderAddress">Tỉnh/ Thành phố người gửi</InputLabel>
+                                    <input id="provinceSenderAddress" value={province} className="form-control" readOnly />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="senderPhoneNumber">Số điện thoại người gửi</InputLabel>
+                                    <input id="senderPhoneNumber" value={senderPhoneNumber} onChange={e => setSenderPhoneNumber(e.target.value)} className="form-control" />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <InputLabel htmlFor="weight">Khối lượng (gram)</InputLabel>
-                                <input id="weight" value={weight} onChange={handleWeightChange} className="form-control" />
+
+                            <div className="content2">
+                                <div className="form-group">
+                                    <InputLabel htmlFor="receiverFullName">Họ tên người nhận</InputLabel>
+                                    <input id="receiverFullName" value={receiverFullName} onChange={e => setReceiverFullName(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="receiverAddress">Địa chỉ người nhận</InputLabel>
+                                    <input id="receiverAddress" value={receiverAddress} onChange={e => setReceiverAddress(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="receiverPhoneNumber">Số điện thoại người nhận</InputLabel>
+                                    <input id="receiverPhoneNumber" value={receiverPhoneNumber} onChange={e => setReceiverPhoneNumber(e.target.value)} className="form-control" />
+                                </div>
                             </div>
+
+                            <div className="content2">
+                                <div className="form-group">
+                                    <InputLabel htmlFor="shipmentType">Loại hàng hóa</InputLabel>
+                                    <Select id="shipmentType" value={shipmentType} onChange={e => setShipmentType(e.target.value)} className="form-control">
+                                        <MenuItem value="Tài liệu">Tài liệu</MenuItem>
+                                        <MenuItem value="Hàng hóa">Hàng hóa</MenuItem>
+                                    </Select>
+                                </div>
+                                <div className="form-group">
+                                    <div style={{ marginLeft: "20px" }}>
+                                        <InputLabel htmlFor="sendDateTime">Ngày giờ gửi</InputLabel>
+                                    </div>
+                                    <DatePicker id="sendDateTime" selected={sendDateTime} onChange={date => setSendDateTime(date)} showTimeSelect dateFormat="Pp" className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                    <InputLabel htmlFor="weight">Khối lượng (gram)</InputLabel>
+                                    <input id="weight" value={weight} onChange={handleWeightChange} className="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="content2">
+                                <div className="form-group">
+                                    <InputLabel htmlFor="mainFee">Cước chính</InputLabel>
+                                    <input id="mainFee" value={mainFee} className="form-control" readOnly />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="extraFee">Phụ phí</InputLabel>
+                                    <input id="extraFee" value={extraFee} onChange={e => setExtraFee(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="gtvtFee">Cước GTGT</InputLabel>
+                                    <input id="gtvtFee" value={gtvtFee} onChange={e => setGtvtFee(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="vatFee">Cước VAT</InputLabel>
+                                    <input id="vatFee" value={vatFee} className="form-control" readOnly />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="mainFee">Cước chính</InputLabel>
-                                <input id="mainFee" value={mainFee} className="form-control" readOnly />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="extraFee">Phụ phí</InputLabel>
-                                <input id="extraFee" value={extraFee} onChange={e => setExtraFee(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="gtvtFee">Cước GTGT</InputLabel>
-                                <input id="gtvtFee" value={gtvtFee} onChange={e => setGtvtFee(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="vatFee">Cước VAT</InputLabel>
-                                <input id="vatFee" value={vatFee} className="form-control" readOnly />
-                            </div>
-                        </div>
-
-                    </div>
 
                     <div className="card-footer">
                         <button type="submit" className="btn1">Add</button>

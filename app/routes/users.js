@@ -196,7 +196,7 @@ router.put("/info1/:userid", async (req, res) => {
         const db = req.app.locals.db;
         const { userid } = req.params;
         const { fullname, birthday, gender, address, phone, email } = req.body;
-        const checkIDQuery = "SELECT * FROM user WHERE ID_user = ?";
+        const checkIDQuery = "SELECT *,office.Name FROM user WHERE ID_user = ?";
         db.query(checkIDQuery, [userid], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);
@@ -292,8 +292,7 @@ router.delete("/delete/:userid", async (req, res) => {
 router.get("/info/:userid", async (req, res) => {
     const db = req.app.locals.db;
     const { userid } = req.params;
-
-    const getUser = "SELECT * FROM user WHERE ID_user = ?";
+    const getUser = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE ID_user = ?";
     db.query(getUser, [userid], (err, results) => {
         if (err) {
             console.error("Lỗi truy cập csdl" + err.message);
@@ -323,7 +322,7 @@ router.get("/info_users", async (req, res) => {
         });
     } else if (title === "Trưởng điểm tập kết" || title === "Trưởng điểm giao dịch") {
         // Nếu title là Trưởng điểm, truy vấn tất cả user có cùng OfficeID và khác userId
-        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND user.Title != 'Trưởng điểm giao dịch' OR user.Title != 'Trưởng điểm tập kết' ;";
+        getUsersQuery = "SELECT user.*, office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE user.OfficeId = ? AND (user.Title != 'Trưởng điểm giao dịch' OR user.Title != 'Trưởng điểm tập kết') ;";
         db.query(getUsersQuery, [officeID], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);

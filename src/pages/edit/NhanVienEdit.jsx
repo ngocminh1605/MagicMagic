@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import Select from "react-select"
 
 const NhanVienEdit = () => {
     const { userID } = useParams();
     const navigate = useNavigate();
-
+    // const [office, setOffice] = useState('');
+    const [options, setOptions] = useState([]);
     const [userData, setUserData] = useState({
         UserName: '',
         email: '',
@@ -17,6 +19,17 @@ const NhanVienEdit = () => {
         OfficeId: '',
     });
 
+    const customStyles = {
+        menu: provided => ({
+            ...provided,
+            overflowY: 'auto',  // Enable vertical scrolling if needed
+        }),
+        control: provided => ({
+            ...provided,
+            padding: "6px",
+            borderRadius: "5px" // Adjust the border-radius for the main control
+        }),
+    };
     useEffect(() => {
         const fetchDefaultUserInfo = async () => {
             try {
@@ -33,6 +46,44 @@ const NhanVienEdit = () => {
         };
         fetchDefaultUserInfo();
     }, [userID]);
+
+    useEffect(() => {
+        const fetchOfficeOptions = async () => {
+            try {
+                const officeData = await optionOffice();
+                const mappedOptions = officeData.map(office => ({
+                    value: office.ID_office,
+                    label: office.Name
+                }));
+                setOptions(mappedOptions);
+            } catch (error) {
+                console.error('Error fetching office options:', error);
+            }
+        };
+
+        fetchOfficeOptions();
+    }, []);
+
+    const optionOffice = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/office/allOffice', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.data;
+            } else {
+                console.error('Lỗi lấy office:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Lỗi lấy office:', error);
+        }
+    };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -89,11 +140,10 @@ const NhanVienEdit = () => {
                         <div className="content2">
                             <div className="form-group">
                                 <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
-                                <input
-                                    id="office"
-                                    value={userData.OfficeId}
-                                    onChange={(e) => setUserData({ ...userData, OfficeId: e.target.value })}
-                                    className="form-control"
+                                <Select
+                                    options={options}
+                                    styles={customStyles}
+                                   onChange={(selectedOption) => setUserData({ ...userData, OfficeId: selectedOption.value })}
                                 />
                             </div>
 
@@ -106,7 +156,8 @@ const NhanVienEdit = () => {
                                     className="form-control"
                                 >
                                     <option value="">-- Select Title--</option>
-                                    <option value="Trưởng điểm">Trưởng điểm</option>
+                                    <option value="Trưởng điểm giao dịch">Trưởng điểm giao dịch</option>
+                                    <option value="Trưởng điểm tập kết">Trưởng điểm tập kết</option>
                                     <option value="Nhân viên giao dịch">Nhân viên giao dịch</option>
                                     <option value="Nhân viên tập kết">Nhân viên tập kết</option>
                                 </select>

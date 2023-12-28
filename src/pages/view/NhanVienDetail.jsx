@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import InputLabel from '@mui/material/InputLabel';
 import { axiosInstance } from '../../constant/axios';
@@ -6,32 +6,68 @@ import './nhanviendetail.scss';
 import { Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { useParams } from 'react-router-dom';
+import axios from "axios";
 
 const NhanVienDetail = () => {
     const navigate = useNavigate();
-    const list = {
-        ID: 1,
-        FullName: 'Nguyễn Thị Ngọc Minh',
-        Gender: 'nữ',
-        Birth: '02/08/2003',
-        Phone: '0963282003',
-        Email: 'hyung301295@gmail.com',
-        IdentityCard: '001303011618',
-        StartDate: '20/12/2003',
-        OfficeID: 1,
-        Position: 'boss'
-    };
+    const { userID } = useParams();
+    const [userData, setUserData] = useState({
+        ID_user: '',
+        FullName: '',
+        birthday: '',
+        gender: '',
+        address: '',
+        Phone: '',
+        email: '',
+        datestart:'',
+        title:'',
+        Name:'',
+    });
+    console.log(userID);
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/users/info/${userID}`);
+                if (response.status === 200) {
+                    setUserData(response.data[0]);
+                    console.log(userData);
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
 
+        fetchUserInfo();
+    }, [userID]);
+    const list = {
+        ID: userData.ID_user,
+        FullName: userData.FullName,
+        Gender: userData.gender,
+        Birth: userData.birthday,
+        Phone: userData.Phone,
+        Email: userData.email,
+        Address: userData.address,
+        StartDate: userData.datestart,
+        Office: userData.Name,
+        Position: userData.title
+    };
+    const formatDate = (dateString) => {
+        const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    };
+    
     const listItems = Object.entries(list).map(([key, value]) => (
         <li key={key}>
-            <strong>{key}:</strong> {value}
+            <strong>{key}:</strong> {key === 'StartDate' ? formatDate(value) : value}
         </li>
     ));
-
+    
     return (
         <div className="add">
-            <Sidebar />
+            <Sidebar/>
 
             <div className="container">
 

@@ -17,7 +17,7 @@
 }
 
 .popup-content {
-  display: flex ;
+  display: flex;
   //position: fixed;
   line-height: 1.4;
   background: white;
@@ -40,17 +40,17 @@
   display: inline-block;
   background-color: var(--pink);
   color: #000;
-  cursor: pointer; 
+  cursor: pointer;
   border: none;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 
-.card-footer {
+.card-footers {
   display: flex;
-justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .close {
@@ -90,6 +90,7 @@ option {
   flex-direction: column;
   gap: 3vh
 }
+
 .forward-choice {
   display: flex;
   flex-direction: column;

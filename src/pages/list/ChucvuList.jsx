@@ -9,7 +9,7 @@ const ChucvuList = () => {
         <div className="list">
             <Sidebar />
             <div className="container">
-                <div className='title'>Position</div>
+                <div className='title'>Các chức vụ</div>
                 <ChucVuTable />
             </div>
         </div>

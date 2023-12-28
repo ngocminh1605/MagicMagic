@@ -36,8 +36,6 @@ const EditProfile = () => {
         fetchDefaultInfo();
     }, [userID]);
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(

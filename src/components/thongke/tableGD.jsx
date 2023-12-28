@@ -36,10 +36,10 @@ const TableGD = () => {
 
 const [colDefs] = useState([
   { headerName: "STT", field: "STT", width: 75},
-  { headerName: "Tên điểm", field: "Ten", width: 168},
+  { headerName: "Tên điểm", field: "Ten", width: 150},
   { headerName: "Số hàng đã gửi", field: "Gui", width: 110},
   { headerName: "Số hàng đã nhận", field: "Nhan", width: 110},
-  { headerName: "Tổng cộng", field: "Tong", width: 100 },
+  { headerName: "Tổng cộng", field: "Tong",width: 151 },
 ]);
   
   const defaultColDef = useMemo(() => {

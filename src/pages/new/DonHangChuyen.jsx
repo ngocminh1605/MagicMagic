@@ -172,7 +172,7 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
           )}
         </div>
 
-        <div className="card-footer">
+        <div className="card-footers">
           <button type="submit" className="btn-modal btn1 ">Xác nhận</button>
           <button onClick={closePopup} className='btn1 btn-modal'>Close</button>
         </div>

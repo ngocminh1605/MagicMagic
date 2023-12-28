@@ -39,9 +39,11 @@ const Login = () => {
         }
       } else {
         console.error('Login failed');
+        alert("Sai username hoặc password :<")
       }
     } catch (error) {
       console.error('Error during login:', error);
+      alert("Sai username hoặc password :<")
     }
   };
   
