@@ -68,8 +68,8 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 - Tra cứu thông tin, trạng thái và tiến trình chuyển phát của kiện hàng mình gửi.
 
 ## IV. Công nghệ <a name="technique"></a>
-- Ngôn ngữ: ReactJS
-- Cơ sở dữ liệu: MySQL
+- Ngôn ngữ: ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/>
+- Cơ sở dữ liệu: MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
 
 ## V. Video Demo <a name="demo"></a>
 link
