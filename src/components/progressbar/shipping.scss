@@ -1,0 +1,72 @@
+.shipping-tracker {
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 2vh;
+}
+
+.step {
+    flex: content;
+    text-align: center;
+    position: relative;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.number {
+    position: relative;
+    z-index: 2;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #fff;
+    flex: 1;
+}
+
+.step::before {
+    content: '';
+    position: absolute;
+    top: 28%;
+    right: 100%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    height: 2px;
+    background-color: #ccc;
+    z-index: 1;
+    width: calc((90vw)/(6)); 
+}
+
+.step:not(:first-child)::before {
+    background-color: #a6a3a3;
+}
+
+.step:first-child::before {
+    display: none;
+}
+
+.step.active {
+    color: #27ae60;
+
+    .number {
+        background-color: #27ae60;
+        border-color: #27ae60;
+    }
+
+    &::before {
+        background-color: #27ae60;
+    }
+}
+
+.step-label {
+    margin-top: 3vh;
+    font-size: 14px;
+    flex-wrap: wrap;
+    flex: 2;
+}

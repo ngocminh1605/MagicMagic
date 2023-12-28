@@ -7,12 +7,32 @@ import { axiosInstance } from '../../constant/axios';
 import { useParams } from 'react-router-dom';
 import { InputLabel, Select, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
+import ShippingTracker from '../../components/progressbar/ShippingTracker'
 
 const TraCuu = () => {
     const {goodCode} = useParams();
     const [info, setInfo] = useState();
     const [state, setState] = useState();
-   
+    const [step, setStep] = useState();
+    const [returned, setReturned] = useState(false);
+    const [send, setSend]  = useState(false);
+    const [receive, setReceive]  = useState(false);
+
+    function standardizeProvinceName(input) {
+        const normalized = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        const standardized = normalized.replace(/\s/g, "");
+        return standardized;
+    }
+
+    function extractAndLowerCase(input) {
+        const parts = input.split("_");
+        if (parts.length > 1) {
+            const extractedPart = parts[1].toLowerCase();
+            return extractedPart;
+        } else {
+            return input.toLowerCase();
+        }
+    }
     useEffect(() => {
         if (goodCode) {
             const fetchData = async (goodCode) => {
@@ -28,8 +48,26 @@ const TraCuu = () => {
                     if (response.ok) {
                         const data = await response.json();
                         if (setInfo) { setInfo(data.info[0]); }
-                        if (setState) { setState(data.state); }
-                        
+                        if (setState) { 
+                            setState(data.state); 
+                        }
+
+                        const isReturned = data.state.some(item => item.State === "Trả về");
+                        setReturned(isReturned);
+
+                        if (data.state.length > 0) {
+                            setStep(data.state[data.state.length - 1].State);
+                           
+                            if (data.state[data.state.length-1].Name.includes("GD") && 
+                            standardizeProvinceName(data.info[0].Address_sender).includes(extractAndLowerCase(data.state[data.state.length-1].Name))) {
+                                setSend(true)
+                            }
+
+                            if (data.state[data.state.length-1].Name.includes("GD") && 
+                            standardizeProvinceName(data.info[0].Address_receiver).includes(extractAndLowerCase(data.state[data.state.length-1].Name))) {
+                                setReceive(true)
+                            }
+                        }
                     } else {
                         console.error('Lỗi lấy tỉnh:', response.statusText);
                     }
@@ -42,13 +80,44 @@ const TraCuu = () => {
         }
         
     }, [goodCode]);
-  
+    
+
+    function indexStep(step) {
+        let index = 0;
+        switch (step) {
+            case "Đã nhận":
+                if (send) {
+                    index = 1;
+                } else if (receive) {
+                    index = 3;
+                } else {
+                    index = 2;
+                }
+              break;
+            case "Đang chờ":
+                    index = 2;
+              break;
+            case "Chờ nhận":
+              index = 4;
+              break;
+            case "Trả về":
+              index = 0;
+              break;            
+            case "Thành công":
+                index = 5;
+                break; 
+          }
+        
+        return index;
+      }
 
   return (
     <div style={{ overflowY: 'auto', height: '100vh' }}>
         <div className='title'>
             Thông tin vận đơn
         </div>
+
+        <ShippingTracker currentStep={indexStep(step)} isReturn={returned} />
 
         {info && 
             <div>
@@ -107,7 +176,7 @@ const TraCuu = () => {
                                         : item.State === "Đã gửi" || item.State === "Gửi trả về" ? "Đơn hàng đi khỏi bưu cục và sẽ tới điểm tiếp theo."
                                         : item.State === "Chờ nhận" ? "Đơn hàng đang được gửi tới người nhận tại " + info.Address_receiver
                                         : item.State === "Thành công" ? (index+=3, "Đơn hàng gửi tới người nhận thành công!")
-                                        : item.State === "Trả về" ? "Không gửi tới được người nhận! Đơn hàng sẽ được trả về."
+                                        : item.State === "Trả về" ? ("Không gửi tới được người nhận! Đơn hàng sẽ được trả về.")
                                         : ""}
 
                                         {(item.State === "Đã nhận" || item.State === "Nhận trả về")  && item.Name.includes("TK") ? " điểm tập kết " + item.Address + "." : ""}
