@@ -49,7 +49,7 @@ const OrdersTable = ({ officeID, userID, title }) => {
           "Ngày gửi": new Date(item.Senddate).toLocaleString(),
           "Giá": item.Price,
           "Cân nặng": item.Weight,
-          "Mã Bưu chính": item.Postalcode,
+          "Mã Bưu chính": item.PostalcodeSend,
           "Tên người gửi": item.Name_sender,
           "Địa chỉ người gửi": item.Address_sender,
           "Số điện thoại người gửi": item.Phone_sender,

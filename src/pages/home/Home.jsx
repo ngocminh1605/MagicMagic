@@ -13,10 +13,20 @@ const Home = () => {
             <Sidebar setTitle={setTitle} setOfficeID={setOfficeID}/>
             <div className="homeContainer" style={{ overflowY: 'auto', height: '100vh' }}>
                 <div className="widgets">
-                {<Widget officeID={officeID} type="nhan" />}
-                {<Widget officeID={officeID} type="gui" />}
-                {<Widget officeID={officeID} type="tong"/>}
+                    {<Widget officeID={officeID} type="nhan" />}
+                    {<Widget officeID={officeID} type="gui" />}
+                    {<Widget officeID={officeID} type="tong"/>}
+                    {title === 'Trưởng điểm giao dịch' && <Widget officeID={officeID} type="employee"/>}
+                    {title === 'Trưởng điểm tập kết' && <Widget officeID={officeID} type="employee" />}
                 </div>
+
+                {title === 'admin' && 
+                    <div className="widgets">
+                        {<Widget officeID={officeID} type="officeGD" />}
+                        {<Widget officeID={officeID} type="officeTK" />}
+                        {<Widget officeID={officeID} type="allEmployee"/>}
+                </div>
+                }
 
                 {title === 'Nhân viên giao dịch' &&
                     <div className="widgets">
@@ -26,9 +36,6 @@ const Home = () => {
                 }
 
                 {title === 'admin' && <Chart />}
-
-                {title === 'Trưởng điểm giao dịch' && <Chart officeID={officeID} />}
-                {title === 'Trưởng điểm tập kết' && <Chart officeID={officeID} />}
                 
                 {title === 'admin' && 
                     <div className="tables">

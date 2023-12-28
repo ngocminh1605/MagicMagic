@@ -62,7 +62,7 @@ const [colDefs] = useState([
     autoSizeColumns: true,
   };
   return (
-    <div className={"ag-theme-quartz ag-theme-acmecorp"} style={{ width: '40vw', height: '60vh', flexDirection: "column" }}>
+    <div className={"ag-theme-quartz ag-theme-acmecorp"} style={{ width: '40vw', height: '60vh', flexDirection: "column",marginLeft:"15px"}}>
       <AgGridReact
         rowData={rowData}
         columnDefs={colDefs}

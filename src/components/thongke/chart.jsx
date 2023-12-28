@@ -67,7 +67,7 @@ const Chart = ({ officeID }) => {
 
     return (
         <div className="chart-container">
-            <div className="chart" style={{ width: '80vw', marginLeft: '15px', height: '100%' }}>
+            <div className="chart" style={{ width: '81vw', marginLeft: '15px', height: '100%',paddingRight:"15px" }}>
                 <div className="titleChart">
                     <Box sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>

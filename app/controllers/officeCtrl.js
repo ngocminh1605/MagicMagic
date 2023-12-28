@@ -47,6 +47,20 @@ const officeCtrl = {
         }
     },
 
+    getOfficeByUser : async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { userID } = req.body;
+           
+            const [results] = await officeQueries.getOfficeByUser(userID, db, res);
+    
+            res.status(201).json({ message: "Lấy office theo ID thành công!", data: results });
+        } catch (error) {
+            console.error("Lỗi lấy office theo ID: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
     getOption: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -68,10 +82,8 @@ const officeCtrl = {
             const nameOffice = infoOfficeCurrent[0].Name;
             const addressOffice = infoOfficeCurrent[0].Address;
             const destination = infoOrderCurrent[0].Address_receiver;
-            const addressSender = extractProvinceName(infoOrderCurrent[0].Address_sender);
-            const addressReceiver = extractProvinceName(infoOrderCurrent[0].Address_receiver);
-
-            console.log(extractProvinceName("Số 36, Quận 4, TP HCM"));
+            const addressSender = officeQueries.extractProvinceName(infoOrderCurrent[0].Address_sender);
+            const addressReceiver = officeQueries.extractProvinceName(infoOrderCurrent[0].Address_receiver);
 
             let option;
             
@@ -112,9 +124,10 @@ const officeCtrl = {
             const { officeID } = req.body;
            
             const data = await officeQueries.getOfficeByID(officeID, db, res);
-            const results = extractProvinceName(data[0].Address)
+            const results = officeQueries.extractProvinceName(data[0].Address)
+            const codeSend = data[0].Postalcode
     
-            res.status(201).json({ message: "Lấy tỉnh/tp office theo ID thành công!", data: results });
+            res.status(201).json({ message: "Lấy tỉnh/tp office theo ID thành công!", data: results, code: codeSend });
         } catch (error) {
             console.error("Lỗi lấy tỉnh/tp office theo ID: ", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
@@ -136,83 +149,6 @@ const officeCtrl = {
 
 }
 
-function extractProvinceName(address) {
-    const lowercaseAddress = address.toLowerCase();
-  
-    const provinces = {
-        'An Giang': ['an giang', 'an giang'],
-        'Bà Rịa-Vũng Tàu': ['vũng tàu', 'bà rịa', 'vung tau', 'ba ria'],
-        'Bắc Giang': ['bắc giang', 'bac giang'],
-        'Bắc Kạn': ['bắc kạn', 'bac kan'],
-        'Bạc Liêu': ['bạc liêu', 'bac lieu'],
-        'Bắc Ninh': ['bắc ninh', 'bac ninh'],
-        'Bến Tre': ['bến tre', 'ben tre'],
-        'Bình Định': ['bình định', 'binh dinh'],
-        'Bình Dương': ['bình dương', 'binh duong'],
-        'Bình Phước': ['bình phước', 'binh phuoc'],
-        'Bình Thuận': ['bình thuận', 'binh thuan'],
-        'Cà Mau': ['cà mau', 'ca mau'],
-        'Cần Thơ': ['cần thơ', 'can tho'],
-        'Cao Bằng': ['cao bằng', 'cao bang'],
-        'Đà Nẵng': ['đà nẵng', 'da nang'],
-        'Đắk Lắk': ['đắk lắk', 'dak lak'],
-        'Đắk Nông': ['đắk nông', 'dak nong'],
-        'Điện Biên': ['điện biên', 'dien bien'],
-        'Đồng Nai': ['đồng nai', 'dong nai'],
-        'Đồng Tháp': ['đồng tháp', 'dong thap'],
-        'Gia Lai': ['gia lai', 'gia lai'],
-        'Hà Giang': ['hà giang', 'ha giang'],
-        'Hà Nam': ['hà nam', 'ha nam'],
-        'Hà Nội': ['hà nội', 'ha noi'],
-        'Hà Tĩnh': ['hà tĩnh', 'ha tinh'],
-        'Hải Dương': ['hải dương', 'hai duong'],
-        'Hải Phòng': ['hải phòng', 'hai phong'],
-        'Hậu Giang': ['hậu giang', 'hau giang'],
-        'TP Hồ Chí Minh': ['hồ chí minh', 'tp hcm', 'ho chi minh'],
-        'Hòa Bình': ['hòa bình', 'hoa binh'],
-        'Hưng Yên': ['hưng yên', 'hung yen'],
-        'Khánh Hòa': ['khánh hòa', 'khanh hoa'],
-        'Kiên Giang': ['kiên giang', 'kien giang'],
-        'Kon Tum': ['kon tum', 'kon tum'],
-        'Lai Châu': ['lai châu', 'lai chau'],
-        'Lâm Đồng': ['lâm đồng', 'lam dong'],
-        'Lạng Sơn': ['lạng sơn', 'lang son'],
-        'Lào Cai': ['lào cai', 'lao cai'],
-        'Long An': ['long an', 'long an'],
-        'Nam Định': ['nam định', 'nam dinh'],
-        'Nghệ An': ['nghệ an', 'nghe an'],
-        'Ninh Bình': ['ninh bình', 'ninh binh'],
-        'Ninh Thuận': ['ninh thuận', 'ninh thuan'],
-        'Phú Thọ': ['phú thọ', 'phu tho'],
-        'Phú Yên': ['phú yên', 'phu yen'],
-        'Quảng Bình': ['quảng bình', 'quang binh'],
-        'Quảng Nam': ['quảng nam', 'quang nam'],
-        'Quảng Ngãi': ['quảng ngãi', 'quang ngai'],
-        'Quảng Ninh': ['quảng ninh', 'quang ninh'],
-        'Quảng Trị': ['quảng trị', 'quang tri'],
-        'Sóc Trăng': ['sóc trăng', 'soc trang'],
-        'Sơn La': ['sơn la', 'son la'],
-        'Tây Ninh': ['tây ninh', 'tay ninh'],
-        'Thái Bình': ['thái bình', 'thai binh'],
-        'Thái Nguyên': ['thái nguyên', 'thai nguyen'],
-        'Thanh Hóa': ['thanh hóa', 'thanh hoa'],
-        'Thừa Thiên-Huế': ['thừa thiên-huế', 'thua thien-hue'],
-        'Tiền Giang': ['tiền giang', 'tien giang'],
-        'Trà Vinh': ['trà vinh', 'tra vinh'],
-        'Tuyên Quang': ['tuyên quang', 'tuyen quang'],
-        'Vĩnh Long': ['vĩnh long', 'vinh long'],
-        'Vĩnh Phúc': ['vĩnh phúc', 'vinh phuc'],
-        'Yên Bái': ['yên bái', 'yen bai'],
-      };
-      
-    for (const [province, keywords] of Object.entries(provinces)) {
-      const containsProvince = keywords.some(keyword => lowercaseAddress.includes(keyword));
-      if (containsProvince) {
-        return province;
-      }
-    }
-  
-    return 'Không xác định';
-}
+
 
 module.exports = officeCtrl;

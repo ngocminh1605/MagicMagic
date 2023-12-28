@@ -220,4 +220,42 @@ const returnTotal = async (officeID, db, res) => {
     });
 };
 
-module.exports = { all, allByMonth, sendAll, sendByMonth, receiveAll, receivedByMonth, GDOffice, TKOffice, success, returnTotal };
+const office = async (office, db, res) => {
+    const query = "SELECT COUNT(office.ID_office) as numOfOffice FROM office WHERE office.Name LIKE ?;";
+
+    return new Promise((resolve, reject) => {
+        db.query(query, [`%${office}%`], (err, results) => {
+            if (err) {
+                console.error("Lỗi đếm số office: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+const employee = async (officeID, db, res) => {
+    let query = "";
+
+    if (!officeID) {
+        query = `SELECT COUNT(u.ID_user) AS numOfemployee FROM user u
+        JOIN office o ON o.ID_office = u.OfficeId;`
+    } else {
+        query = `SELECT COUNT(u.ID_user) AS numOfemployee FROM user u
+        JOIN office o ON o.ID_office = u.OfficeId
+        WHERE u.title LIKE '%Nhân viên%' AND o.ID_office = ?`
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(query, [officeID], (err, results) => {
+            if (err) {
+                console.error("Lỗi đếm nhân viên: ", err.message);
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+module.exports = { all, allByMonth, sendAll, sendByMonth, receiveAll, receivedByMonth, GDOffice, TKOffice, success, returnTotal,
+                    employee, office };
