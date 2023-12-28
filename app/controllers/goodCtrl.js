@@ -3,13 +3,14 @@ const router = express.Router();
 
 
 const goodQueries = require("../database/goodQuery");
+const officeQueries = require("../database/officeQuery");
 
 const goodCtrl = {
     createOrder : async(req, res) => {
         try {
             const db = req.app.locals.db;
     
-            const { nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, mainPrice, secondPrice, GTVT, VAT, IdUser, Senddate } = req.body;
+            const { nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, PostalcodeSend, type, weight, mainPrice, secondPrice, GTVT, VAT, IdUser, Senddate } = req.body;
 
             const QRCodeList = await goodQueries.getQRCode(db);
 
@@ -23,7 +24,7 @@ const goodCtrl = {
                 isDuplicate = QRCodeList.includes(goodQR);
             } while (isDuplicate);
 
-            await goodQueries.createOrder(nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res);
+            await goodQueries.createOrder(nameSender, addressSender, phoneSender, nameReceiver, addressReceiver, phoneReceiver, PostalcodeSend, type, weight, goodQR,  mainPrice, secondPrice, GTVT, VAT, Price, IdUser, Senddate, db, res);
 
             const newOrder = await goodQueries.getOrderByQRCode(goodQR, db);
     
@@ -184,6 +185,25 @@ const goodCtrl = {
         } catch (error) {
             console.error("Lỗi thông tin và trạng thái đơn hàng.", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    updateGood: async (req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const { goodID } = req.body;
+
+            const address = await goodQueries.getAdressReceiver(goodID, db);
+            const provinceReceiver = await officeQueries.extractProvinceName(address[0].Address_receiver);
+
+            const [code] = await goodQueries.getPostalCode(provinceReceiver, db);
+
+            await goodQueries.updateGood(code.Postalcode, goodID, db);
+
+            res.status(200).json({ message: 'Cập nhật thông tin đơn hàng thành công!',});
+        } catch (error) {
+            console.error('Lỗi cập nhật thông tin đơn hàng: ', error);
+            res.status(500).json({ message: 'Lỗi máy chủ Internal Server.' });
         }
     },
 
