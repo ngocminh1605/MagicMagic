@@ -42,24 +42,24 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 - Thống kê hàng gửi, hàng nhận trên toàn quốc, từng điểm giao dịch hoặc điểm tập kết. Thống kế dạng đường giúp so sánh số lượng đơn các tháng
 
 ### 2. Trưởng điểm giao dịch
-- Cấp tài khoản cho giao dịch viên tại điểm giao dịch.
-- Thống kê hàng gửi, hàng nhận tại điểm giao dịch.
+- Quản lý tài khoản giao dịch viên tại điểm giao dịch vs thao tác thêm sửa xóa nhân viên.
+- Thống kê hàng gửi, hàng nhận,số lượng nhân viên tại điểm giao dịch.
 
 ### 3. Trưởng điểm tập kết
 - Quản lý tài khoản nhân viên tại điểm tập kết với các thao tác thêm, sửa, xóa.
-- Thống kê hàng đi, đến.
+- Thống kê hàng gửi, nhận, số lượng nhân viên tại điểm tập kết.
 
 ### 4. Nhân viên giao dịch
 - Ghi nhận hàng cần gửi của khách (người gửi), in giấy biên nhận chuyển phát và phát cho khách hàng.
 - Tạo đơn chuyển hàng gửi đến điểm tập kết mỗi/trước khi đem hàng gửi đến điểm tập kết.
 - Xác nhận đơn hàng về từ điểm tập kết.
 - Tạo đơn hàng cần chuyển đến tay người nhận.
-- Xác nhận hàng đã chuyển đến tay người nhận theo .
-- Xác nhận hàng không chuyển được đến người nhận và trả lại điểm giao dịch.
+- Xác nhận hàng đã chuyển đến tay người nhận thành công .
+- Xác nhận hàng không chuyển được đến người nhận và trả lại điểm giao dịch và hoàn trả lại người gửi.
 - Thống kê tổng đơn hàng, đơn gửi, đơn nhận, đơn hàng đã chuyển thành công, đơn hàng chuyển không thành công và trả lại điểm giao dịch.
 
 ### 5. Nhân viên tập kết
-- Xác nhận đơn hàng đi từ điểm giao dịch chuyển đến.
+- Xác nhận đơn hàng từ điểm giao dịch.
 - Tạo đơn chuyển hàng đến điểm tập kết đích (ứng với điểm giao dịch đích, tức điểm giao dịch phụ trách vùng ứng với địa chỉ của người nhận).
 - Xác nhận đơn hàng nhận về từ điểm tập kết khác.
 - Tạo đơn chuyển hàng đến điểm giao dịch đích.
@@ -70,6 +70,5 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 ## IV. Công nghệ <a name="technique"></a>
 - Ngôn ngữ: ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/>
 - Cơ sở dữ liệu: MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
-
 ## V. Video Demo <a name="demo"></a>
 link
