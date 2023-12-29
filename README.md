@@ -17,7 +17,7 @@
 <br />
 
 ## I. Giới thiệu chung <a name="introduction"></a>
-1. Tên nhóm: 3x
+1. Nhóm: 36
 2. Lớp: INT3306 2 - Phát triển ứng dụng Web
 3. Tên web: MagicMagic
 4. Thành viên:
