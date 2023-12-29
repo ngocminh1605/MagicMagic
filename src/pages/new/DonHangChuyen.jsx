@@ -144,8 +144,8 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
           )}
 
           {Array.isArray(options) && options.length > 0 && (
-            <div className="form-group" style={{width: "450px"}}>
-              <label htmlFor="officeSelect">Chọn Office chuyển đến</label>
+            <div className="form-group" style={{width: "450px",flexDirection:"column",marginLeft:"-20px",marginTop:"-18px"}}>
+              <label htmlFor="officeSelect">Office chuyển đến</label>
               <select
                 id="officeSelect"
                 value={officeSelected}
@@ -162,8 +162,8 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
             </div>
           )}
 
-          <div className="card-footer">
-            <button type="submit" className="btn-modal btn1 ">Xác nhận</button>
+          <div className="card-footers" style = {{flex:1,}}>
+            <button type="submit" className="btn-modal btn1 ">Confirm</button>
             <button onClick={closePopup} className='btn1 btn-modal'>Close</button>
           </div>
         </div>

@@ -20,7 +20,7 @@
   display: flex;
   //position: fixed;
   line-height: 1.4;
-  background: white;
+  background: #FEDBDC;
   padding: 3vh 5vh;
   border-radius: 20px;
   max-width: 600px;
@@ -37,20 +37,19 @@
 
 .btn-modal {
   padding: 10px 10px;
-  display: inline-block;
   background-color: var(--pink);
   color: #000;
   cursor: pointer;
   border: none;
-  margin-right: 10px;
+  align-items: center;
+
 }
 
 
 .card-footers {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-left: 70px;
 }
 
 .close {

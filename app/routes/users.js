@@ -191,12 +191,13 @@ const createInfo_me = async (userid, fullname, birthday, gender, address, phone,
     );
 };
 
+
 router.put("/info1/:userid", async (req, res) => {
     try {
         const db = req.app.locals.db;
         const { userid } = req.params;
         const { fullname, birthday, gender, address, phone, email } = req.body;
-        const checkIDQuery = "SELECT *,office.Name FROM user WHERE ID_user = ?";
+        const checkIDQuery = "SELECT *,office.Name FROM user JOIN office ON user.OfficeId = office.ID_office WHERE ID_user = ?";
         db.query(checkIDQuery, [userid], (err, results) => {
             if (err) {
                 console.error("Lỗi truy vấn cơ sở dữ liệu: " + err.message);

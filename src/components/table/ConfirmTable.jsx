@@ -13,7 +13,6 @@ const ConfirmTable = ({ officeID, userID, title }) => {
 
   const ActionButtonsRenderer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
-
     const openPopup = () => {
       setIsOpen(true);
     };

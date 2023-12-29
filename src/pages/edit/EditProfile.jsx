@@ -54,7 +54,7 @@ const EditProfile = () => {
 
             if (response.status === 201) {
                 alert("Đã sửa đổi thông tin thành công")
-                navigate('/nhanvien');
+                navigate('/home');
             } else {
                 console.error('Update failed with status:', response.status);
             }
@@ -119,7 +119,7 @@ const EditProfile = () => {
 
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Save</button>
-                        <button className="btn2"><Link to={'/nhanvien'} style={{ textDecoration: 'none', color: 'grey' }}>Cancel</Link></button>
+                        <button className="btn2"><Link to={'/home'} style={{ textDecoration: 'none', color: 'grey' }}>Cancel</Link></button>
                     </div>
                 </form>
             </div>
