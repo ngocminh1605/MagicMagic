@@ -75,6 +75,8 @@ ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/
 NodeJS <img alt="NodeJS" width="26px" src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_f0b606abb6d19089febc9faeeba5bc05/nodejs-development-services.png" style="margin-left:20px;"/>
 ExpressJS <img alt="ExpressJS" width="26px" src="https://testrigor.com/wp-content/uploads/2023/01/express-logo.png" style="margin-left:20px;"/>
 
+MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
+
 - Cơ sở dữ liệu: MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
 
 ## V. Cách cài đặt và chạy <a name="setting"></a>
