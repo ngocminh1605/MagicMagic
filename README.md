@@ -78,8 +78,19 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 ## V. Cách cài đặt và chạy <a name="setting"></a>
 
 ### 1. Yêu cầu
-Đã cài đặt 
-### 2. Cài đặt
+- Đã tải xuống database và thêm vào mysql với tùy chọn sửa *host*, *port*, và *user* trong app/app.js
+```bash
+var conn = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "magicmagic",
+  port: 3306
+})
+```
+
+- Đã cài đặt  [src="[https://nodejs.org/en](nodejs)"] 
+### 2. Cài đặt và chạy
 #### a. Clone Repository
 ```bash
 git clone https://github.com/ngocminh1605/MagicMagic.git
@@ -102,15 +113,6 @@ node app.js
 ```
 
 Khi đó có thể truy cập ứng dụng tại địa chỉ ```http://localhost:3000​```
-
-### 2. Trưởng điểm giao dịch
-- Quản lý tài khoản giao dịch viên tại điểm giao dịch vs thao tác thêm sửa xóa nhân viên.
-- Thống kê hàng gửi, hàng nhận,số lượng nhân viên tại điểm giao dịch.
-
-### 3. Trưởng điểm tập kết
-- Quản lý tài khoản nhân viên tại điểm tập kết với các thao tác thêm, sửa, xóa.
-- Thống kê hàng gửi, nhận, số lượng nhân viên tại điểm tập kết.
-
 
 ## VI. Video Demo <a name="demo"></a>
 link
