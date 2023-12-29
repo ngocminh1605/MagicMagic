@@ -106,11 +106,13 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
     } catch (error) {
       console.error('Error creating order:', error);
     }
+    
   };
 
   const handleChangeOffice = (event) => {
     //event.stopPropagation();
     const selectedValue = event.target.value;
+    console.log(selectedValue)
     setOfficeSelected(selectedValue);
   };
   
@@ -150,9 +152,10 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
                 id="officeSelect"
                 value={officeSelected}
                 onChange={handleChangeOffice}
-                onClick={handleChangeOffice}
-                onSubmit={handleChangeOffice}
+                //onClick={handleChangeOffice}
+                onBeforeInput={handleChangeOffice}
               >
+                {setOfficeSelected(options[0].ID_office)}
                 {options.map((option) => (
                   <option key={option.ID_office} value={option.ID_office} >
                     {option.Name}

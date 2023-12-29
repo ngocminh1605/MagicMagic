@@ -12,5 +12,8 @@ router.post("/provinceOffice", officeCtrl.getProvinceOffice);
 router.get("/allOffice", officeCtrl.getAllOffice);
 
 router.get("/listOffice", officeCtrl.getListOffice);
+router.post("/add", officeCtrl.addOffice);
+router.post("/delete", officeCtrl.deleteOffice);
+
 
 module.exports = router;
