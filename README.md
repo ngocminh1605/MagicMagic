@@ -89,7 +89,7 @@ var conn = mysql.createConnection({
 })
 ```
 
-- Đã cài đặt  [src="[https://nodejs.org/en](nodejs)"] 
+- Đã cài đặt  [src=[nodejs](https://nodejs.org/en)] 
 ### 2. Cài đặt và chạy
 #### a. Clone Repository
 ```bash
