@@ -50,6 +50,9 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
             const data = await response.json();
             const officeData = data.data;
             const option = data.option;
+            if (data.option.length > 0) {
+              setOfficeSelected(data.option[0].ID_office)
+            }
 
             setOfficeInfo(officeData);
             setOptions(option);
@@ -112,7 +115,6 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
   const handleChangeOffice = (event) => {
     //event.stopPropagation();
     const selectedValue = event.target.value;
-    console.log(selectedValue)
     setOfficeSelected(selectedValue);
   };
   
@@ -124,6 +126,7 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
           <div className="title">
             Tạo đơn chuyển hàng
           </div>
+          
           {orderInfo.length > 0 && (
             <>
               Mã đơn hàng: {orderInfo[0].QR_code} <br />
@@ -146,25 +149,22 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
           )}
 
           {Array.isArray(options) && options.length > 0 && (
-            <div className="form-group" style={{width: "450px",flexDirection:"column",marginLeft:"-20px",marginTop:"-18px"}}>
+            <div className="form-group" style={{ width: "450px", flexDirection: "column", marginLeft: "-20px", marginTop: "-18px" }}>
               <label htmlFor="officeSelect">Office chuyển đến</label>
               <select
                 id="officeSelect"
                 value={officeSelected}
                 onChange={handleChangeOffice}
-                //onClick={handleChangeOffice}
-                onBeforeInput={handleChangeOffice}
+                
               >
-                {setOfficeSelected(options[0].ID_office)}
                 {options.map((option) => (
-                  <option key={option.ID_office} value={option.ID_office} >
+                  <option key={option.ID_office} value={option.ID_office}>
                     {option.Name}
                   </option>
                 ))}
               </select>
             </div>
           )}
-
           <div className="card-footers" style = {{flex:1,}}>
             <button type="submit" className="btn-modal btn1 ">Confirm</button>
             <button onClick={closePopup} className='btn1 btn-modal'>Close</button>
