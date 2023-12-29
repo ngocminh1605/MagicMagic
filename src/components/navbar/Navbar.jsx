@@ -3,7 +3,6 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./navbar.scss";
 import { useNavigate } from 'react-router-dom';
-//import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import nv2 from '../navbar/nv2.jpg';
 
 const Navbar = () => {

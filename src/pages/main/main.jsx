@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import React, { useState } from 'react';
 import './main.scss';
-import { axiosInstance } from '../../constant/axios';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import logo1 from '../../assets/logo/express-delivery.png';
-import img1 from '../../assets/main.png'
-
-
 
 const Main = () => {
     const navigate = useNavigate();

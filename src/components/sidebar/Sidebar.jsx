@@ -18,15 +18,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import nv from '../navbar/nv.png';
 import { axiosInstance } from '../../constant/axios';
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@emotion/react';
-
 
 const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
   const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-
 
   useEffect(() => {
 
@@ -65,36 +61,32 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     fetchUserInfo();
   }, [setOfficeID, setUserID, setTitle, navigate]);
 
-
-
+// Xử lý khi Click chọn từng item
   const handleItemClick1 = (index) => {
     setActiveItem(index);
     const path = menuItems[index].path;
     navigate(path);
   };
+
   const handleItemClick2 = (index) => {
     setActiveItem(index);
     const path = menuItems2[index].path;
     navigate(path);
   };
+
   const handleItemClick3 = (index) => {
     setActiveItem(index);
     const path = menuItems3[index].path;
     navigate(path);
   };
+
   const handleItemClick4 = (index) => {
     setActiveItem(index);
     const path = menuItems4[index].path;
     navigate(path);
   };
 
-  useEffect(() => {
-  }, [activeItem])
-
-  // const handleLinkClick = (e, index) => {
-  //   e.preventDefault(); 
-  //   handleItemClick(index);
-  // };
+  useEffect(() => {}, [activeItem])
 
   const menuItems = [
     { icon: <HomeIcon style={{ fontSize: '4vh' }} />, text: 'Home', path: '/home' },
@@ -125,7 +117,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
     { icon: <ContactMailIcon style={{ fontSize: '4vh' }} />, text: 'Return', path: `/return` },
   ];
 
-  // console.log(userInfo.title)
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -156,6 +147,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
       }
     }
   };
+
   return (
     <div>
       <div>
@@ -198,6 +190,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
+
           {userInfo.title === 'Trưởng điểm tập kết' && (
             <div className='menu'>
               {menuItems2.map((item, index) => (
@@ -213,6 +206,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
+
           {userInfo.title === 'Nhân viên tập kết' && (
             <div className='menu'>
               {menuItems3.map((item, index) => (
@@ -228,6 +222,7 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
+
           {userInfo.title === 'Nhân viên giao dịch' && (
             <div className='menu'>
               {menuItems4.map((item, index) => (
@@ -243,7 +238,6 @@ const Sidebar = ({ setOfficeID, setUserID, setTitle }) => {
               ))}
             </div>
           )}
-
 
           <div className="items">
             <div className="item">

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel, Select, MenuItem } from '@mui/material';
 import "./donhangchuyen.scss";
-import { useNavigate } from 'react-router-dom';
 
-const DonHangChuyen = ({ goodID, officeID, closePopup }) => { 
-  const navigate = useNavigate();
-  
+const DonHangChuyen = ({ goodID, officeID, closePopup }) => {   
   const [orderInfo, setOrderInfo] = useState({});
   const [officeInfo, setOfficeInfo] = useState({});
   const [options, setOptions] = useState([]);
@@ -13,6 +9,7 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
 
   
   useEffect(() => {
+    // Hàm fetch thông tin đơn hàng
     async function fetchOrderInfo() {
       try {
         const response = await fetch('http://localhost:3001/goods/infoOrder', {
@@ -35,6 +32,7 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
       }
     };
    
+    // Hàm fetch thông tin về office và options
     async function fetchOption() {
       try {
         if (officeID !== null) {
@@ -71,13 +69,15 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
     }
 
     fetchData();
+
+    // Nếu có options, set officeSelected với ID của option đầu tiên
     if (options.length > 0) {
       setOfficeSelected(options[0].ID_office);
-
     }
 
-  }, [goodID, officeID]);
+  }, [goodID, officeID, options]);
 
+  // Xử lý khi người dùng nhấn nút Confirm
   const handleAddClick = async (e) => {
     //e.preventDefault();
 
@@ -112,12 +112,12 @@ const DonHangChuyen = ({ goodID, officeID, closePopup }) => {
     
   };
 
+  // Xử lý khi người dùng thay đổi office
   const handleChangeOffice = (event) => {
     //event.stopPropagation();
     const selectedValue = event.target.value;
     setOfficeSelected(selectedValue);
   };
-  
 
   return (
     <div>

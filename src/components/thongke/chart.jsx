@@ -12,6 +12,7 @@ const Chart = ({ officeID }) => {
     const [year, setYear] = useState(2023);
 
     useEffect(() => {
+        // Hàm để fetch dữ liệu biểu đồ dựa trên officeID và năm được chọn
         const fetchAll = async (officeID) => {
             try {
                 const response = await fetch('http://localhost:3001/thongke/byMonth', {
@@ -24,6 +25,7 @@ const Chart = ({ officeID }) => {
 
                 const responseData = await response.json();
     
+                // Tạo mảng để lưu trữ dữ liệu hàng tháng với giá trị khởi tạo
                 const allMonthsData = Array.from({ length: 12 }, (_, index) => ({
                     month: "Tháng " + (index + 1).toString(), 
                     total: 0,
@@ -31,6 +33,7 @@ const Chart = ({ officeID }) => {
                     receive: 0,
                 }));
 
+                // CHo dữ liệu vào mảng từ phản hồi server
                 if (responseData.all[year]) {
                     responseData.all[year].forEach(({ month, total }) => {
                         const monthIndex = parseInt(month, 10) - 1; 
@@ -61,6 +64,7 @@ const Chart = ({ officeID }) => {
         fetchAll(officeID);
     }, [year, officeID]);
 
+    // Hàm xử lý sự kiện khi thay đổi năm được chọn
     const handleInputChange = (e) => {
         setYear(e.target.value);
     };

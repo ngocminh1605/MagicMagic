@@ -6,6 +6,7 @@ import { AgGridReact } from 'ag-grid-react';
 const TableGD = () => {
   const [rowData, setRowData] = useState([]);
 
+  // Hàm thống kê các thông số của điểm giao dịch
   useEffect(() => {
     const fetchGD = async () => {
         try {

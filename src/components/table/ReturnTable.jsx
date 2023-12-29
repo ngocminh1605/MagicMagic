@@ -5,11 +5,11 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import { Button } from '@mui/material';
 
-
 const ReturnTable = ({ officeID }) => {
   const officeIDRef = useRef(officeID);
   const [rowData, setRowData] = useState([]);
 
+  // Kiểm tra xem hàng hóa có là trả lại hay không
   const checkReturn = async (goodID) => {
     try {
       const response = await fetch('http://localhost:3001/transfer/checkTransfer', {
@@ -33,6 +33,7 @@ const ReturnTable = ({ officeID }) => {
     }
   };
 
+  // Lấy danh sách đơn hàng chờ xác nhận
   const fetchOrders = async (officeID) => {
     if (officeID != null) {
       try {
@@ -71,7 +72,7 @@ const ReturnTable = ({ officeID }) => {
     fetchOrders(officeID);
   }, [officeID]);
 
-  
+   // Xử lý sự kiện khi nhấn nút xác nhận
   const handleConfirmButtonClick = useCallback(
     async (goodID) => {
         const currentOfficeID = officeIDRef.current;
@@ -104,6 +105,7 @@ const ReturnTable = ({ officeID }) => {
       []
   );
 
+  // Xử lý sự kiện khi nhấn nút trả lại
   const handleReturnButtonClick = useCallback(
     async (goodID) => {
         const currentOfficeID = officeIDRef.current;
@@ -208,7 +210,7 @@ const ReturnTable = ({ officeID }) => {
     );
   };
   
-
+  // Cấu hình cột
   const [colDefs] = useState([
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },

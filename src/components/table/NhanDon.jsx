@@ -7,8 +7,10 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 
 const NhanDon = ({ officeID }) => {
+  // Sử dụng useRef để lưu trữ giá trị officeID không bị thay đổi khi component render lại
   const officeIDRef = useRef(officeID);
 
+  // Hàm fetchOrders để lấy danh sách đơn hàng từ server
   const fetchOrders = async (officeID) => {
     try {
       const response = await axios.get('http://localhost:3001/goods/getWait', {
@@ -17,6 +19,7 @@ const NhanDon = ({ officeID }) => {
         },
       });
 
+      // Định dạng dữ liệu trả về từ server
       const formattedData = response.data.data.map(item => ({
         "ID": item.ID_good,
         "Mã đơn hàng": item.QR_code,
@@ -36,13 +39,16 @@ const NhanDon = ({ officeID }) => {
     }
   };
 
+  // useEffect để gọi hàm fetchOrders khi component được render hoặc khi officeID thay đổi
   useEffect(() => {
     officeIDRef.current = officeID;
     fetchOrders(officeID);
   }, [officeID]);
 
+  // Hàm xử lý khi nút Confirm được click
   const handleConfirmButtonClick = useCallback(
     async (goodID) => {
+      // Lấy giá trị officeID từ useRef
       const currentOfficeID = officeIDRef.current;
 
       if (currentOfficeID != null) {
@@ -52,6 +58,7 @@ const NhanDon = ({ officeID }) => {
         };
 
         try {
+          // Gửi request xác nhận đơn hàng đến server
           const confirmResponse = await fetch(
             'http://localhost:3001/transfer/updateReceive',
             {
@@ -63,7 +70,7 @@ const NhanDon = ({ officeID }) => {
             }
           );
 
-          // Handle the response from the server for confirming the order
+           // Xử lý response từ server khi xác nhận đơn hàng
           if (!confirmResponse.ok) {
             console.error(
               'Lỗi xác nhận đơn hàng:',
@@ -81,8 +88,7 @@ const NhanDon = ({ officeID }) => {
       } else {
         alert('Lỗiiiii');
       }
-    },
-    []
+    },[]
   );
 
   const [rowData, setRowData] = useState([]);
@@ -105,6 +111,7 @@ const NhanDon = ({ officeID }) => {
     </div>
   );
 
+  // Cấu hình cột
   const [colDefs] = useState([
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },

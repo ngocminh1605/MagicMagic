@@ -27,12 +27,9 @@ const OrdersTable = ({ officeID, userID, title }) => {
     </div>
   );
   
+  const [rowData, setRowData] = useState([]);
 
-  const [rowData, setRowData] = useState([
-    
-  ]);
-
-
+  // Hàm để lấy danh sách đơn hàng từ server
   useEffect(() => {
     const fetchOrders = async (officeID) => {
       try {
@@ -67,6 +64,7 @@ const OrdersTable = ({ officeID, userID, title }) => {
     fetchOrders(officeID);
   }, [officeID]);
 
+  // Cấu hình cột
   const colDefsBase = [
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },
@@ -82,13 +80,14 @@ const OrdersTable = ({ officeID, userID, title }) => {
     { field: "Số điện thoại người nhận" },
   ];
 
+  // Định nghĩa cột Action
   const actionColDef = {
     headerName: "Action",
     minWidth: 100,
     maxWidth: 120,
     cellRenderer: ActionButtonsRenderer,
   };
-
+// Nếu là Nhân viên giao dịch, thêm cột Action
   const colDefs = title === "Nhân viên giao dịch" ? [...colDefsBase, actionColDef] : colDefsBase;
 
   const defaultColDef = useMemo(() => ({

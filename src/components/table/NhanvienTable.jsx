@@ -11,8 +11,9 @@ import axios from "axios";
 import { format } from 'date-fns';
 
 const NhanVienTable = ({ officeID, userID, title }) => {
-  //console.log("hi", officeID, userID, title);
   const navigate = useNavigate();
+
+   // Renderer cho nút Action
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
       <Button
@@ -59,10 +60,10 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       </Button>
     </div>
   );
-  // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState([
-  ]);
 
+  const [rowData, setRowData] = useState([]);
+
+  // Hàm để lấy danh sách người dùng từ server
   const fetchUser = async (officeID, userID, title) => {
     console.log('useEffect is called');
     try {
@@ -75,7 +76,8 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       });
       if (response.status === 200) {
         const userData = response.data.users;
-        console.log("Dữ liệu người dùng:", userData);
+        
+        // Định dạng dữ liệu trả về từ server
         const formattedData = userData.map(item => {
           console.log(format(new Date(item.datestart), 'dd/MM/yyyy'))
           return {
@@ -94,18 +96,20 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       console.error("Error fetching data:", error);
     }
   };
-
+// useEffect để gọi hàm fetchUser khi component được render hoặc khi officeID, userID, title thay đổi
   useEffect(() => {
     console.log('useEffect is called');
     fetchUser(officeID, userID, title);
   }, [officeID, userID, title]);
 
+  // Hàm xử lý khi nút Delete được click
   const DeleteHandle = async (deleteUserId) => {
     const confirmed = window.confirm("Bạn có chắc là muốn xóa người này ?");
     if (confirmed) {
       try {
         const response = await axios.delete(`http://localhost:3001/users/delete/${deleteUserId}`);
         if (response.status === 200) {
+          // Sau khi xóa thành công, fetch lại danh sách người dùng
           fetchUser(1, userID, "Trưởng điểm giao dịch")
           console.log('Xóa nhân viên thành công');
         } else {
@@ -117,6 +121,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     }
   };
 
+  // Cấu hình cột
   const [colDefs] = useState([
     { field: "ID_User", maxWidth: 175, headerAlign: 'center', align: 'center' },
     { field: "UserName", headerAlign: 'center', align: 'center' },
@@ -139,13 +144,11 @@ const NhanVienTable = ({ officeID, userID, title }) => {
     suppressHorizontalScroll: false,
     PaginationPanel: false,
   };
+
   return (
     <div
-      className={
-        "ag-theme-quartz ag-theme-acmecorp"
-      }
+      className={"ag-theme-quartz ag-theme-acmecorp"}
       style={{ width: '98.5%', height: '70%',flexDirection:"column",marginTop:"20px",marginLeft:"15px",borderRadius:"20px" }}
-
     >
       <Button
         onClick={() => navigate(`/nhanvien/add/${userID}/${officeID}/${title}`)}

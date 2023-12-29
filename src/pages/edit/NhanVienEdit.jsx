@@ -10,8 +10,7 @@ import Select from "react-select"
 const NhanVienEdit = () => {
     const { userID } = useParams();
     const navigate = useNavigate();
-    // const [office, setOffice] = useState('');
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState([]); // State lưu trữ danh sách văn phòng
     const [userData, setUserData] = useState({
         UserName: '',
         email: '',
@@ -30,13 +29,14 @@ const NhanVienEdit = () => {
             borderRadius: "5px" // Adjust the border-radius for the main control
         }),
     };
+
+    // Effect để fetch thông tin người dùng mặc định
     useEffect(() => {
         const fetchDefaultUserInfo = async () => {
             try {
                 const response = await axios.get(`http://localhost:3001/users/info/${userID}`);
                 if (response.status === 200) {
                     setUserData(response.data[0]);
-                    console.log(userData);
                 } else {
                     console.error('Request failed with status:', response.status);
                 }
@@ -45,8 +45,9 @@ const NhanVienEdit = () => {
             }
         };
         fetchDefaultUserInfo();
-    }, [userID]);
+    }, [userID, userData]);
 
+    // Effect để fetch danh sách văn phòng khi component được mount
     useEffect(() => {
         const fetchOfficeOptions = async () => {
             try {
@@ -64,6 +65,7 @@ const NhanVienEdit = () => {
         fetchOfficeOptions();
     }, []);
 
+     // Hàm fetch danh sách văn phòng
     const optionOffice = async () => {
         try {
             const response = await fetch('http://localhost:3001/office/allOffice', {
@@ -85,6 +87,7 @@ const NhanVienEdit = () => {
         }
     };
 
+    // Hàm xử lý khi người dùng nhấn nút lưu thay đổi
     const handleUpdate = async (e) => {
         e.preventDefault();
         console.log(
@@ -93,6 +96,7 @@ const NhanVienEdit = () => {
             userData.OfficeId,
             userData.title)
         try {
+            // Gửi yêu cầu cập nhật thông tin người dùng lên server
             const response = await axios.put(`http://localhost:3001/users/info/${userID}`, {
                 username: userData.UserName,
                 email: userData.email,

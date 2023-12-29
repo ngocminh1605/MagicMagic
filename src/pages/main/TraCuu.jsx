@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useNavigate } from 'react-router-dom';
 import './tracuu.scss';
-import { axiosInstance } from '../../constant/axios';
 import { useParams } from 'react-router-dom';
-import { InputLabel, Select, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ShippingTracker from '../../components/progressbar/ShippingTracker'
 
@@ -105,6 +100,9 @@ const TraCuu = () => {
               break;            
             case "Thành công":
                 index = 5;
+                break; 
+            default:
+                index = 0;
                 break; 
           }
         

@@ -3,7 +3,6 @@ import './editProfile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
-import { axiosInstance } from '../../constant/axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from "axios";
@@ -21,6 +20,7 @@ const EditProfile = () => {
     });
     console.log(userID)
     useEffect(() => {
+        // Hàm fetch thông tin người dùng mặc định khi component được mount
         const fetchDefaultInfo = async () => {
             try {
                 const response = await axios.get(`http://localhost:3001/users/info/${userID}`);
@@ -36,6 +36,7 @@ const EditProfile = () => {
         fetchDefaultInfo();
     }, [userID]);
 
+    // Hàm xử lý khi người dùng submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(
@@ -43,6 +44,7 @@ const EditProfile = () => {
             userData.Phone,
         )
         try {
+            // Gửi yêu cầu cập nhật thông tin người dùng lên server
             const response = await axios.put(`http://localhost:3001/users/info1/${userID}`, {
                 fullname: userData.FullName,
                 birthday: userData.birthday,

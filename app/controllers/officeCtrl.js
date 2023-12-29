@@ -1,10 +1,8 @@
-var express = require("express");
-const router = express.Router();
-
 const officeQueries = require("../database/officeQuery");
 const goodQueries = require("../database/goodQuery");
 
 const officeCtrl = {
+    // Lấy thông tin điểm giao dịch
     getOfficeTransaction : async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -18,7 +16,7 @@ const officeCtrl = {
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
-
+    // Lấy thông tin điểm tập kết
     getOfficeGathering : async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -33,6 +31,7 @@ const officeCtrl = {
         }
     },
 
+    // Lấy thông tin office bằng ID office
     getOfficeByID : async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -47,6 +46,7 @@ const officeCtrl = {
         }
     },
 
+    // Lấy thông tin office bằng ID user
     getOfficeByUser : async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -61,6 +61,7 @@ const officeCtrl = {
         }
     },
 
+    // Lấy ra các option có thể lựa chọn khi tạo đơn chuyển tiếp
     getOption: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -111,13 +112,14 @@ const officeCtrl = {
                 option = "Xem lại các địa chỉ!";
             }
     
-            res.status(201).json({ message: "Lấy office theo ID thành công!", data: infoOfficeCurrent,  option: option});
+            res.status(201).json({ message: "Lấy option thành công!", data: infoOfficeCurrent,  option: option});
         } catch (error) {
-            console.error("Lỗi lấy office theo ID: ", error);
+            console.error("Lỗi lấy option: ", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
 
+    // Lấy tỉnh của office
     getProvinceOffice: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -134,6 +136,7 @@ const officeCtrl = {
         }
     },
 
+    // Lấy thông tin ID_office, Name của office
     getAllOffice: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -147,6 +150,7 @@ const officeCtrl = {
         }
     },
 
+    // Lấy danh sách office
     getListOffice: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -158,6 +162,7 @@ const officeCtrl = {
         }
     },
 
+    // Thêm office
     addOffice: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -173,6 +178,7 @@ const officeCtrl = {
         }
     },
 
+    // Xóa office
     deleteOffice: async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -188,7 +194,5 @@ const officeCtrl = {
     },
 
 }
-
-
 
 module.exports = officeCtrl;

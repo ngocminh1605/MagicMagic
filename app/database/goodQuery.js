@@ -1,12 +1,13 @@
 const crypto = require('crypto');
 const qrcode = require('qrcode');
 
+// Tạo mã QR từ data truyền vào.
 const generateQRCodeBase64 = async (data) => {
     try {
-        // Generate QR code as a buffer
+        // Tạo QR code như một buffer
         const qrCodeBuffer = await qrcode.toBuffer(data);
 
-        // Convert the buffer to base64
+        // Chuyển đổi buffer sang base64
         const qrCodeBase64 = qrCodeBuffer.toString('base64');
 
         return qrCodeBase64;
@@ -16,7 +17,7 @@ const generateQRCodeBase64 = async (data) => {
     }
 };
 
-
+// Tạo một dãy số ngẫu nhiên 
 const generateRandom = (length, characters) => {
     const randomBytes = crypto.randomBytes(length);
     let code = '';
@@ -29,6 +30,7 @@ const generateRandom = (length, characters) => {
     return code;
 };
 
+// Tạo mã đơn hàng
 const generateCode = () => {
     const letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const number = "0123456789";
@@ -70,6 +72,7 @@ const createOrder = async (nameSender, addressSender, phoneSender, nameReceiver,
     });
 };
 
+// Lấy thông tin đơn hàng bằng mã QR
 const getOrderByQRCode = async (QRCode, db) => {
     const query = 'SELECT * FROM good WHERE QR_code = ?';
     return new Promise((resolve, reject) => {
@@ -83,7 +86,7 @@ const getOrderByQRCode = async (QRCode, db) => {
     });
 };
 
-// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+// Lấy dữ liệu đơn hàng có State là đang đợi
 const getStateWait = async (officeID, db, res) => {
     const query = `SELECT DISTINCT * FROM good g
                     JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -99,7 +102,7 @@ const getStateWait = async (officeID, db, res) => {
     });
 };
 
-// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+// Lấy dữ liệu đơn hàng có State là chờ nhận
 const getStateReturn = async (officeID, db, res) => {
     const query = `SELECT DISTINCT * FROM good g
                     JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -115,7 +118,7 @@ const getStateReturn = async (officeID, db, res) => {
     });
 };
 
-// Lấy dữ liệu đơn hàng có State là đang đợi/ Đợi trả về
+// Lấy dữ liệu đơn hàng có State là đã nhận
 const getStateNhan = async (officeID, db, res) => {
     const query = `SELECT DISTINCT * FROM good g
                     JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -189,7 +192,7 @@ const getSend = async (officeID, db, res) => {
     });
 };
 
-// Lấy dữ liệu đơn hàng đã gửi
+// Lấy dữ liệu đơn hàng đã nhận
 const getReceive = async (officeID, db, res) => {
     let getReceiveQuery = "";
 
@@ -220,6 +223,7 @@ const getReceive = async (officeID, db, res) => {
     });
 };
 
+// Lấy thông tin đơn hàng bởi ID_good
 const getOrderInfo = async (goodID, db, res) => {
     const getInfoQuery = `SELECT * FROM good WHERE good.ID_good = ? ;`;
 
@@ -234,6 +238,7 @@ const getOrderInfo = async (goodID, db, res) => {
     });
 };
 
+// Lấy thông tin đơn hàng và history bởi mã QR
 const getInfoByQR = async (goodCode, db, res) => {
     const query = `SELECT DISTINCT g.* FROM good g
                             JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -250,6 +255,7 @@ const getInfoByQR = async (goodCode, db, res) => {
     });
 };
 
+// Lấy các state và thông tin theo Mã QR
 const getStateByQR = async (goodCode, db, res) => {
     const query = `SELECT DISTINCT b.State, b.ID_Office, b.Time_update, o.Name, o.Address FROM good g
                         JOIN bookinghistory b ON b.ID_good = g.ID_good
@@ -267,7 +273,7 @@ const getStateByQR = async (goodCode, db, res) => {
     });
 };
 
-
+// Cập nhật PostalcodeReceive trong bảng good
 const updateGood = async (code, goodID, db) => {
     const query = 'UPDATE good SET good.PostalcodeReceive = ? WHERE good.ID_good = ?;';
     return new Promise((resolve, reject) => {
@@ -281,6 +287,7 @@ const updateGood = async (code, goodID, db) => {
     });
 };
 
+// Lấy địa chỉ người nhận
 const getAdressReceiver = async (goodID, db) => {
     const query = 'SELECT Address_receiver FROM good WHERE ID_good = ?';
     return new Promise((resolve, reject) => {
@@ -294,6 +301,7 @@ const getAdressReceiver = async (goodID, db) => {
     });
 };
 
+// Lấy mã bưu chính theo các địa điểm
 const getPostalCode = async (province, db) => {
     const query = `SELECT Postalcode FROM office WHERE Address LIKE ? AND Name LIKE '%GD%';`;
     return new Promise((resolve, reject) => {
