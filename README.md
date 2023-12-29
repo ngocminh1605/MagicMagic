@@ -80,6 +80,23 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 ```bash
 git clone https://github.com/ngocminh1605/MagicMagic.git
 ```
+
+#### b. Cài đặt các gói npm cần thiết
+```bash
+npm install
+```
+
+#### c. Chạy frontend
+```bash
+npm start
+```
+
+#### d. Chạy backend
+```bash
+cd app
+node app.js
+```
+
 ### 2. Trưởng điểm giao dịch
 - Quản lý tài khoản giao dịch viên tại điểm giao dịch vs thao tác thêm sửa xóa nhân viên.
 - Thống kê hàng gửi, hàng nhận,số lượng nhân viên tại điểm giao dịch.
