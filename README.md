@@ -71,11 +71,15 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 
 ## IV. Công nghệ <a name="technique"></a>
 - Ngôn ngữ: ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/>
+            
+
 - Cơ sở dữ liệu: MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
 
 ## V. Cách cài đặt và chạy <a name="setting"></a>
 
-### 1. Cài đặt
+### 1. Yêu cầu
+Đã cài đặt 
+### 2. Cài đặt
 #### a. Clone Repository
 ```bash
 git clone https://github.com/ngocminh1605/MagicMagic.git
@@ -96,6 +100,8 @@ npm start
 cd app
 node app.js
 ```
+
+Khi đó có thể truy cập ứng dụng tại địa chỉ ```http://localhost:3000​```
 
 ### 2. Trưởng điểm giao dịch
 - Quản lý tài khoản giao dịch viên tại điểm giao dịch vs thao tác thêm sửa xóa nhân viên.
