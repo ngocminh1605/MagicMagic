@@ -11,7 +11,9 @@
   <br />
   <a href="#technique">IV. Công nghệ</a>
   <br />
-  <a href="#demo">V. Video demo</a>
+  <a href="#setting">V. Cách cài đặt và chạy</a>
+  <br />
+  <a href="#demo">VI. Video demo</a>
   <br />
 </h2>
 <br />
@@ -70,5 +72,9 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 ## IV. Công nghệ <a name="technique"></a>
 - Ngôn ngữ: ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/>
 - Cơ sở dữ liệu: MySQL <img alt="SQL" width="26px" src="https://img.icons8.com/external-wanicon-flat-wanicon/48/external-sql-server-big-data-wanicon-flat-wanicon.png" style="margin-left:20px;" />
-## V. Video Demo <a name="demo"></a>
+
+## V. Cách cài đặt và chạy <a name="setting"></a>
+
+
+## VI. Video Demo <a name="demo"></a>
 link
