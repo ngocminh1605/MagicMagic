@@ -30,6 +30,29 @@
 |   2   |    Trần Diệu Anh     | 21020279 | 21020279@vnu.edu.vn |  [AnhDieuTran](https://github.com/AnhDieuTran)  |
 |   3   | Nguyễn Thị Ngọc Minh | 21020358 | 21020358@vnu.edu.vn | [ngocminh1605](https://github.com/ngocminh1605) |
 
+5. Công việc
+
+- Nguyễn Phương Linh: FE + demo
+  + Xử lý giao diện màn hình chính
+  + Xử lý giao diện đăng nhập
+  + Xử lý sidebar
+  + Xử lý giao diện các tác vụ thêm, sửa, xóa
+  + Xử lý scale
+  + Demo
+- Nguyễn Thị Ngọc Minh: FE + BE + demo
+  + Xử lý giao diện bảng
+  + Xử lý giao diện thống kê
+  + Xử lý dữ liệu user
+  + Xử lý tác vụ user
+  + Xử lý quyền hạn user
+  + Demo
+- Trần Diệu Anh: BE
+  + Xử lý dữ liệu đơn hàng
+  + Xử lý quá trình vận chuyển đơn hàng
+  + Xử lý dữ liệu thống kê
+  + Xử lý thông tin in đơn hàng
+  + Xử lý dữ liệu phòng ban
+
 
 ## II. Mô tả <a name="about"></a>
 MagicMagic là công ty hoạt động trong lĩnh vực chuyển phát. Công ty này có các điểm giao dịch phủ khắp cả nước. Mỗi điểm giao dịch phụ trách một vùng. Ngoài các điểm giao dịch, công ty cũng có nhiều điểm tập kết hàng hóa. Mỗi điểm giao dịch sẽ làm việc với một điểm tập kết và ngược lại.
