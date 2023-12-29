@@ -11,7 +11,7 @@ const ShippingTracker = ({ currentStep, isReturn }) => {
     } else {
       setSteps(['Không thành công', 'Trả lại', 'Đang vận chuyển', 'Đã đến GD gửi', 'Đang trả hàng', 'Trả lại thành công']);
     }
-  }, [currentStep]);
+  }, [currentStep, isReturn]);
 
   return (
     <div className="shipping-tracker">

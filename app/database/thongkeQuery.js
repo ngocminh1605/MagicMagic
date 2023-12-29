@@ -1,3 +1,4 @@
+// Đếm tất cả các đơn hàng hoặc đơn hàng của một office cụ thể
 const all = async (officeID, db, res) => {
     let query = "";
     if (!officeID) {
@@ -17,6 +18,7 @@ const all = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng đã nhận hoặc đang chờ nhận
 const receiveAll = async (officeID, db, res) => {
     let query = "";
 
@@ -37,8 +39,8 @@ const receiveAll = async (officeID, db, res) => {
     });
 };
 
-
- const sendAll = async (officeID, db, res) => {
+// Đếm số lượng đơn hàng đã gửi hoặc đang chờ gửi
+const sendAll = async (officeID, db, res) => {
     let query = "";
 
     if (!officeID) {
@@ -58,6 +60,7 @@ const receiveAll = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng theo tháng
 const allByMonth = async (officeID, db, res) => {
     let query = "";
 
@@ -87,6 +90,7 @@ const allByMonth = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng đã gửi hoặc đang chờ gửi theo tháng
 const sendByMonth = async (officeID, db, res) => {
     let query = "";
 
@@ -116,6 +120,7 @@ const sendByMonth = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng đã nhận hoặc đang chờ nhận theo tháng
 const receivedByMonth = async (officeID, db, res) => {
     let query = "";
 
@@ -144,7 +149,7 @@ const receivedByMonth = async (officeID, db, res) => {
     });
 };
 
-
+// Đếm số lượng đơn hàng theo trạng thái của từng office (GD)
 const GDOffice = async (db, res) => {
     const query = `SELECT
                         ROW_NUMBER() OVER (ORDER BY o.Name) AS STT,
@@ -168,6 +173,7 @@ const GDOffice = async (db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng theo trạng thái của từng office (TK)
 const TKOffice = async (db, res) => {
     const query = `SELECT
                         ROW_NUMBER() OVER (ORDER BY o.Name) AS STT,
@@ -191,7 +197,7 @@ const TKOffice = async (db, res) => {
     });
 };
 
-
+// Đếm số lượng đơn hàng thành công của một office
 const success = async (officeID, db, res) => {
     const query = `SELECT COUNT(DISTINCT ID_good) as success FROM bookinghistory WHERE bookinghistory.State IN ("Thành công") AND bookinghistory.ID_Office = ?`;
 
@@ -206,6 +212,7 @@ const success = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng đơn hàng trả lại của một office
 const returnTotal = async (officeID, db, res) => {
     const query = `SELECT COUNT(DISTINCT ID_good) as tralai FROM bookinghistory WHERE bookinghistory.State IN ("Trả về", "Nhận trả về", "Gửi trả về") AND bookinghistory.ID_Office = ?`;
 
@@ -220,6 +227,7 @@ const returnTotal = async (officeID, db, res) => {
     });
 };
 
+// Đếm số lượng office
 const office = async (office, db, res) => {
     const query = "SELECT COUNT(office.ID_office) as numOfOffice FROM office WHERE office.Name LIKE ?;";
 
@@ -234,6 +242,7 @@ const office = async (office, db, res) => {
     });
 };
 
+// Đếm số lượng nhân viên của một office hoặc toàn bộ
 const employee = async (officeID, db, res) => {
     let query = "";
 
@@ -257,5 +266,5 @@ const employee = async (officeID, db, res) => {
     });
 };
 
-module.exports = { all, allByMonth, sendAll, sendByMonth, receiveAll, receivedByMonth, GDOffice, TKOffice, success, returnTotal,
-                    employee, office };
+// Xuất module chứa tất cả các hàm truy vấn
+module.exports = { all, allByMonth, sendAll, sendByMonth, receiveAll, receivedByMonth, GDOffice, TKOffice, success, returnTotal, employee, office };

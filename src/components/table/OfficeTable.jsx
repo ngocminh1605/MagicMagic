@@ -5,13 +5,14 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { createRoot } from 'react-dom/client';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
 const OfficeTable = () => {
   const navigate = useNavigate();
+
+  // Renderer cho nút Action
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
       <Button
@@ -47,6 +48,7 @@ const OfficeTable = () => {
 
   const [rowData, setRowData] = useState([]);
 
+  // Hàm để lấy danh sách office từ server
   useEffect(() => {
     const fetchOffice = async () => {
       try {
@@ -74,10 +76,10 @@ const OfficeTable = () => {
       }
     }
   
-
     fetchOffice();
   }, []);
 
+  // Hàm xử lý khi nút Delete được click
   const DeleteHandle = async (deleteUserId) => {
     const confirmed = window.confirm("Bạn có chắc là muốn xóa office này ?");
     if (confirmed) {
@@ -99,6 +101,7 @@ const OfficeTable = () => {
     }
   };
 
+// Cấu hình cột
   const [colDefs] = useState([
     { field: "ID_Office", maxWidth: 175, headerAlign: 'center', align: 'center' },
     { field: "Name", headerAlign: 'center', align: 'center' },
@@ -124,13 +127,8 @@ const OfficeTable = () => {
   };
   return (
     <div
-      className={
-        "ag-theme-quartz ag-theme-acmecorp"
-      }
-      style={{
-        width: '100%', height: '70%', flexDirection: "column",
-      }}
-
+      className={"ag-theme-quartz ag-theme-acmecorp"}
+      style={{width: '100%', height: '70%', flexDirection: "column", }}
     >
       <Button
         onClick={() => navigate(``)}

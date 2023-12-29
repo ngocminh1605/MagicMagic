@@ -1,5 +1,4 @@
 var express = require("express");
-var bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const transferCtrl = require("../controllers/transferCtrl");

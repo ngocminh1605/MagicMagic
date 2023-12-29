@@ -1,3 +1,4 @@
+// Thêm office
 const addOffice = async (name, address, hotline, learder, code, db, res) => {
     const transQuery = "INSERT INTO office (`Name`, `Address`, `HotLine`, `ID_Leader`, `Postalcode`) VALUE (?, ?, ?, ?, ?);";
 
@@ -11,6 +12,7 @@ const addOffice = async (name, address, hotline, learder, code, db, res) => {
     });
 };
 
+// Xóa office
 const deleteOffice = async (officeID, db, res) => {
     const transQuery = "DELETE FROM office WHERE office.ID_office = ?";
 
@@ -24,6 +26,7 @@ const deleteOffice = async (officeID, db, res) => {
     });
 };
 
+// Lấy thông tin office giao dịch theo địa chỉ
 const transactionAndAddress = async (address, db, res) => {
     const transQuery = "SELECT * FROM office WHERE office.Name LIKE '%GD%' AND office.Address LIKE ?;";
 
@@ -39,6 +42,7 @@ const transactionAndAddress = async (address, db, res) => {
     });
 };
 
+// Lấy thông tin office tập kết theo địa chỉ
 const gatheringAndAddress = async (address, db, res) => {
     const gatherQuery = "SELECT * FROM office WHERE office.Name LIKE '%TK%' AND office.Address LIKE ?;";
 
@@ -54,6 +58,7 @@ const gatheringAndAddress = async (address, db, res) => {
     });
 };
 
+// Lấy thông tin office theo ID
 const getOfficeByID = async (officeID, db, res) => {
     const getQuery = "SELECT * FROM office WHERE office.ID_office = ?;";
     return new Promise((resolve, reject) => {
@@ -68,7 +73,7 @@ const getOfficeByID = async (officeID, db, res) => {
     });
 };
 
-
+// Lấy ID_office, Name trong bảng office
 const getAllOffice = async (db, res) => {
     const getQuery = "SELECT ID_office, Name FROM office;";
     return new Promise((resolve, reject) => {
@@ -83,7 +88,7 @@ const getAllOffice = async (db, res) => {
     });
 };
 
-
+// Lấy danh sách office và tên trưởng điểm
 const getListOffice = async (db, res) => {
     const getQuery = `SELECT office.*, user.FullName AS leaderName FROM office 
     JOIN user ON user.ID_user = office.ID_leader WHERE user.title LIKE '%Trưởng điểm%';`;
@@ -99,7 +104,7 @@ const getListOffice = async (db, res) => {
     });
 };
 
-
+// Lấy ra tên tỉnh từ một địa chỉ dài
 function extractProvinceName(address) {
     const lowercaseAddress = address.toLowerCase();
   

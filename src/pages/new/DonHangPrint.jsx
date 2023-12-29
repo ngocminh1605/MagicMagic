@@ -12,6 +12,7 @@ const DonHangPrint = () => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [qrCodeImage, setQrCodeImage] = useState(null);
 
+  // Sử dụng useEffect để fetch thông tin đơn hàng khi goodID thay đổi
   useEffect(() => {
     const fetchOrderInfo = async (goodID) => {
       try {
@@ -29,10 +30,10 @@ const DonHangPrint = () => {
     fetchOrderInfo(goodID);
   }, [goodID]);
 
+  // Hàm xử lý in trang
   const handlePrint = () => {
     window.print();
   };
-
 
   return (
     <div className='add'>

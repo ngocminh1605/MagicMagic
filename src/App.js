@@ -31,22 +31,26 @@ function App() {
                             <Route index path="login"  element={<Login />} />
                             <Route index path="profile" element={<EditProfile/>}/>
                             <Route index path="home" element={<Home />} />
+                            
                             <Route path="nhanvien">
                                 <Route index element={<NhanVienList />} />
                                 <Route path="add/:userID/:officeID/:title" element={<NhanVienNew />} />
                                 <Route path="edit/:userID" element={<NhanVienEdit />} />
                                 <Route path="view/:userID" element={<NhanVienDetail />} />
                             </Route>
+                            
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
                                 <Route path="add/:userID/:officeID/:title" element={<NhanVienNew />} />
                                 <Route path="edit/:userID" element={<NhanVienEdit />} />
                             </Route>
+                            
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
                                 <Route path="add/:userID" element={<DonHangNew />} />
                                 <Route path="view/:goodID" element={<DonHangPrint />} />
                             </Route>
+
                             <Route path="position">
                                 <Route index element={<ChucvuList />} />
                             </Route>
@@ -59,6 +63,7 @@ function App() {
                             <Route path="receive">
                                 <Route index element={<DonHangNhan />} />
                             </Route>
+                            
                             <Route path="return">
                                 <Route index element={<DonHangReturn />} />
                             </Route>

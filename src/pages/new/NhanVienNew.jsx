@@ -15,7 +15,7 @@ const NhanVienNew = () => {
     const [position, setPosition] = useState('');
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
-    const { userID, officeID, title } = useParams();
+    const { title } = useParams();
 
     useEffect(() => {
         const fetchOfficeOptions = async () => {
@@ -62,6 +62,7 @@ const NhanVienNew = () => {
             isProceed = false;
             errorMessage += 'Email';
         }
+        console.log(errorMessage)
 
         if (!isProceed) {
             // setAlert({ status: 'error', title: 'Error', description: 'Please enter the value in' });

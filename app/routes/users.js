@@ -4,6 +4,7 @@ var jwt = require("jsonwebtoken");
 const router = express.Router();
 
 // post : up; put : sua du lieu/update ; get : lay du lieu; delete : xoa du 
+// Hàm mã hóa mật khẩu sử dụng bcrypt
 const hashPassword = async (password) => {
     try {
         const saltRounds = 10;
@@ -14,6 +15,7 @@ const hashPassword = async (password) => {
         throw "Lỗi đăng ký người dùng.";
     }
 };
+// Hàm so sánh mật khẩu đã mã hóa với mật khẩu nhập vào
 const comparePasswords = async (password, hashedPassword) => {
     try {
         return await bcrypt.compare(password, hashedPassword);
@@ -23,6 +25,7 @@ const comparePasswords = async (password, hashedPassword) => {
     }
 };
 
+// Hàm tạo mới người dùng
 const createUser = async (username, email, password, officeID, Title, db, res) => {
     // Kiểm tra có tồn tại mail chưa
     const checkUserQuery = "SELECT * FROM user WHERE email = ? OR UserName = ?";
@@ -50,7 +53,7 @@ const createUser = async (username, email, password, officeID, Title, db, res) =
     });
 };
 
-
+// Endpoint đăng ký người dùng
 router.post("/register", async (req, res) => {
     try {
         const db = req.app.locals.db;
@@ -64,7 +67,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-
+// Endpoint đăng nhập người dùng
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -115,19 +118,15 @@ router.post("/login", async (req, res) => {
     }
 });
 
+// Middleware kiểm tra xác thực token
 const isAuthenticated = (req, res, next) => {
     try {
-        // console.log("Headers:", req.headers); // Log headers
         const token = req.headers.authorization.split(" ")[1];
-        // console.log("Token:", token); // Log token
 
         if (!token) {
             console.log("Not token");
             return res.status(401).json({ message: "Unauthorized" });
         }
-
-        // console.log("Hello 2", token);
-
         // Xác thực token
         const now = Date.now() / 1000;
         const expirationThreshold = 5 * 60; // 5 minutes in seconds
@@ -154,12 +153,14 @@ const isAuthenticated = (req, res, next) => {
         return res.status(401).json({ message: "Unauthorized" });
     }
 };
+
+// Endpoint lấy thông tin người dùng hiện tại
 router.get("/me", isAuthenticated, (req, res) => {
     const user = req.user;
-    // console.log("user:", user);
     return res.status(200).json({ user: { userId: user.userId, username: user.username, officeID: user.officeID, title: user.title } });
 });
 
+// Endpoint đăng xuất
 router.get("/logout", isAuthenticated, (req, res) => {
     try {
         // Xóa token khỏi header
@@ -171,8 +172,7 @@ router.get("/logout", isAuthenticated, (req, res) => {
 });
 
 
-// edit hồ sơ
-
+// Hàm cập nhật thông tin người dùng
 const createInfo_me = async (userid, fullname, birthday, gender, address, phone, email, db, res) => {
     const updateUserInfoQuery1 =
         "UPDATE user SET fullname = ?, birthday = ?, gender = ?, address = ?, phone = ?, email = ? WHERE ID_user = ?";
@@ -191,7 +191,7 @@ const createInfo_me = async (userid, fullname, birthday, gender, address, phone,
     );
 };
 
-
+// Endpoint cập nhật thông tin người dùng
 router.put("/info1/:userid", async (req, res) => {
     try {
         const db = req.app.locals.db;
@@ -221,9 +221,8 @@ router.put("/info1/:userid", async (req, res) => {
 
 
 
-//sửa thông tin người dùng
+//Sửa thông tin người dùng
 const createInfo = async (userid, username, email, title, officeid, db, res) => {
-    // Update user information directly
     const updateUserInfoQuery =
         "UPDATE user SET UserName = ?, email = ?, Title = ?, OfficeId = ? WHERE ID_user = ?";
     db.query(
@@ -241,7 +240,7 @@ const createInfo = async (userid, username, email, title, officeid, db, res) => 
     );
 };
 
-// sửa đổi thông tin người dùng
+// Endpoint sửa đổi thông tin người dùng
 router.put("/info/:userid", async (req, res) => {
     try {
         const db = req.app.locals.db;
@@ -270,7 +269,7 @@ router.put("/info/:userid", async (req, res) => {
     }
 });
 
-// xóa người dùng theo id
+// Xóa người dùng theo ID
 router.delete("/delete/:userid", async (req, res) => {
     const db = req.app.locals.db;
     const { userid } = req.params;
@@ -290,6 +289,7 @@ router.delete("/delete/:userid", async (req, res) => {
     });
 });
 
+// Lấy thông tin người dùng theo ID
 router.get("/info/:userid", async (req, res) => {
     const db = req.app.locals.db;
     const { userid } = req.params;
@@ -302,8 +302,6 @@ router.get("/info/:userid", async (req, res) => {
         return res.status(200).json(results);
     });
 });
-
-
 
 // lấy thông tin list người dùng
 router.get("/info_users", async (req, res) => {
@@ -336,8 +334,4 @@ router.get("/info_users", async (req, res) => {
     }
 });
 
-
-
-
 module.exports = router;
-

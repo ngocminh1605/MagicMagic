@@ -16,9 +16,12 @@ const DonHangNew = () => {
     const [goodID, setGoodID] = useState(null);
     const { userID } = useParams();
 
+    // State cho thông tin người gửi
     const [senderFullName, setSenderFullName] = useState('');
     const [senderAddress, setSenderAddress] = useState('');
     const [senderPhoneNumber, setSenderPhoneNumber] = useState('');
+    
+    // State cho thông tin người nhận
     const [receiverFullName, setReceiverFullName] = useState('');
     const [receiverAddress, setReceiverAddress] = useState('');
     const [receiverPhoneNumber, setReceiverPhoneNumber] = useState('');
@@ -32,6 +35,7 @@ const DonHangNew = () => {
     const [province, setProvince] = useState('');	
     const [PostalcodeSend, setPostalcodeSend] = useState('');	
 
+    // useEffect để tính toán cước VAT khi có sự thay đổi ở các state liên quan
     useEffect(() => {
         const calculateAndSetVatFee = () => {
             const calculatedVatFee = calculateVatFee(mainFee, extraFee, gtvtFee);
@@ -39,6 +43,8 @@ const DonHangNew = () => {
         };
         calculateAndSetVatFee();
     }, [mainFee, extraFee, gtvtFee, shipmentType]);
+    
+    // useEffect để fetch dữ liệu khi officeID hoặc goodID thay đổi
     useEffect(() => {
         if (officeID) {
             const fetchData = async () => {
@@ -65,6 +71,7 @@ const DonHangNew = () => {
             fetchData();
         }
 
+        // Update thông tin good sau khi đã tạo đơn hàng
         if (goodID) {
             async function updateGood(goodID) {
                 try {
@@ -88,9 +95,11 @@ const DonHangNew = () => {
         }
     }, [officeID, goodID]);
 
+    // Update thông tin good sau khi đã tạo đơn hàng
     const handleAddClick = async (e) => {
         e.preventDefault();
 
+        // Kiểm tra xem các trường thông tin có được điền đầy đủ hay không
         if (
             senderFullName.trim() === '' ||
             senderAddress.trim() === '' ||
@@ -107,7 +116,7 @@ const DonHangNew = () => {
             return;
         }
 
-        // Prepare data to be sent to the server
+        // Chuẩn bị dữ liệu để gửi đến server
         const requestData = {
             nameSender: senderFullName,
             addressSender: senderAddress + ", " + province,
@@ -126,8 +135,7 @@ const DonHangNew = () => {
             Senddate: format(utcToZonedTime((sendDateTime), 'Asia/Ho_Chi_Minh'), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         };
 
-
-
+        // Hàm xử lý gửi yêu cầu xác nhận đơn hàng
         async function handleConfirmRequest(confirmData) {
             try {
                 const confirmResponse = await fetch('http://localhost:3001/transfer/confirmReceive', {
@@ -178,6 +186,7 @@ const DonHangNew = () => {
         }
     };
 
+    // Xử lý khi người dùng thay đổi trọng lượng
     const handleWeightChange = (e) => {
         const newWeight = e.target.value;
         setWeight(newWeight);

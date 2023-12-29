@@ -5,13 +5,10 @@ import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { createRoot } from 'react-dom/client';
-import { Button, IconButton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Button} from '@mui/material';
 
 
 const ChucVuTable = () => {
-  const navigate = useNavigate();
   const handleEditClick = (params) => {
     console.log('Edit clicked for row:', params.data);
   };
@@ -22,9 +19,6 @@ const ChucVuTable = () => {
 
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>
-      {/* Check if the icons are visible */}
-      {/* {EditIcon && <IconButton onClick={() => handleEditClick(props)}><EditIcon /></IconButton>}
-      {DeleteIcon && <IconButton onClick={() => handleDeleteClick(props)}><DeleteIcon /></IconButton>} */}
       <Button
         style={{
           textTransform: 'none',
@@ -39,6 +33,7 @@ const ChucVuTable = () => {
         View
       </Button>
       <Button
+      onClick={handleEditClick}
         style={{
           textTransform: 'none',
           backgroundColor: 'orange',
@@ -52,6 +47,7 @@ const ChucVuTable = () => {
         Edit
       </Button>
       <Button
+      onClick={handleDeleteClick}
         style={{
           textTransform: 'none',
           backgroundColor: "crimson",
@@ -67,7 +63,7 @@ const ChucVuTable = () => {
     </div>
   );
   // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState([
+  const [rowData] = useState([
     { ID: '1', "Chức Vụ": "Lãnh đạo","Phòng ban làm việc":"Trụ sở chính" },
     { ID: '2', "Chức Vụ": "Trưởng điểm giao dịch", "Phòng ban làm việc":"Điểm giao dịch" },
     { ID: '3', "Chức Vụ": "Trưởng điểm tập kết","Phòng ban làm việc":"Điểm tập kết" },
@@ -76,7 +72,7 @@ const ChucVuTable = () => {
   ]);
 
   // Column Definitions: Defines & controls grid columns.
-  const [colDefs, setColDefs] = useState([
+  const [colDefs] = useState([
     {
       field: "ID", headerAlign: 'center',maxWidth: 175,
       align: 'center'
@@ -108,7 +104,7 @@ const ChucVuTable = () => {
 
   const defaultColDef = useMemo(() => ({
     filter: true,
-  }));
+  }), []);
   const gridOptions = {
     // domLayout: 'autoHeight',
     headerHeight: 45,

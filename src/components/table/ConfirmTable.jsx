@@ -4,13 +4,12 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './NhanvienTable.scss';
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import DonHangChuyen from '../../pages/new/DonHangChuyen';
 
 const ConfirmTable = ({ officeID, userID, title }) => {
-  const navigate = useNavigate();
 
+  // Component con để hiển thị nút Confirm và popup
   const ActionButtonsRenderer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const openPopup = () => {
@@ -48,13 +47,9 @@ const ConfirmTable = ({ officeID, userID, title }) => {
     );
   };
   
-  
-  const [rowData, setRowData] = useState([
-    
-  ]);
+  const [rowData, setRowData] = useState([]);
 
-
-
+  // Hook useEffect để fetch dữ liệu khi component được tạo hoặc officeID thay đổi
   useEffect(() => {
     const fetchOrders = async (officeID) => {
       if (officeID != null) {
@@ -69,6 +64,7 @@ const ConfirmTable = ({ officeID, userID, title }) => {
 
         const responseData = await response.json();
           
+        // Xử lý dữ liệu và định dạng lại
           const formattedData = responseData.data
           .filter(item => Array.isArray(item) && item !== null)
           .flatMap(item => item.map(innerItem => ({
@@ -89,12 +85,12 @@ const ConfirmTable = ({ officeID, userID, title }) => {
           console.error('Error fetching orders:', error);
         }
       }
-      
     };
 
     fetchOrders(officeID);
   }, [officeID]);
 
+  // Cấu hình cột
   const [colDefs] = useState([
     { field: "Mã đơn hàng" },
     { field: "Loại hàng" },
@@ -124,7 +120,6 @@ const ConfirmTable = ({ officeID, userID, title }) => {
     pagination: true,
   };
   return (
-    // Container with theme & dimensions
     <div
       className={
         "ag-theme-quartz ag-theme-acmecorp"

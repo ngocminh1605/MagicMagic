@@ -10,6 +10,7 @@ import TKIcon from './image/gather.png';
 import GDIcon from './image/transfer.png';
 
 const Widget = ({ officeID, type}) => {
+    // State để lưu trữ giá trị các chỉ số thống kê
     const [giatri, setGiatri] = useState({
         tongNhanTQ: 0,
         tongGuiTQ: 0,
@@ -23,6 +24,7 @@ const Widget = ({ officeID, type}) => {
     });
 
     useEffect(() => {
+        // Hàm fetch dữ liệu từ máy chủ khi có sự thay đổi trong officeID
         const fetchData = async (officeID) => {
             try {
                 const response = await fetch('http://localhost:3001/thongke/all', {
@@ -35,6 +37,7 @@ const Widget = ({ officeID, type}) => {
     
                 const responseData = await response.json();
     
+                // Cập nhật state với dữ liệu mới
                 setGiatri(prevState => ({
                     ...prevState,
                     tongNhanTQ: responseData.receive,
@@ -48,6 +51,7 @@ const Widget = ({ officeID, type}) => {
             }
         };
     
+        // Hàm fetch dữ liệu nhân viên từ tất cả các chi nhánh
         const fetchEmployeeAll = async () => {
             try {
                 const response = await fetch('http://localhost:3001/thongke/employee', {
@@ -59,6 +63,7 @@ const Widget = ({ officeID, type}) => {
     
                 const responseData = await response.json();
     
+                // Cập nhật state với dữ liệu mới
                 setGiatri(prevState => ({
                     ...prevState,
                     tongNV1: responseData.employee,
@@ -68,6 +73,7 @@ const Widget = ({ officeID, type}) => {
             }
         };
     
+        // Hàm fetch dữ liệu nhân viên từ chi nhánh cụ thể (theo officeID)
         const fetchEmployeeLead = async (officeID) => {
             try {
                 const response = await fetch('http://localhost:3001/thongke/employee', {
@@ -80,6 +86,7 @@ const Widget = ({ officeID, type}) => {
     
                 const responseData = await response.json();
     
+                // Cập nhật state với dữ liệu mới
                 setGiatri(prevState => ({
                     ...prevState,
                     tongNV2: responseData.employee,
@@ -89,6 +96,7 @@ const Widget = ({ officeID, type}) => {
             }
         };
     
+         // Hàm fetch dữ liệu về số điểm giao dịch và số điểm tập kết
         const fetchOffice = async () => {
             try {
                 const response = await fetch('http://localhost:3001/thongke/office', {
@@ -100,6 +108,7 @@ const Widget = ({ officeID, type}) => {
     
                 const responseData = await response.json();
     
+                // Cập nhật state với dữ liệu mới
                 setGiatri(prevState => ({
                     ...prevState,
                     tongGD: responseData.gd,
@@ -117,7 +126,7 @@ const Widget = ({ officeID, type}) => {
     
     }, [officeID]);
     
-
+    // Biến data chứa thông tin cần hiển thị dựa vào type được truyền vào
     let data;
 
     switch (type) {

@@ -1,11 +1,10 @@
 var express = require("express");
 const router = express.Router();
-
-
 const goodQueries = require("../database/goodQuery");
 const officeQueries = require("../database/officeQuery");
 
 const goodCtrl = {
+    // Tạo đơn hàng mới.
     createOrder : async(req, res) => {
         try {
             const db = req.app.locals.db;
@@ -35,6 +34,7 @@ const goodCtrl = {
         }
     },
 
+    // Lấy thông tin đơn hàng qua ID_good.
     getByID: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -48,10 +48,11 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn lấy các đơn hàng theo từng office.
     getAll: async (req, res) => {
         try {
             const db = req.app.locals.db;
-            const { officeID } = req.query; // Use req.query to get parameters from the URL
+            const { officeID } = req.query;
             const results = await goodQueries.getAll(officeID, db);
         
             res.status(200).json({ message: "Truy vấn lấy các đơn hàng theo office thành công!", data: results });
@@ -60,6 +61,8 @@ const goodCtrl = {
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
+
+    // Truy vấn lấy các đơn hàng đã gửi thành công.
     getSendAll: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -72,6 +75,7 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn lấy các đơn hàng theo office đã gửi thành công.
     getSendByOffice: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -85,6 +89,7 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn lấy các đơn hàng đã nhận thành công.
     getReceiveAll: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -97,6 +102,7 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn lấy các đơn hàng theo office đã nhận thành công.
     getReceiveByOffice: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -110,6 +116,7 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn thông tin đơn hàng
     getInfoOrder: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -129,6 +136,7 @@ const goodCtrl = {
         }
     },
 
+    // Truy vấn lấy các đơn hàng có trạng thái đang đợi.
     getStateWait: async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -141,19 +149,21 @@ const goodCtrl = {
         }
     },
 
+    // Lấy dữ liệu đơn hàng có State là chờ nhận/ đã nhận
     getStateReturn: async (req, res) => {
         try {
             const db = req.app.locals.db;
             const { officeID } = req.query; 
             const results = await goodQueries.getStateReturn(officeID, db);
         
-            res.status(200).json({ message: "Truy vấn lấy các đơn hàng trạng thái đang đợi thành công!", data: results });
+            res.status(200).json({ message: "Truy vấn lấy các đơn hàng trạng thái chờ nhận thành công!", data: results });
         } catch (error) {
-            console.error("Lỗi lấy các đơn hàng trạng thái đang đợi: ", error);
+            console.error("Lỗi lấy các đơn hàng trạng thái chờ nhận: ", error);
             res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
         }
     },
 
+    // Kiểm tra xem mã QR có tồn tại không
     checkQRExist : async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -170,6 +180,7 @@ const goodCtrl = {
         }
     },
 
+    // Lấy trạng thái các đơn hàng
     getStateOrder  : async (req, res) => {
         try {
             const db = req.app.locals.db;
@@ -188,6 +199,7 @@ const goodCtrl = {
         }
     },
 
+    // Cập nhật trạng thái đơn hàng thêm postalcode
     updateGood: async (req, res) => {
         try {
             const db = req.app.locals.db;
