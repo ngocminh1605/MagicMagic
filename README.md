@@ -71,7 +71,8 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 
 ## IV. Công nghệ <a name="technique"></a>
 - Công nghệ:
-ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/>
+
+ReactJS <img alt="React" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" style="margin-left:20px;"/> 
 
 NodeJS <img alt="NodeJS" width="26px" src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_f0b606abb6d19089febc9faeeba5bc05/nodejs-development-services.png" style="margin-left:20px;"/>
 
