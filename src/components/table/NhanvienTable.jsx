@@ -11,7 +11,7 @@ import axios from "axios";
 import { format } from 'date-fns';
 
 const NhanVienTable = ({ officeID, userID, title }) => {
-  console.log("hi", officeID, userID, title);
+  //console.log("hi", officeID, userID, title);
   const navigate = useNavigate();
   const ActionButtonsRenderer = (props) => (
     <div style={{ justifyContent: "space-between" }}>

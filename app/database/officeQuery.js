@@ -1,3 +1,29 @@
+const addOffice = async (name, address, hotline, learder, code, db, res) => {
+    const transQuery = "INSERT INTO office (`Name`, `Address`, `HotLine`, `ID_Leader`, `Postalcode`) VALUE (?, ?, ?, ?, ?);";
+
+    return new Promise((resolve, reject) => {
+        db.query(transQuery, [name, address, hotline, learder, code], (err) => {
+            if (err) {
+                console.error("Lỗi thêm office: ", err.message);
+                reject(err);
+            }
+        });
+    });
+};
+
+const deleteOffice = async (officeID, db, res) => {
+    const transQuery = "DELETE FROM office WHERE office.ID_office = ?";
+
+    return new Promise((resolve, reject) => {
+        db.query(transQuery, [officeID], (err) => {
+            if (err) {
+                console.error("Lỗi thêm office: ", err.message);
+                reject(err);
+            } 
+        });
+    });
+};
+
 const transactionAndAddress = async (address, db, res) => {
     const transQuery = "SELECT * FROM office WHERE office.Name LIKE '%GD%' AND office.Address LIKE ?;";
 
@@ -59,7 +85,8 @@ const getAllOffice = async (db, res) => {
 
 
 const getListOffice = async (db, res) => {
-    const getQuery = "SELECT * FROM office;";
+    const getQuery = `SELECT office.*, user.FullName AS leaderName FROM office 
+    JOIN user ON user.ID_user = office.ID_leader WHERE user.title LIKE '%Trưởng điểm%';`;
     return new Promise((resolve, reject) => {
         db.query(getQuery, (err, results) => {
             if (err) {
@@ -152,4 +179,5 @@ function extractProvinceName(address) {
     return 'Không xác định';
 }
 
-module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID, getAllOffice, extractProvinceName, getListOffice};
+module.exports = { transactionAndAddress, gatheringAndAddress, getOfficeByID, getAllOffice, extractProvinceName, getListOffice,
+                    addOffice, deleteOffice};

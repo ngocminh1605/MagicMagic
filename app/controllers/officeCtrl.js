@@ -158,6 +158,35 @@ const officeCtrl = {
         }
     },
 
+    addOffice: async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+
+            const {name, address, hotline, learder, code} = req.body;
+           
+            const data = await officeQueries.addOffice(name, address, hotline, learder, code, db, res);
+    
+            res.status(201).json({ message: "Thêm office thành công!"});
+        } catch (error) {
+            console.error("Lỗi thêm office: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
+    deleteOffice: async(req, res) => {
+        try {
+            const db = req.app.locals.db;
+            const {officeID} = req.body;
+           
+            const data = await officeQueries.deleteOffice(officeID, db, res);
+    
+            res.status(201).json({ message: "Xóa office thành công!"});
+        } catch (error) {
+            console.error("Lỗi xóa office: ", error);
+            res.status(500).json({ message: "Lỗi máy chủ Internal Server." });
+        }
+    },
+
 }
 
 

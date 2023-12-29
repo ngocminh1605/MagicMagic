@@ -39,6 +39,8 @@ function App() {
                             </Route>
                             <Route path="office">
                                 <Route index element={<PhongBanList />} />
+                                <Route path="add/:userID/:officeID/:title" element={<NhanVienNew />} />
+                                <Route path="edit/:userID" element={<NhanVienEdit />} />
                             </Route>
                             <Route path="orders">
                                 <Route index element={<DonHang />} />
