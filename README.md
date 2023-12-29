@@ -75,6 +75,19 @@ tập kết ứng với điểm giao dịch của người nhận. Tại điểm
 
 ## V. Cách cài đặt và chạy <a name="setting"></a>
 
+### 1. Cài đặt
+#### a. Clone Repository
+```bash
+git clone https://github.com/ngocminh1605/MagicMagic.git
+```
+### 2. Trưởng điểm giao dịch
+- Quản lý tài khoản giao dịch viên tại điểm giao dịch vs thao tác thêm sửa xóa nhân viên.
+- Thống kê hàng gửi, hàng nhận,số lượng nhân viên tại điểm giao dịch.
+
+### 3. Trưởng điểm tập kết
+- Quản lý tài khoản nhân viên tại điểm tập kết với các thao tác thêm, sửa, xóa.
+- Thống kê hàng gửi, nhận, số lượng nhân viên tại điểm tập kết.
+
 
 ## VI. Video Demo <a name="demo"></a>
 link
