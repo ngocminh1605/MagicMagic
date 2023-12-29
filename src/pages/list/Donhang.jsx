@@ -12,8 +12,8 @@ const DonHang = () => {
     <div className="list">
       <Sidebar setOfficeID={setOfficeID} setUserID={setUserID} setTitle={setTitle}/>
       <div className="container">
-        <div className='title' style = {{marginBottom:"50px"}}>Đơn hàng</div>
-        <OrdersTable officeID={officeID} userID={userID} title={title} />
+        <div className='title'>Đơn hàng</div>
+        <OrdersTable officeID={officeID} userID={userID} title={title}/>
       </div>
     </div>
   );

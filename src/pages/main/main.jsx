@@ -14,8 +14,6 @@ const Main = () => {
     const navigate = useNavigate();
     const [goodCode, setGoodCode] = useState('');
     const [message, setMessage] = useState('');
-
-
     const handleClick = async () => {
         try {
             const response = await fetch(`http://localhost:3001/goods/checkExist?goodCode=${goodCode}`, {
@@ -63,16 +61,16 @@ const Main = () => {
                             onClick={() => navigate('login')}
                             style={{
                                 textTransform: 'none',
-                                backgroundColor: "var(--glass)",
-                                color: 'var(--black)',
-                                width: '27vh',
+                                backgroundColor: "#FFE8E9",
+                                color: '#B03D66',
+                                width: '23vh',
                                 marginRight: '10vh',
                                 marginTop: '3vh',
                                 borderRadius: 10,
-                                height: '10vh',
+                                height: '7vh',
                                 marginLeft: 'auto',
                                 fontWeight: 'bold',
-                                fontSize: '3.5vh',
+                                fontSize: '3vh',
 
                             }}
                         >

@@ -148,8 +148,8 @@ const TraCuu = () => {
         }
 
         {state && info &&
-            <div>
-                Chi tiết tình trạng vận đơn
+            <div style={{ backgroundColor: "#FEDBDC", margin: "20px", borderRadius: 20, padding: "20px" }}>
+                <h4><b>Chi tiết tình trạng vận đơn</b></h4>
                 <table>
                     <thead>
                         <tr>

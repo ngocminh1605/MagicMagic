@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './NhanvienTable.scss';
@@ -90,6 +90,17 @@ const OfficeTable = () => {
 
 
   ]);
+  useEffect(() => {
+    const fetChOffice = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/office/listOffice');
+        if (response.status === 200) {
+          
+        }
+      }
+    }
+
+  });
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
@@ -121,37 +132,37 @@ const OfficeTable = () => {
   };
   return (
     // Container with theme & dimensions
-      <div
-        className={
-          "ag-theme-quartz ag-theme-acmecorp"
-        }
-        style={{ width: '100%', height: '70%', flexDirection: "column" }}
+    <div
+      className={
+        "ag-theme-quartz ag-theme-acmecorp"
+      }
+      style={{ width: '98.5%', height: '70%', flexDirection: "column", marginTop: "20px", marginLeft: "15px", borderRadius: "20px" }}
+    >
+      <Button
+        // onClick={() => navigate('/nhanvien/add')}
+        style={{
+          textTransform: 'none',
+          backgroundColor: "#FF9AA2",
+          color: 'white',
+          width: 70,
+          marginRight: 15,
+          borderRadius: 10,
+          height: 40,
+          marginLeft: 'auto',
+          display: "flex",
+          marginBottom: 15
+        }}
       >
-        <Button
-          // onClick={() => navigate('/nhanvien/add')}
-          style={{
-            textTransform: 'none',
-            backgroundColor: "#FF9AA2",
-            color: 'white',
-            width: 70,
-            marginRight: 15,
-            borderRadius: 10,
-            height: 40,
-            marginLeft: 'auto',
-            display: "flex",
-            marginBottom: 15
-          }}
-        >
-          Add
-        </Button>
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={colDefs}
-          defaultColDef={defaultColDef}
-          pagination={true}
-          gridOptions={gridOptions}
-        />
-      </div>
+        Add
+      </Button>
+      <AgGridReact
+        rowData={rowData}
+        columnDefs={colDefs}
+        defaultColDef={defaultColDef}
+        pagination={true}
+        gridOptions={gridOptions}
+      />
+    </div>
   );
 }
 export default OfficeTable;

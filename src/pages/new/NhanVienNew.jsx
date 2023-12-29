@@ -123,7 +123,7 @@ const NhanVienNew = () => {
 
         }
     };
-    
+
     const options2 = [
         { value: 'Trưởng điểm giao dịch', label: 'Trưởng điểm giao dịch' },
         { value: 'Trưởng điểm tập kết', label: 'Trưởng điểm tập kết' },
@@ -142,71 +142,72 @@ const NhanVienNew = () => {
                 <div className="title">Employee</div>
 
                 <form className="offset-lg-1 col-lg-8" onSubmit={handleSubmit}>
-                    <div className="row">
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="username">User Name <span className="errmsg">*</span></InputLabel>
-                                <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="password">Password <span className="errmsg">*</span></InputLabel>
-                                <input id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="content1">
-                            <div className="form-group2">
-                                <InputLabel htmlFor="email">Email <span className="errmsg">*</span></InputLabel>
-                                <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="content2">
-
-                            <div className="form-group">
-                                <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
-                                <Select
-                                    options={options}
-                                    styles={customStyles}
-                                    onChange={(selectedOption) => setOffice(selectedOption.value)}
-
-                                />
-                            </div>
-                            {title === 'admin' && (
+                    <div style={{ backgroundColor: "#FEDBDC", margin: "20px", borderRadius: 20, padding: "20px" }}>
+                        <div className="row">
+                            <div className="content2">
                                 <div className="form-group">
-                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                    <InputLabel htmlFor="username">User Name <span className="errmsg">*</span></InputLabel>
+                                    <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="password">Password <span className="errmsg">*</span></InputLabel>
+                                    <input id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" />
+                                </div>
+                            </div>
+
+                            <div className="content1">
+                                <div className="form-group2">
+                                    <InputLabel htmlFor="email">Email <span className="errmsg">*</span></InputLabel>
+                                    <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" />
+                                </div>
+                            </div>
+
+                            <div className="content2">
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
                                     <Select
-                                        options={options2}
+                                        options={options}
                                         styles={customStyles}
-                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                        onChange={(selectedOption) => setOffice(selectedOption.value)}
+
                                     />
                                 </div>
-                            )}
-                            {title === 'Trưởng điểm giao dịch' && (
-                                <div className="form-group">
-                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
-                                    <Select
-                                        options={options3}
-                                        styles={customStyles}
-                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
-                                    />
-                                </div>
-                            )}
-                            {title === 'Trưởng điểm tập kết' && (
-                                <div className="form-group">
-                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
-                                    <Select
-                                        options={options4}
-                                        styles={customStyles}
-                                        onChange={(selectedOption) => setPosition(selectedOption.value)}
-                                    />
-                                </div>
-                            )}
+                                {title === 'admin' && (
+                                    <div className="form-group">
+                                        <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                        <Select
+                                            options={options2}
+                                            styles={customStyles}
+                                            onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                        />
+                                    </div>
+                                )}
+                                {title === 'Trưởng điểm giao dịch' && (
+                                    <div className="form-group">
+                                        <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                        <Select
+                                            options={options3}
+                                            styles={customStyles}
+                                            onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                        />
+                                    </div>
+                                )}
+                                {title === 'Trưởng điểm tập kết' && (
+                                    <div className="form-group">
+                                        <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                        <Select
+                                            options={options4}
+                                            styles={customStyles}
+                                            onChange={(selectedOption) => setPosition(selectedOption.value)}
+                                        />
+                                    </div>
+                                )}
 
+                            </div>
                         </div>
                     </div>
-
                     <div className="card-footer">
                         <button type="submit" className="btn1" onClick={handleSubmit}>Add</button>
                         <button className="btn2" onClick={() => navigate("/nhanvien")}>Back</button>

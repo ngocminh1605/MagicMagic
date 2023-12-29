@@ -1,12 +1,14 @@
 .ag-theme-quartz {
     --ag-row-border-style: "solid";
-    --ag-row-border-color: "black"
+    --ag-row-border-color: "black";
+    --ag-borders-radius:"20px";
 }
 
 .ag-theme-acmecorp {
     --ag-odd-row-background-color: #f4c2d7;
     --ag-borders: solid 1px;
-    --ag-background-color: #f8dae9;
+    
+    --ag-background-color: #FEDBDC;
     --ag-tooltip-background-color: #efb0c9;
 
 }

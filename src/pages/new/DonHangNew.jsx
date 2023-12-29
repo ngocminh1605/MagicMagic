@@ -32,7 +32,6 @@ const DonHangNew = () => {
     const [province, setProvince] = useState('');	
     const [PostalcodeSend, setPostalcodeSend] = useState('');	
 
-
     useEffect(() => {
         const calculateAndSetVatFee = () => {
             const calculatedVatFee = calculateVatFee(mainFee, extraFee, gtvtFee);
@@ -40,9 +39,7 @@ const DonHangNew = () => {
         };
         calculateAndSetVatFee();
     }, [mainFee, extraFee, gtvtFee, shipmentType]);
-
     useEffect(() => {
-        
         if (officeID) {
             const fetchData = async () => {
                 try {
@@ -65,7 +62,6 @@ const DonHangNew = () => {
                     console.error('Lỗi fetch data:', error);
                 }
             };
-
             fetchData();
         }
 
@@ -302,6 +298,5 @@ const DonHangNew = () => {
         </div>
     );
 };
-
 
 export default DonHangNew;

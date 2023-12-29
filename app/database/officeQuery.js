@@ -71,6 +71,8 @@ const getListOffice = async (db, res) => {
         });
     });
 };
+
+
 function extractProvinceName(address) {
     const lowercaseAddress = address.toLowerCase();
   

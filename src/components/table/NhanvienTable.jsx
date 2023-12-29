@@ -144,10 +144,7 @@ const NhanVienTable = ({ officeID, userID, title }) => {
       className={
         "ag-theme-quartz ag-theme-acmecorp"
       }
-      style={{
-        width: '100%', height: '70%', flexDirection: "column",
-
-      }}
+      style={{ width: '98.5%', height: '70%',flexDirection:"column",marginTop:"20px",marginLeft:"15px",borderRadius:"20px" }}
 
     >
       <Button

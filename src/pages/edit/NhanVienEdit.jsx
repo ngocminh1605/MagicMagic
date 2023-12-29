@@ -117,53 +117,56 @@ const NhanVienEdit = () => {
             <div className="container">
                 <div className="title">Employee</div>
                 <form className="offset-lg-1 col-lg-8" onSubmit={handleUpdate}>
-                    <div className="row">
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="username">User Name<span className="errmsg">*</span></InputLabel>
-                                <input
-                                    id="username"
-                                    value={userData.UserName}
-                                    onChange={(e) => setUserData({ ...userData, UserName: e.target.value })}
-                                    className="form-control"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="content1">
-                            <div className="form-group2">
-                                <InputLabel htmlFor="email">Email <span className="errmsg">*</span></InputLabel>
-                                <input id="email" value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="content2">
-                            <div className="form-group">
-                                <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
-                                <Select
-                                    options={options}
-                                    styles={customStyles}
-                                   onChange={(selectedOption) => setUserData({ ...userData, OfficeId: selectedOption.value })}
-                                />
+                    <div style={{ backgroundColor: "#FEDBDC", margin: "20px", borderRadius: 20, padding: "20px" }}>
+                        <div className="row">
+                            <div className="content1">
+                                <div className="form-group2">
+                                    <InputLabel htmlFor="username">User Name<span className="errmsg">*</span></InputLabel>
+                                    <input
+                                        id="username"
+                                        value={userData.UserName}
+                                        onChange={(e) => setUserData({ ...userData, UserName: e.target.value })}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="form-group">
-                                <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
-                                <select
-                                    id="position"
-                                    value={userData.title}
-                                    onChange={(e) => setUserData({ ...userData, title: e.target.value })}
-                                    className="form-control"
-                                >
-                                    <option value="">-- Select Title--</option>
-                                    <option value="Trưởng điểm giao dịch">Trưởng điểm giao dịch</option>
-                                    <option value="Trưởng điểm tập kết">Trưởng điểm tập kết</option>
-                                    <option value="Nhân viên giao dịch">Nhân viên giao dịch</option>
-                                    <option value="Nhân viên tập kết">Nhân viên tập kết</option>
-                                </select>
+                            <div className="content1">
+                                <div className="form-group2">
+                                    <InputLabel htmlFor="email">Email <span className="errmsg">*</span></InputLabel>
+                                    <input id="email" value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="form-control" />
+                                </div>
+                            </div>
+
+                            <div className="content2">
+                                <div className="form-group">
+                                    <InputLabel htmlFor="office">Office <span className="errmsg">*</span></InputLabel>
+                                    <Select
+                                        options={options}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => setUserData({ ...userData, OfficeId: selectedOption.value })}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <InputLabel htmlFor="position">Position <span className="errmsg">*</span></InputLabel>
+                                    <select
+                                        id="position"
+                                        value={userData.title}
+                                        onChange={(e) => setUserData({ ...userData, title: e.target.value })}
+                                        className="form-control"
+                                    >
+                                        <option value="">-- Select Title--</option>
+                                        <option value="Trưởng điểm giao dịch">Trưởng điểm giao dịch</option>
+                                        <option value="Trưởng điểm tập kết">Trưởng điểm tập kết</option>
+                                        <option value="Nhân viên giao dịch">Nhân viên giao dịch</option>
+                                        <option value="Nhân viên tập kết">Nhân viên tập kết</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
+
 
                     <div className="card-footer">
                         <button type="submit" className="btn1">Save</button>
