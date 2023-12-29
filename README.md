@@ -30,7 +30,7 @@
 |   2   |    Trần Diệu Anh     | 21020279 | 21020279@vnu.edu.vn |  [AnhDieuTran](https://github.com/AnhDieuTran)  |
 |   3   | Nguyễn Thị Ngọc Minh | 21020358 | 21020358@vnu.edu.vn | [ngocminh1605](https://github.com/ngocminh1605) |
 
-5. Công việc
+5. Công việc:
 
 - Nguyễn Phương Linh: FE + demo
   + Xử lý giao diện màn hình chính
