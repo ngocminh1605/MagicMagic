@@ -90,17 +90,7 @@ const OfficeTable = () => {
 
 
   ]);
-  useEffect(() => {
-    const fetChOffice = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/office/listOffice');
-        if (response.status === 200) {
-          
-        }
-      }
-    }
-
-  });
+  
 
   // Column Definitions: Defines & controls grid columns.
   const [colDefs, setColDefs] = useState([
